@@ -24,6 +24,13 @@ abstract class Content {
     return $this->render();
   }
   
+  function __get( $name ) {
+    if( method_exists( $this, $name ) ) {
+      return $this->$name();
+    }
+  }
+  
+  abstract public function editor();
   abstract public function setData( $data );
   abstract public function render();
 } 

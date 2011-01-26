@@ -23,19 +23,43 @@ class DefaultSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default.css">
+  <script>
+    function editBody() {
+      document.getElementById("bodyView").style.display = "none";
+      document.getElementById("bodyEdit").style.display = "block";
+    }
+    function previewBody() {
+      document.getElementById("bodyView").style.display = "block";
+      document.getElementById("bodyEdit").style.display = "none";
+      document.getElementById("bodySave").style.display = "block";
+      document.getElementById("bodyContent").innerHTML = 
+        document.getElementById("bodyRaw").value;
+    }
+    function cancelBody() {
+      document.getElementById("bodyView").style.display = "block";
+      document.getElementById("bodyEdit").style.display = "none";
+    }
+  </script>
 </head>
 <body>
 $this->userBar
 <h1>SkoolSCool</h1>
 <div class="body">
-  $this->bodyControls
-  $content
-  <div class="info">
-  Author: $content->author
-  </div>
-    <div>
-$this->subcontent
+  <div id="bodyView">
+    $this->bodyControls
+    <div id="bodyContent">
+      $content
     </div>
+    <div class="info">
+      Author: $content->author
+    </div>
+  </div>
+  <div id="bodyEdit" style="display:none;">
+    $content->editor
+  </div>
+  <div>
+    $this->subcontent
+  </div>
 </div>
 $this->footer
 </body>
@@ -135,7 +159,9 @@ EOT;
     return ! $this->user->isContributor() ? "" :
       <<<EOT
 <div class="controls">
-<a href="">add</a> - <a href="">remove</a> - <a href="">edit</a>
+  <a href="#">add</a>
+  | <a href="#">remove</a>
+  | <a href="#">edit</a>
 </div>
 EOT;
   }
@@ -144,10 +170,10 @@ EOT;
     return ! $this->user->isContributor() ? "" :
       <<<EOT
 <div class="controls">
-  <a href="">edit</a>
+  <a href="#" onclick="editBody()">edit</a>
+  <span id="bodySave" style="display:none;"> | <a href="#">save</a>
 </div>
 EOT;
   }
-
 
 }
