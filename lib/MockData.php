@@ -3,8 +3,9 @@
 $GLOBALS['MockData'] = array(
   'devel' => array( 
     'users' => array(
-      'xtof' => array( 'name' => 'Christophe VG',
-                       'pass' => md5('xtof') )
+      'xtof' => array( 'name'   => 'Christophe VG',
+                       'pass'   => md5('xtof'),
+                       'rights' => 'contributor,admin' )
     ),
     'content' => array(
       'default' => array( 'author'   => 'xtof',

@@ -1,0 +1,41 @@
+.body {
+  border: 2px solid #aaa;
+  padding: 5px;
+  margin: 5px;
+}
+
+.item {
+  border: 2px solid #aaa;
+  padding: 5px;
+  margin: 5px;
+}
+
+.controls {
+  border: 1px solid #777;
+  padding: 3px;
+  margin: 3px;
+  float: right;
+}
+
+.info {
+  border: 1px solid #aaa;
+  background-color: #eee;
+  color: #777;
+  font-size: 75%;
+  padding: 3px;
+  margin: 3px;
+}
+
+.userbar {
+  border: 1px solid #aaa;
+  border-bottom: 10px solid #aaa;
+  background-color: #eee;
+  color: #777;
+  font-size: 75%;
+  padding: 3px;
+  margin: 3px;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 200px;
+}

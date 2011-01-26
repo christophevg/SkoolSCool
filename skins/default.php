@@ -20,16 +20,26 @@ class DefaultSkin extends Skin {
    */
   function body( $content ) {
     return <<<EOT
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="./skins/default.css">
+</head>
+<body>
 $this->userBar
-<h1>Default Skin</h1>
-<div>
-  <b>$this->user</b> requested <b>$content</b> by <u>$content->author</u>
+<h1>SkoolSCool</h1>
+<div class="body">
+  $this->bodyControls
+  $content
+  <div class="info">
+  Author: $content->author
+  </div>
     <div>
 $this->subcontent
     </div>
 </div>
 $this->footer
-
+</body>
+</html>
 EOT;
   }
 
@@ -40,13 +50,14 @@ EOT;
    */
   function item( $content ) {
     return <<<EOT
-
+<div class="item">
+$this->itemControls
 <h2>SubContent</h2>
 <b><i>$content->author</i></b> added child <b><i>$content</i></b>
-
+</div>
 EOT;
   }
-
+  
   /**
    * In stead of the item and body methods, it is also possible to supply
    * specific item and body methods for each content type. If these are
@@ -55,10 +66,11 @@ EOT;
    */
   function CommentAsItem( $content ) {
     return <<<EOT
-
+<div class="comment item">
+$this->itemControls
 <h2>Comment</h2>
 <b><i>$content->author</i></b> added child <b><i>$content</i></b>
-
+</div>
 EOT;
   }
 
@@ -77,19 +89,36 @@ EOT;
   
   function showLogin() {
     return <<<EOT
-
+<script>
+function showLogon() {
+  document.getElementById("userActions").style.display="none";
+  document.getElementById("logon").style.display="block";
+}
+function showUserActions() {
+  document.getElementById("userActions").style.display="block";
+  document.getElementById("logon").style.display="none";
+}
+</script>
+<div class="userbar">
+<div id="userActions">
+  <a href="#" onclick="showLogon();">log on</a> | 
+  <a href="#">register</a>
+</div>
+<div id="logon" style="display:none;">
 <form action="./" method="post">
   username : <input name="login"> password : <input type="password" name="pass"> <input type="submit">
 </form>
-    
+<a href="#" onclick="showUserActions();">cancel</a>
+</div>
+</div>
 EOT;
   }
 
   function showUser() {
     return <<<EOT
-
+<div class="userbar">
 $this->user : <a href="?action=logout">logout</a>    
-
+</div>
 EOT;
   }
   
@@ -101,4 +130,24 @@ EOT;
 
 EOT;
   }
+  
+  function itemControls() {
+    return ! $this->user->isContributor() ? "" :
+      <<<EOT
+<div class="controls">
+<a href="">add</a> - <a href="">remove</a> - <a href="">edit</a>
+</div>
+EOT;
+  }
+
+  function bodyControls() {
+    return ! $this->user->isContributor() ? "" :
+      <<<EOT
+<div class="controls">
+  <a href="">edit</a>
+</div>
+EOT;
+  }
+
+
 }

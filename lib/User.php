@@ -32,6 +32,7 @@ class User {
   final private function __construct( $data ) {
     $this->name = $data['name'];
     $this->pass = $data['pass'];
+    $this->rights = split( ',', $data['rights'] );
   }
   
   /**
@@ -48,6 +49,18 @@ class User {
    */
   function isAnonymous() {
     return $this->name == 'anonymous';
+  }
+  
+  function isContributor() {
+    return $this->hasRight('contributor');
+  }
+
+  function isAdmin() {
+    return $this->hasRight('admin');
+  }
+  
+  function hasRight($right) {
+    return in_array( $right, $this->rights );
   }
   
   /**
