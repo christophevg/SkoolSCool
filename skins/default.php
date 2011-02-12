@@ -23,7 +23,9 @@ class DefaultSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default.css">
+  <script src="http://github.com/christophevg/breakdown/raw/master/js/breakdown.js"></script>
   <script>
+
     function editBody() {
       document.getElementById("bodyView").style.display = "none";
       document.getElementById("bodyEdit").style.display = "block";
@@ -32,13 +34,19 @@ class DefaultSkin extends Skin {
       document.getElementById("bodyView").style.display = "block";
       document.getElementById("bodyEdit").style.display = "none";
       document.getElementById("bodySave").style.display = "block";
+      showBody();
+    }
+    var converter = null;
+    function showBody() {
+      if( !converter ) { converter = new Breakdown.converter(); }
       document.getElementById("bodyContent").innerHTML = 
-        document.getElementById("bodyRaw").value;
+        converter.makeHtml(document.getElementById("bodyRaw").value);
     }
     function cancelBody() {
       document.getElementById("bodyView").style.display = "block";
       document.getElementById("bodyEdit").style.display = "none";
     }
+    window.onload = showBody;
   </script>
 </head>
 <body>
@@ -48,7 +56,6 @@ $this->userBar
   <div id="bodyView">
     $this->bodyControls
     <div id="bodyContent">
-      $content
     </div>
     <div class="info">
       Author: $content->author
