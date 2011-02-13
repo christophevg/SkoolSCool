@@ -70,8 +70,18 @@ $this->userBar
 </div>
 $this->footer
 </body>
+<!-- this page was generated in $this->duration seconds  -->
 </html>
 EOT;
+  }
+
+  /**
+   * Returns the duration of the processing of the request based on the
+   * global __START variable and the current microtime.
+   */
+  function duration() {
+    global $__START;
+    return microtime(true) - $__START;
   }
 
   /**

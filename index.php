@@ -6,6 +6,9 @@
  * @author Christophe VG <contact+skoolscool@christophe.vg>
  */
 
+// keep track of the very first moment we started processing the request
+$__START = microtime(true);
+
 include_once 'lib/User.php'; 
 include_once 'lib/Content.php';
 include_once 'lib/Skin.php';
