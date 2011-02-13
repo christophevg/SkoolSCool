@@ -22,32 +22,10 @@ class DefaultSkin extends Skin {
     return <<<EOT
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="./skins/default.css">
+  <link rel="stylesheet" type="text/css" href="./skins/default/screen.css">
   <script src="http://github.com/christophevg/breakdown/raw/master/js/breakdown.js"></script>
-  <script>
-
-    function editBody() {
-      document.getElementById("bodyView").style.display = "none";
-      document.getElementById("bodyEdit").style.display = "block";
-    }
-    function previewBody() {
-      document.getElementById("bodyView").style.display = "block";
-      document.getElementById("bodyEdit").style.display = "none";
-      document.getElementById("bodySave").style.display = "block";
-      showBody();
-    }
-    var converter = null;
-    function showBody() {
-      if( !converter ) { converter = new Breakdown.converter(); }
-      document.getElementById("bodyContent").innerHTML = 
-        converter.makeHtml(document.getElementById("bodyRaw").value);
-    }
-    function cancelBody() {
-      document.getElementById("bodyView").style.display = "block";
-      document.getElementById("bodyEdit").style.display = "none";
-    }
-    window.onload = showBody;
-  </script>
+  <script src="./skins/default/users.js"></script>
+  <script src="./skins/default/editing.js"></script>
 </head>
 <body>
 $this->userBar
@@ -130,16 +108,6 @@ EOT;
   
   function showLogin() {
     return <<<EOT
-<script>
-function showLogon() {
-  document.getElementById("userActions").style.display="none";
-  document.getElementById("logon").style.display="block";
-}
-function showUserActions() {
-  document.getElementById("userActions").style.display="block";
-  document.getElementById("logon").style.display="none";
-}
-</script>
 <div class="userbar">
 <div id="userActions">
   <a href="#" onclick="showLogon();">log on</a> | 
