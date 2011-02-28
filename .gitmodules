@@ -1,0 +1,3 @@
+[submodule "lib/breakdown"]
+	path = lib/breakdown
+	url = http://github.com/christophevg/breakdown.git

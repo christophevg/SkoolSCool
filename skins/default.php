@@ -23,7 +23,7 @@ class DefaultSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default/screen.css">
-  <script src="http://github.com/christophevg/breakdown/raw/master/js/breakdown.js"></script>
+  <script src="./lib/breakdown/js/breakdown.js"></script>
   <script src="./skins/default/users.js"></script>
   <script src="./skins/default/editing.js"></script>
 </head>
