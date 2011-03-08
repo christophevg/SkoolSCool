@@ -49,6 +49,21 @@ EOT;
     return $this->user->isContributor() ?
       $this->editableBodyContent() : $this->readOnlyBodyContent();
   }
+
+  function readOnlyBodyContent() {
+    $content = $this->content;
+    $body = Breakdown::getConverter()->makeHtml((string)$content);
+    return <<<EOT
+  <div id="bodyView">
+    <div id="bodyContent">
+      $body
+    </div>
+    <div class="info">
+      Author: $content->author @ $content->time
+    </div>
+  </div>
+EOT;
+  }
   
   function editableBodyContent() {
     $content = $this->content;
@@ -63,21 +78,6 @@ EOT;
     </div>
   </div>
   $this->editor
-EOT;
-  }
-
-  function readOnlyBodyContent() {
-    $content = $this->content;
-    $body = Breakdown::getConverter()->makeHtml((string)$content);
-    return <<<EOT
-  <div id="bodyView">
-    <div id="bodyContent">
-      $body
-    </div>
-    <div class="info">
-      Author: $content->author @ $content->time
-    </div>
-  </div>
 EOT;
   }
 
@@ -105,12 +105,28 @@ EOT;
    * to body-level content.
    */
   function item() {
+    return $this->user->isContributor() ?
+      $this->editableItem() : $this->readOnlyItem();
+  }
+  
+  function readOnlyItem() {
+    $content = $this->content;
+    $body = Breakdown::getConverter()->makeHtml((string)$content);
+    return <<<EOT
+<div class="item">
+  <h2>SubContent</h2>
+  <b><i>$content->author</i></b> added child <b><i>$body</i></b>
+</div>
+EOT;
+  }
+  
+  function editableItem() {
     $content = $this->content;
     return <<<EOT
 <div class="item">
-$this->itemControls
-<h2>SubContent</h2>
-<b><i>$content->author</i></b> added child <b><i>$content</i></b>
+  $this->itemControls
+  <h2>SubContent</h2>
+  <b><i>$content->author</i></b> added child <b><i>$content</i></b>
 </div>
 EOT;
   }
@@ -180,8 +196,7 @@ EOT;
   }
   
   function itemControls() {
-    return ! $this->user->isContributor() ? "" :
-      <<<EOT
+    return <<<EOT
 <div class="controls">
   <a href="#">add</a>
   | <a href="#">remove</a>
@@ -191,8 +206,7 @@ EOT;
   }
 
   function bodyControls() {
-    return ! $this->user->isContributor() ? "" :
-      <<<EOT
+    return <<<EOT
 <div class="controls">
   <a href="#" onclick="editBody()">edit</a>
   <span id="bodySave" style="display:none;"> | <a href="#">save</a>
