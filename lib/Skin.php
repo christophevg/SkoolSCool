@@ -18,13 +18,20 @@ abstract class Skin {
     return $this;
   }
   
-  function show( $content = null ) {
-    $this->content = $content;
+  function show( $content = "" ) {
+    if( ! is_array( $this->contents ) ) { $this->contents = array(); }
+    array_push( $this->contents, $content );
     return $this;
   }
 
   function __toString() {
-    return $this->applySkin( $this->content );
+    $out = $this->applySkin();
+    array_pop( $this->contents );
+    return $out;
+  }
+  
+  function content() {
+    return $this->contents[count($this->contents)-1];
   }
   
   function __get( $name ) {
@@ -33,23 +40,24 @@ abstract class Skin {
     }
   }
   
-  function subcontent() {
+  function subContent() {
     $subContent = "";
     foreach( $this->content->children as $child ) {
-      $subContent .= $this->applySkin( Content::get($child), 'item' );
+      $subContent .= $this->show( Content::get($child) );
     }
     return $subContent;
   }
 
-  private function applySkin( $content, $type = 'body' ) {
+  private function applySkin() {
+    $type = count($this->contents) > 1 ? 'item' : 'body';
     $contentType = str_replace( 'Content', '' , get_class($content) );
     $skinMethod = $contentType . 'As' . ucfirst( $type );
     if( method_exists( $this, $skinMethod ) ) {
-      return $this->$skinMethod( $content );
+      return $this->$skinMethod();
     } elseif( method_exists( $this, $type ) ) {
-      return $this->$type( $content );
+      return $this->$type();
     } else {
-      return (string)$content;
+      return (string)$this->content;
     }
   }
 

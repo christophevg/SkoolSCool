@@ -1,5 +1,7 @@
 <?php
 
+include_once dirname(__FILE__) . '/../lib/breakdown/php/breakdown.php';
+
 /**
  * Default Skin
  * This is a very bare-bone Skin implementation. It's focus is on the
@@ -18,7 +20,7 @@ class DefaultSkin extends Skin {
    * subcontent object. All other (unknown) properties are mapped to methods
    * on the Skin's implementation.
    */
-  function body( $content ) {
+  function body() {
     return <<<EOT
 <html>
 <head>
@@ -28,28 +30,63 @@ class DefaultSkin extends Skin {
   <script src="./skins/default/editing.js"></script>
 </head>
 <body>
-$this->userBar
-<h1>SkoolSCool</h1>
-<div class="body">
+  $this->userBar
+  <h1>SkoolSCool</h1>
+  <div class="body">
+    $this->bodyContent  
+    <div class="subcontent">
+      $this->subContent
+    </div>
+  </div>
+  $this->footer
+</body>
+<!-- this page was generated in $this->duration seconds  -->
+</html>
+EOT;
+  }
+  
+  function bodyContent() {
+    return $this->user->isContributor() ?
+      $this->editableBodyContent() : $this->readOnlyBodyContent();
+  }
+  
+  function editableBodyContent() {
+    $content = $this->content;
+    return <<<EOT
   <div id="bodyView">
     $this->bodyControls
     <div id="bodyContent">
+      $content
     </div>
     <div class="info">
       Author: $content->author @ $content->time
     </div>
   </div>
+  $this->editor
+EOT;
+  }
+
+  function readOnlyBodyContent() {
+    $content = $this->content;
+    $body = Breakdown::getConverter()->makeHtml((string)$content);
+    return <<<EOT
+  <div id="bodyView">
+    <div id="bodyContent">
+      $body
+    </div>
+    <div class="info">
+      Author: $content->author @ $content->time
+    </div>
+  </div>
+EOT;
+  }
+
+  function editor() {
+    $content = $this->content;
+    return <<<EOT
   <div id="bodyEdit" style="display:none;">
     $content->editor
   </div>
-  <div>
-    $this->subcontent
-  </div>
-</div>
-$this->footer
-</body>
-<!-- this page was generated in $this->duration seconds  -->
-</html>
 EOT;
   }
 
@@ -67,7 +104,8 @@ EOT;
    * minimal Skin implementation. It is used to render content that is linked
    * to body-level content.
    */
-  function item( $content ) {
+  function item() {
+    $content = $this->content;
     return <<<EOT
 <div class="item">
 $this->itemControls
@@ -83,7 +121,8 @@ EOT;
    * available, they will be used, otherwise the general body and item methods
    * will be called.
    */
-  function CommentAsItem( $content ) {
+  function CommentAsItem() {
+    $content = $this->content;
     return <<<EOT
 <div class="comment item">
 $this->itemControls
