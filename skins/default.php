@@ -36,7 +36,7 @@ $this->userBar
     <div id="bodyContent">
     </div>
     <div class="info">
-      Author: $content->author
+      Author: $content->author @ $content->time
     </div>
   </div>
   <div id="bodyEdit" style="display:none;">

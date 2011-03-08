@@ -14,7 +14,8 @@ abstract class Content {
   
   public function __construct( $data ) {
     // common data
-    $this->author = User::get( $data['author'] );
+    $this->author   = User::get( $data['author'] );
+    $this->time     = date( "d M Y (H:i:s)", $data['time'] );
     $this->children = $data['children'];
     // custom data
     $this->setData( $data['data'] );

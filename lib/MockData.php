@@ -10,6 +10,7 @@ $GLOBALS['MockData'] = array(
     'content' => array(
       'default' => array( 'author'   => 'xtof',
                           'type'     => 'page',
+                          'time'     => 1299614027,
                           'data'     => <<<EOT
 Introduction paragraph
 
@@ -32,11 +33,13 @@ EOT
                         ),
       'sub1'    => array( 'author'   => 'xtof',
                           'type'     => 'comment',
+                          'time'     => 1299614127,
                           'data'     => 'Hello Comments',
                           'children' => array()
                         ),
       'sub2'    => array( 'author'   => 'xtof',
                           'type'     => 'comment',
+                          'time'     => 1299614187,
                           'data'     => 'Hello Comments Again',
                           'children' => array()
                         )
