@@ -5,7 +5,10 @@ $GLOBALS['MockData'] = array(
     'users' => array(
       'xtof' => array( 'name'   => 'Christophe VG',
                        'pass'   => md5('xtof'),
-                       'rights' => 'contributor,admin' )
+                       'rights' => 'contributor,admin' ),
+      'kristien' => array( 'name'   => 'Kristien T',
+                           'pass'   => md5('kristien'),
+                           'rights' => 'contributor' )
     ),
     'content' => array(
       'default' => array( 'author'   => 'xtof',
@@ -31,13 +34,13 @@ EOT
 ,
                           'children' => array( 'sub1', 'sub2' )
                         ),
-      'sub1'    => array( 'author'   => 'xtof',
+      'sub1'    => array( 'author'   => 'kristien',
                           'type'     => 'comment',
                           'time'     => 1299614127,
                           'data'     => 'Hello Comments',
                           'children' => array()
                         ),
-      'sub2'    => array( 'author'   => 'xtof',
+      'sub2'    => array( 'author'   => 'kristien',
                           'type'     => 'comment',
                           'time'     => 1299614187,
                           'data'     => 'Hello Comments Again',
