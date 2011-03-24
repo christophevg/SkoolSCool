@@ -41,6 +41,7 @@ class DefaultSkin extends Skin {
       $this->subContent
     </div>
   </div>
+  <br clear="both">
   $this->footer
 </body>
 <!-- this page was generated in $this->duration seconds  -->
@@ -142,13 +143,36 @@ EOT;
    */
   function CommentAsItem() {
     $content = $this->content;
+    $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
-<div class="comment item">
-$this->itemControls
-<h2>Comment</h2>
-<b><i>$content->author</i></b> added child <b><i>$content</i></b>
+<div class="comment">
+  <div class="commenter">
+    <img src="$this->gravatarURL" width="50" height="50"><br>
+    $content->author
+  </div>
+  <div class="body">
+    $this->itemControls
+    $body
+  </div>
 </div>
 EOT;
+  }
+  
+  /**
+   * Returns a Gravatar URL, based on the content's author's email address
+   */
+  protected function gravatarURL() {
+    $defaultImage = "http://" . $_SERVER['HTTP_HOST'] . 
+                    dirname($_SERVER['SCRIPT_NAME'])  . 
+                    "/skins/default/images/unknown_user.png";
+    $size   = "50";
+    $rating = "G";
+    $border = "000000";
+    $url    = "http://www.gravatar.com/avatar.php?gravatar_id=%s".
+              "&default=%s&size=%s&border=%s&rating=%s";
+
+    return sprintf(	$url, md5($this->content->author->email), 
+                    $defaultImage, $size, $border, $rating );
   }
 
   /**

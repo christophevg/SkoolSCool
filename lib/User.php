@@ -30,8 +30,9 @@ class User {
    * @param $data hash containing user information
    */
   final private function __construct( $data ) {
-    $this->name = $data['name'];
-    $this->pass = $data['pass'];
+    $this->name   = $data['name'];
+    $this->pass   = $data['pass'];
+    $this->email  = $data['email'];
     $this->rights = split( ',', $data['rights'] );
   }
   
