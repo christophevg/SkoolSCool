@@ -6,14 +6,12 @@
  * @author Christophe VG <contact+skoolscool@christophe.vg>
  */
 
-// keep track of the very first moment we started processing the request
-$__START = microtime(true);
+include_once 'lib/SkoolSCool.php';
 
-include_once 'lib/User.php'; 
-include_once 'lib/Content.php';
-include_once 'lib/Skin.php';
-
-include_once 'lib/SessionManager.php';
+/**
+ * get the (default) skin (=look & feel)
+ */
+$skin = Skin::get();
 
 /**
  * content requests are passed through the 'c' (content) get parameter
@@ -34,11 +32,6 @@ $user = SessionManager::getInstance()->currentUser;
  */
 $content = Content::get( $request );
 if( ! $content ) { $content = Content::get(); }
-
-/**
- * get the (default) skin (=look & feel)
- */
-$skin = Skin::get();
 
 /**
  * show the content to the user using the skin

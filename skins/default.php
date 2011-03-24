@@ -1,5 +1,8 @@
 <?php
 
+// keep track of time
+$GLOBALS['__START'] = microtime(true);
+
 include_once dirname(__FILE__) . '/../lib/breakdown/php/breakdown.php';
 
 /**
@@ -96,7 +99,7 @@ EOT;
    */
   function duration() {
     global $__START;
-    return microtime(true) - $__START;
+    return round(microtime(true) - $__START, 4);
   }
 
   /**
