@@ -1,26 +1,39 @@
 <?php
 
-// keep track of time
-$GLOBALS['__START'] = microtime(true);
-
-include_once dirname(__FILE__) . '/../lib/breakdown/php/breakdown.php';
-
 /**
  * Default Skin
+ * Author: Christophe VG <contact+skoolscool@christophe.vg>
+ *
  * This is a very bare-bone Skin implementation. It's focus is on the
- * development of the features that can be used in a Skin, not on the look
- * and feel or layout.
+ * the features that can be used in a Skin and not on the look and feel or
+ * layout.
+ * This skin applies as little visual layouting as possible and simply
+ * shows the possibilities of SkoolSCool functionality.
+ * It can serve as a base for designing actual skins and aims to explain as
+ * many patterns, possibilities and examples as possible.
  */
 
-class DefaultSkin extends Skin {
+// keep track of time to show of how fast we render these pages ;-)
+$GLOBALS['__START'] = microtime(true);
 
+/**
+ * We use breakdown to allow end users to mark-up their content without
+ * the need to know HTML or other complex ways to add a little mark-up
+ * Breakdown is a light-weight-like implementation of MarkDown.
+ * It has both a PHP and Javascript implementation, which allows for rendering
+ * the result from both languages with exactly the same result.
+ */
+include_once dirname(__FILE__) . '/../lib/breakdown/php/breakdown.php';
+
+class DefaultSkin extends Skin {
   /**
    * The body method is one of the methods that need to be implemented to 
    * provide the parent Skin an implementation to operate minimally.
-   * It renders the body, given a content object. This content object contains
-   * a reference to the author. The object renders itself in a string context.
+   * It renders the body based on the content object.
+   * This content object contains a reference to the author. It also renders
+   * itself in a string context.
    * The $this object, contains references to the current user and a 
-   * subcontent object. All other (unknown) properties are mapped to methods
+   * subContent object. All other (unknown) properties are mapped to methods
    * on the Skin's implementation.
    */
   function body() {
@@ -34,7 +47,8 @@ class DefaultSkin extends Skin {
 </head>
 <body>
   $this->userBar
-  <h1>SkoolSCool</h1>
+  <h1>SkoolSCool - Default Skin</h1>
+  <hr>
   <div class="body">
     $this->bodyContent  
     <div class="subcontent">
@@ -49,16 +63,17 @@ class DefaultSkin extends Skin {
 EOT;
   }
   
-  function bodyContent() {
-    return $this->user->isContributor() ?
-      $this->editableBodyContent() : $this->readOnlyBodyContent();
-  }
-
-  function readOnlyBodyContent() {
+  /**
+   * Method implementing part of the body. It displays the main content,
+   * edit-controls and editor. To display the content, it first calls out to
+   * BreakDown to transform the user supplied content into HTML.
+   */
+  protected function bodyContent() {
     $content = $this->content;
     $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
   <div id="bodyView">
+    $this->bodyEditControls
     <div id="bodyContent">
       $body
     </div>
@@ -66,26 +81,30 @@ EOT;
       Author: $content->author @ $content->time
     </div>
   </div>
-EOT;
-  }
-  
-  function editableBodyContent() {
-    $content = $this->content;
-    return <<<EOT
-  <div id="bodyView">
-    $this->bodyControls
-    <div id="bodyContent">
-      $content
-    </div>
-    <div class="info">
-      Author: $content->author @ $content->time
-    </div>
-  </div>
-  $this->editor
+  $this->bodyEditor
 EOT;
   }
 
-  function editor() {
+  /**
+   * If the user is logged, so at least a contributor, we offer controls to
+   * start editing the body content.
+   */
+  protected function bodyEditControls() {
+    if( ! $this->user->isContributor() ) { return ""; }
+    return <<<EOT
+  <div class="controls">
+    <a href="#" onclick="editBody()">edit</a>
+    <span id="bodySave" style="display:none;"> | <a href="#">save</a>
+  </div>
+EOT;
+  }
+
+  /**
+   * If the user is logged, so at least a contributor, we offer insert the
+   * editor to interact with the underlying content-data.
+   */
+  protected function bodyEditor() {
+    if( ! $this->user->isContributor() ) { return ""; }
     $content = $this->content;
     return <<<EOT
   <div id="bodyEdit" style="display:none;">
@@ -95,43 +114,41 @@ EOT;
   }
 
   /**
-   * Returns the duration of the processing of the request based on the
-   * global __START variable and the current microtime.
-   */
-  function duration() {
-    global $__START;
-    return round(microtime(true) - $__START, 4);
-  }
-
-  /**
    * The item method is the second method that must be provided to have a 
    * minimal Skin implementation. It is used to render content that is linked
    * to body-level content.
    */
   function item() {
-    return $this->user->isContributor() ?
-      $this->editableItem() : $this->readOnlyItem();
-  }
-  
-  function readOnlyItem() {
     $content = $this->content;
     $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
 <div class="item">
+  $this->itemEditControls
   <h2>SubContent</h2>
   <b><i>$content->author</i></b> added child <b><i>$body</i></b>
+  $this->itemEditor
 </div>
 EOT;
   }
   
-  function editableItem() {
+  function itemEditControls() {
+    if( ! $this->user->isContributor() ) { return ""; }
+    return <<<EOT
+  <div class="controls">
+    <a href="#">add</a>
+    | <a href="#">remove</a>
+    | <a href="#">edit</a>
+  </div>
+EOT;
+  }
+  
+  function itemEditor() {
+    if( ! $this->user->isContributor() ) { return ""; }
     $content = $this->content;
     return <<<EOT
-<div class="item">
-  $this->itemControls
-  <h2>SubContent</h2>
-  <b><i>$content->author</i></b> added child <b><i>$content</i></b>
-</div>
+  <div id="itemEdit" style="display:none;">
+    $content->editor
+  </div>
 EOT;
   }
   
@@ -140,8 +157,11 @@ EOT;
    * specific item and body methods for each content type. If these are
    * available, they will be used, otherwise the general body and item methods
    * will be called.
+   * It this case, Comments will be rendered in specific way AND only in case
+   * the user is logged on. Anonymous users don't see comments.
    */
   function CommentAsItem() {
+    if( ! $this->user->isContributor() ) { return ""; }
     $content = $this->content;
     $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
@@ -151,7 +171,7 @@ EOT;
     $content->author
   </div>
   <div class="body">
-    $this->itemControls
+    $this->itemEditControls
     $body
   </div>
 </div>
@@ -176,19 +196,17 @@ EOT;
   }
 
   /**
-   * Below this point are Skin specific methods, exposed as properties to the
-   * methods above.
+   * Switch between a user logon form or user info and logout actions.
    */  
-  
-  function userBar() {
-    if( $this->user->isAnonymous() ) {
-      return $this->showLogin();
-    } else {
-      return $this->showUser();
-    }
+  protected function userBar() {
+    return $this->user->isAnonymous() ? 
+      $this->showLogin() : $this->showUser();
   }
   
-  function showLogin() {
+  /**
+   * If a user is not logged in, we offer him a logon form.
+   */
+  private function showLogin() {
     return <<<EOT
 <div class="userbar">
 <div id="userActions">
@@ -205,40 +223,34 @@ EOT;
 EOT;
   }
 
-  function showUser() {
+  /**
+   * If a user is logged in, we display his name and a logout action.
+   */
+  private function showUser() {
     return <<<EOT
 <div class="userbar">
 $this->user : <a href="?action=logout">logout</a>    
 </div>
 EOT;
   }
-  
-  function footer() {
-    return <<<EOT
 
+  /**
+   * Returns the footer of the page.
+   */
+  protected function footer() {
+    return <<<EOT
     <hr>
     a footer
-
 EOT;
   }
   
-  function itemControls() {
-    return <<<EOT
-<div class="controls">
-  <a href="#">add</a>
-  | <a href="#">remove</a>
-  | <a href="#">edit</a>
-</div>
-EOT;
-  }
-
-  function bodyControls() {
-    return <<<EOT
-<div class="controls">
-  <a href="#" onclick="editBody()">edit</a>
-  <span id="bodySave" style="display:none;"> | <a href="#">save</a>
-</div>
-EOT;
+  /**
+   * Returns the duration of the processing of the request based on the
+   * global __START variable and the current microtime.
+   */
+  protected function duration() {
+    global $__START;
+    return round(microtime(true) - $__START, 4);
   }
 
 }

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Skin
+ *
+ * This abstract class is the base class for all skins. It implements the
+ * external interface that's being called from the index.php driver.
+ * Although the skin provides content rendering by default, in normal
+ * circumstances, an implementing Skin will at least provide an implementation
+ * for the body() and item() methods.
+ */
 abstract class Skin {
   /**
    * Factory Method to get a skin object based on its name.
