@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SkoolSCool
+ * SkoolSCool - Ajax interface
  * A small and very specific CMS for an elementary school's website
  * @author Christophe VG <contact+skoolscool@christophe.vg>
  */
@@ -9,17 +9,13 @@
 include_once 'lib/SkoolSCool.php';
 
 /**
- * get the (default) skin (=look & feel)
- */
-$skin = Skin::get();
-
-/**
- * content requests are passed through the 'cid' (content id) get parameter
+ * ajax requests are passed through the 'cid' (content id) post parameter
  * example: http://skoolscool.org/index.php?cid=somePage
  * at server level this can be rewritten
  * example: http://skoolscool.org/somePage
  */
-$request = $_GET['cid'];
+$request = $_POST['cid'];
+$data    = $_POST['data'];
 
 /**
  * get the current user
@@ -28,12 +24,16 @@ $user = SessionManager::getInstance()->currentUser;
 
 /**
  * retrieve the relevant content
- * if it returns nothing, we get the default content
  */
 $content = Content::get( $request );
-if( ! $content ) { $content = Content::get(); }
 
 /**
- * show the content to the user using the skin
+ * check if the user can update the requested content, if so, do it, else fail
  */
-print $skin->show( $content )->to( $user );
+if( AuthorizationManager::getInstance()
+      ->can( $user )->update( $content ) )
+{
+  print "ok";
+} else {
+  print "fail";
+}

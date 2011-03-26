@@ -42,8 +42,13 @@ class DefaultSkin extends Skin {
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default/screen.css">
   <script src="./lib/breakdown/js/breakdown.js"></script>
+  <script src="./skins/default/notify.js"></script>
+  <script src="./skins/default/ajax.js"></script>
   <script src="./skins/default/users.js"></script>
   <script src="./skins/default/editing.js"></script>
+  <script>
+    var __page__ = "{$this->content->cid}";
+  </script>
 </head>
 <body>
   {$this->userBar}
@@ -92,8 +97,16 @@ EOT;
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
   <div class="controls">
-    <a href="#" onclick="editBody()">edit</a>
-    <span id="bodySave" style="display:none;"> | <a href="#">save</a>
+    <span id="bodyEditAction">
+      <a href="#" onclick="editBody();">edit</a>
+    </span>
+    <span id="bodySaveAction" style="display:none;">
+      | <a href="#" onclick="saveBody();">save</a>
+    </span>
+    <span id="bodyCancelAction" style="display:none;">
+      | <a href="#" onclick="cancelBody();">cancel</a>
+    </span>
+    <span id="bodySavingAction" style="display:none;">Saving</span>
   </div>
 EOT;
   }
@@ -107,6 +120,8 @@ EOT;
     return <<<EOT
   <div id="bodyEdit" style="display:none;">
     {$this->content->editor}
+    <a href="#" onclick="previewBody();">preview</a> |
+    <a href="#" onclick="cancelBody();">cancel</a>
   </div>
 EOT;
   }

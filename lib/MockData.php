@@ -13,7 +13,8 @@ $GLOBALS['MockData'] = array(
                            'rights' => 'contributor' )
     ),
     'content' => array(
-      'default' => array( 'author'   => 'xtof',
+      'default' => array( 'cid'      => 'default',
+                          'author'   => 'xtof',
                           'type'     => 'page',
                           'time'     => 1299614027,
                           'data'     => <<<EOT
@@ -36,7 +37,8 @@ EOT
 ,
                           'children' => array( 'sub1', 'sub2' )
                         ),
-      'sub1'    => array( 'author'   => 'xtof',
+      'sub1'    => array( 'cid'      => 'sub1',
+                          'author'   => 'xtof',
                           'type'     => 'comment',
                           'time'     => 1299614127,
                           'data'     => "Hallo iedereen,\n\n" .
@@ -45,7 +47,8 @@ EOT
                                         "Niet te veel ambetante kindjes?",
                           'children' => array()
                         ),
-      'sub2'    => array( 'author'   => 'kristien',
+      'sub2'    => array( 'cid'      => 'sub2',
+                          'author'   => 'kristien',
                           'type'     => 'comment',
                           'time'     => 1299614187,
                           'data'     => 'Hello Comments Again',
