@@ -69,6 +69,7 @@ EOT;
    * BreakDown to transform the user supplied content into HTML.
    */
   protected function bodyContent() {
+    if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
   <div id="bodyView">
     {$this->bodyEditControls}
@@ -88,7 +89,7 @@ EOT;
    * start editing the body content.
    */
   protected function bodyEditControls() {
-    if( ! $this->user->isContributor() ) { return ""; }
+    if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
   <div class="controls">
     <a href="#" onclick="editBody()">edit</a>
@@ -98,11 +99,11 @@ EOT;
   }
 
   /**
-   * If the user is logged, so at least a contributor, we offer insert the
-   * editor to interact with the underlying content-data.
+   * If the user can edit the current content, we insert the editor to
+   * interact with the underlying content-data.
    */
   protected function bodyEditor() {
-    if( ! $this->user->isContributor() ) { return ""; }
+    if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
   <div id="bodyEdit" style="display:none;">
     {$this->content->editor}
@@ -129,7 +130,7 @@ EOT;
   }
   
   protected function itemEditControls() {
-    if( ! $this->user->isContributor() ) { return ""; }
+    if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
   <div class="controls">
     <a href="#">add</a>
@@ -140,7 +141,7 @@ EOT;
   }
   
   protected function itemEditor() {
-    if( ! $this->user->isContributor() ) { return ""; }
+    if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
   <div id="itemEdit" style="display:none;">
     {$this->content->editor}
@@ -157,7 +158,7 @@ EOT;
    * the user is logged on. Anonymous users don't see comments.
    */
   protected function CommentAsItem() {
-    if( ! $this->user->isContributor() ) { return ""; }
+    if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="comment">
   <div class="commenter">
@@ -253,6 +254,24 @@ EOT;
   protected function duration() {
     global $__START;
     return round(microtime(true) - $__START, 4);
+  }
+
+  /**
+   * Wrapper function for the AuthorizationManager to check if the current
+   * user can update the current content.
+   */
+  private function contentIsEditable() {
+    return AuthorizationManager::getInstance()
+            ->can( $this->user )->update( $this->content );
+  }
+
+  /**
+   * Wrapper function for the AuthorizationManager to check if the current
+   * user can read the current content.
+   */
+  private function contentIsReadable() {
+    return AuthorizationManager::getInstance()
+            ->can( $this->user )->read( $this->content );
   }
 
 }
