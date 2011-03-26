@@ -36,7 +36,7 @@ class DefaultSkin extends Skin {
    * subContent object. All other (unknown) properties are mapped to methods
    * on the Skin's implementation.
    */
-  function body() {
+  protected function body() {
     return <<<EOT
 <html>
 <head>
@@ -46,19 +46,19 @@ class DefaultSkin extends Skin {
   <script src="./skins/default/editing.js"></script>
 </head>
 <body>
-  $this->userBar
+  {$this->userBar}
   <h1>SkoolSCool - Default Skin</h1>
   <hr>
   <div class="body">
-    $this->bodyContent  
+    {$this->bodyContent}
     <div class="subcontent">
-      $this->subContent
+      {$this->subContent}
     </div>
   </div>
   <br clear="both">
-  $this->footer
+  {$this->footer}
 </body>
-<!-- this page was generated in $this->duration seconds  -->
+<!-- this page was generated in {$this->duration} seconds  -->
 </html>
 EOT;
   }
@@ -69,19 +69,17 @@ EOT;
    * BreakDown to transform the user supplied content into HTML.
    */
   protected function bodyContent() {
-    $content = $this->content;
-    $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
   <div id="bodyView">
-    $this->bodyEditControls
+    {$this->bodyEditControls}
     <div id="bodyContent">
-      $body
+      {$this->contentAsHtml}
     </div>
     <div class="info">
-      Author: $content->author @ $content->time
+      Author: {$this->content->author} @ {$this->content->time}
     </div>
   </div>
-  $this->bodyEditor
+  {$this->bodyEditor}
 EOT;
   }
 
@@ -105,10 +103,9 @@ EOT;
    */
   protected function bodyEditor() {
     if( ! $this->user->isContributor() ) { return ""; }
-    $content = $this->content;
     return <<<EOT
   <div id="bodyEdit" style="display:none;">
-    $content->editor
+    {$this->content->editor}
   </div>
 EOT;
   }
@@ -118,20 +115,20 @@ EOT;
    * minimal Skin implementation. It is used to render content that is linked
    * to body-level content.
    */
-  function item() {
-    $content = $this->content;
-    $body = Breakdown::getConverter()->makeHtml((string)$content);
+  protected function item() {
     return <<<EOT
 <div class="item">
-  $this->itemEditControls
+  {$this->itemEditControls}
   <h2>SubContent</h2>
-  <b><i>$content->author</i></b> added child <b><i>$body</i></b>
-  $this->itemEditor
+  <b><i>{$this->content->author}</i></b>
+  added child
+  <b><i>{$this->contentAsHtml}</i></b>
+  {$this->itemEditor}
 </div>
 EOT;
   }
   
-  function itemEditControls() {
+  protected function itemEditControls() {
     if( ! $this->user->isContributor() ) { return ""; }
     return <<<EOT
   <div class="controls">
@@ -142,12 +139,11 @@ EOT;
 EOT;
   }
   
-  function itemEditor() {
+  protected function itemEditor() {
     if( ! $this->user->isContributor() ) { return ""; }
-    $content = $this->content;
     return <<<EOT
   <div id="itemEdit" style="display:none;">
-    $content->editor
+    {$this->content->editor}
   </div>
 EOT;
   }
@@ -160,22 +156,28 @@ EOT;
    * It this case, Comments will be rendered in specific way AND only in case
    * the user is logged on. Anonymous users don't see comments.
    */
-  function CommentAsItem() {
+  protected function CommentAsItem() {
     if( ! $this->user->isContributor() ) { return ""; }
-    $content = $this->content;
-    $body = Breakdown::getConverter()->makeHtml((string)$content);
     return <<<EOT
 <div class="comment">
   <div class="commenter">
-    <img src="$this->gravatarURL" width="50" height="50"><br>
-    $content->author
+    <img src="{$this->gravatarURL}" width="50" height="50"><br>
+    {$this->content->author}
   </div>
   <div class="body">
-    $this->itemEditControls
-    $body
+    {$this->itemEditControls}
+    {$this->contentAsHtml}
   </div>
 </div>
 EOT;
+  }
+  
+  /**
+   * Returns the content that is currently in scope as HTML. Content is stored
+   * as a BreakDown encoded string.
+   */ 
+  protected function contentAsHtml() {
+    return Breakdown::getConverter()->makeHtml((string)$this->content);    
   }
   
   /**
