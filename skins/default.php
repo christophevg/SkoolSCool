@@ -247,7 +247,8 @@ EOT;
   private function showUser() {
     return <<<EOT
 <div class="userbar">
-$this->user : <a href="?action=logout">logout</a>    
+$this->user : <a href="?action=logout">logout</a> 
+            | <a href="?initMockData=true">reset</a>    
 </div>
 EOT;
   }

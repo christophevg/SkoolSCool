@@ -27,6 +27,16 @@ class DBI extends Singleton {
   function get( $id ) { 
     return $this->driver->get( $id ); 
   }
+  
+  function in( $table ) {
+    $this->driver->in( $table );
+    return $this;
+  }
+  
+  function set( $id, $data ) {
+    $this->driver->set( $id, $data );
+    return $this;
+  }
 }
 
 interface Driver {
@@ -34,4 +44,7 @@ interface Driver {
 
   public function from( $table );
   public function get( $id );
+
+  public function in( $table );
+  public function set( $id, $data );
 }

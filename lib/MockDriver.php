@@ -3,16 +3,26 @@
 include_once dirname(__FILE__) . '/MockData.php';
 
 class MockDriver implements Driver {
-  public function __construct( $args ) {
-    global $MockData;
-    $this->data = $MockData[$args]; 
+  public function __construct( $set ) {
+    $this->set = $set;
   }
-
+  
   public function from( $table ) {
-    $this->table = $this->data[$table];
+    $this->table = $table;
   }
   
   public function get( $id ) {
-    return $this->table[$id];
+    return SessionManager::getInstance()
+      ->MockData[$this->set][$this->table][$id];
+  }
+
+  public function in( $table ) {
+    $this->table = $table;
+  }
+  
+  public function set( $id, $data ) {
+    $all = SessionManager::getInstance()->MockData;
+    $all[$this->set][$this->table][$id]['data'] = $data;
+    SessionManager::getInstance()->MockData = $all;
   }
 }

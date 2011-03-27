@@ -33,6 +33,7 @@ $content = Content::get( $request );
 if( AuthorizationManager::getInstance()
       ->can( $user )->update( $content ) )
 {
+  $data = DBI::getInstance()->in( 'content' )->set( $request, $data );
   print "ok";
 } else {
   print "fail";
