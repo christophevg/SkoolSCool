@@ -23,7 +23,7 @@ $GLOBALS['__START'] = microtime(true);
  * It has both a PHP and Javascript implementation, which allows for rendering
  * the result from both languages with exactly the same result.
  */
-include_once dirname(__FILE__) . '/../lib/breakdown/php/breakdown.php';
+include_once dirname(__FILE__) . '/default/breakdown/php/breakdown.php';
 
 class DefaultSkin extends Skin {
   /**
@@ -41,7 +41,7 @@ class DefaultSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default/screen.css">
-  <script src="./lib/breakdown/js/breakdown.js"></script>
+  <script src="./skins/default/breakdown/js/breakdown.js"></script>
   <script src="./skins/default/notify.js"></script>
   <script src="./skins/default/ajax.js"></script>
   <script src="./skins/default/users.js"></script>
