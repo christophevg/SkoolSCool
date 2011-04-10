@@ -11,9 +11,9 @@ class CommentContent extends Content {
   
   public function editor() {
     return <<<EOT
-<textarea style="">
-$this->data;
-</textarea>
+<textarea id="{$this->cid}Raw" class="raw">
+$this->data
+</textarea><br>
 EOT;
   }
 

@@ -11,7 +11,7 @@ class PageContent extends Content {
   
   public function editor() {
     return <<<EOT
-<textarea id="bodyRaw">
+<textarea id="{$this->cid}Raw" class="raw">
 $this->data
 </textarea><br>
 EOT;

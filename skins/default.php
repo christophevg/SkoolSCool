@@ -41,14 +41,12 @@ class DefaultSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/default/screen.css">
+
   <script src="./skins/default/breakdown/js/breakdown.js"></script>
   <script src="./skins/default/notify.js"></script>
   <script src="./skins/default/ajax.js"></script>
   <script src="./skins/default/users.js"></script>
   <script src="./skins/default/editing.js"></script>
-  <script>
-    var __page__ = "{$this->content->cid}";
-  </script>
 </head>
 <body>
   {$this->userBar}
@@ -67,103 +65,83 @@ class DefaultSkin extends Skin {
 </html>
 EOT;
   }
-  
-  /**
-   * Method implementing part of the body. It displays the main content,
-   * edit-controls and editor. To display the content, it first calls out to
-   * BreakDown to transform the user supplied content into HTML.
-   */
+
   protected function bodyContent() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
-  <div id="bodyView">
-    {$this->bodyEditControls}
-    <div id="bodyContent">
-      {$this->contentAsHtml}
-    </div>
-    <div class="info">
-      Author: {$this->content->author} @ {$this->content->time}
-    </div>
+<div id="{$this->content->cid}Container" class="container">
+  {$this->editControls}
+  <div id="{$this->content->cid}View" class="body">
+    {$this->contentAsHtml}
   </div>
-  {$this->bodyEditor}
-EOT;
-  }
-
-  /**
-   * If the user is logged, so at least a contributor, we offer controls to
-   * start editing the body content.
-   */
-  protected function bodyEditControls() {
-    if( ! $this->contentIsEditable() ) { return ""; }
-    return <<<EOT
-  <div class="controls">
-    <span id="bodyEditAction">
-      <a href="#" onclick="editBody();">edit</a>
-    </span>
-    <span id="bodySaveAction" style="display:none;">
-      | <a href="#" onclick="saveBody();">save</a>
-    </span>
-    <span id="bodyCancelAction" style="display:none;">
-      | <a href="#" onclick="cancelBody();">cancel</a>
-    </span>
-    <span id="bodySavingAction" style="display:none;">Saving</span>
-  </div>
-EOT;
-  }
-
-  /**
-   * If the user can edit the current content, we insert the editor to
-   * interact with the underlying content-data.
-   */
-  protected function bodyEditor() {
-    if( ! $this->contentIsEditable() ) { return ""; }
-    return <<<EOT
-  <div id="bodyEdit" style="display:none;">
-    {$this->content->editor}
-    <a href="#" onclick="previewBody();">preview</a> |
-    <a href="#" onclick="cancelBody();">cancel</a>
-  </div>
-EOT;
-  }
-
-  /**
-   * The item method is the second method that must be provided to have a 
-   * minimal Skin implementation. It is used to render content that is linked
-   * to body-level content.
-   */
-  protected function item() {
-    return <<<EOT
-<div class="item">
-  {$this->itemEditControls}
-  <h2>SubContent</h2>
-  <b><i>{$this->content->author}</i></b>
-  added child
-  <b><i>{$this->contentAsHtml}</i></b>
   {$this->itemEditor}
 </div>
 EOT;
   }
-  
-  protected function itemEditControls() {
+
+  private function generateCommands( $commands ) {
+    $html = "";
+    foreach( $commands as $command => $isActive ) 
+    {
+      $lc_command = strtolower($command);
+      $state = $isActive ? " active" : " inactive";
+      $html .= <<<EOT
+      <span id="{$this->content->cid}{$command}Command" class="command{$state}">
+        <a href="javascript:" onclick="{$lc_command}Content('{$this->content->cid}');">{$lc_command}</a>
+      </span>
+
+EOT;
+    }
+    return $html;
+  }
+
+  protected function editControls() {
     if( ! $this->contentIsEditable() ) { return ""; }
+    $commands = $this->generateCommands( array( "Edit" => true, 
+                                                "Save" => false, 
+                                                "Cancel" => false ) );
+    $states = "";
+    foreach( array( "Saving" => false ) as $state => $isActive ) {
+      $activation = $isActive ? " active" : "";
+      $states .= <<<EOT
+      <span id="{$this->content->cid}{$state}State" class="state{$activation}">{$state}</span>
+    
+EOT;
+    }
     return <<<EOT
-  <div class="controls">
-    <a href="#">add</a>
-    | <a href="#">remove</a>
-    | <a href="#">edit</a>
-  </div>
+<div id="{$this->content->cid}Controls" class="controls">
+{$commands}{$states}</div>
 EOT;
   }
   
   protected function itemEditor() {
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
-  <div id="itemEdit" style="display:none;">
-    {$this->content->editor}
-  </div>
+<div id="{$this->content->cid}Editor" class="editor">
+  {$this->content->editor}
+  {$this->editorControls}
+</div>
 EOT;
   }
   
+  protected function editorControls() {
+    $commands = $this->generateCommands( array( "preview" => true,
+                                                "cancel"  => true ) );
+    return <<<EOT
+<div id="{$this->content->cid}EditorControls" class="editorcontrols">
+  {$commands}
+</div>
+EOT;
+  }
+  
+  /**
+   * This is the second fall-back function. Just like body it is called if
+   * no specific skin method is provided for the currently active content type
+   */
+  protected function item() {
+    return $this->bodyContent();
+  }
+
   /**
    * In stead of the item and body methods, it is also possible to supply
    * specific item and body methods for each content type. If these are
@@ -180,10 +158,7 @@ EOT;
     <img src="{$this->gravatarURL}" width="50" height="50"><br>
     {$this->content->author}
   </div>
-  <div class="body">
-    {$this->itemEditControls}
-    {$this->contentAsHtml}
-  </div>
+  {$this->bodyContent}
 </div>
 EOT;
   }
@@ -228,14 +203,14 @@ EOT;
     return <<<EOT
 <div class="userbar">
 <div id="userActions">
-  <a href="#" onclick="showLogon();">log on</a> | 
-  <a href="#">register</a>
+  <a href="javascript:" onclick="showLogon();">log on</a> | 
+  <a href="javascript:">register</a>
 </div>
 <div id="logon" style="display:none;">
 <form action="./" method="post">
   username : <input name="login"> password : <input type="password" name="pass"> <input type="submit">
 </form>
-<a href="#" onclick="showUserActions();">cancel</a>
+<a href="javascript:" onclick="showUserActions();">cancel</a>
 </div>
 </div>
 EOT;

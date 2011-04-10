@@ -93,12 +93,12 @@ abstract class Skin {
     $contentType = str_replace( 'Content', '' , get_class($this->content) );
     $skinMethod = $contentType . 'As' . ucfirst( $type );
 
-    if( method_exists( $this, $skinMethod ) ) {
+    if( method_exists( $this, $skinMethod ) ) {  // e.g. CommandAsItem
       return $this->$skinMethod();
-    } elseif( method_exists( $this, $type ) ) {
+    } elseif( method_exists( $this, $type ) ) {  // e.g. item
       return $this->$type();
     } else {
-      return (string)$this->content;
+      return (string)$this->content;             // just render the content
     }
   }
 }

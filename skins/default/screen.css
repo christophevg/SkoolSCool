@@ -16,7 +16,7 @@ DIV.comment DIV.commenter {
   padding-top: 10px;
 }
 
-DIV.comment DIV.body {
+DIV.comment DIV.container {
   padding: 1px;
   padding-left: 20px;
   width: 540px;
@@ -27,7 +27,28 @@ DIV.comment DIV.body {
   background-position: left bottom;
 }
 
-/* to review */
+.editorcontrols {
+  height: 20px;
+  border: 1px solid yellow;
+}
+
+.body {
+  border: 1px solid green;
+  min-height: 80px;
+}
+
+.editor {
+  border: 1px solid blue;
+  margin: 5px;
+}
+
+DIV.comment .editor {
+  margin: 0px;
+}
+
+.raw {
+  width: 100%;
+}
 
 .controls {
   border: 1px solid #777;
@@ -35,6 +56,36 @@ DIV.comment DIV.body {
   margin: 3px;
   float: right;
 }
+
+.controls .command {
+  display: none;
+}
+
+.controls .command.active {
+  display: block;
+}
+
+.controls .state {
+  display: none;
+}
+
+.controls .state.active {
+  display: block;
+}
+
+.editor {
+  display: none;
+}
+
+.editor.active {
+  display: block;
+}
+
+.container {
+  border: 1px solid red;
+}
+
+/* to review */
 
 .info {
   border: 1px solid #aaa;
