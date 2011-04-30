@@ -155,7 +155,7 @@ EOT;
     return <<<EOT
 <div class="comment">
   <div class="commenter">
-    <img src="{$this->gravatarURL}" width="50" height="50"><br>
+    {$this->largeGravatar}<br>
     {$this->content->author}
   </div>
   {$this->bodyContent}
@@ -172,13 +172,25 @@ EOT;
   }
   
   /**
+   * Gravatar support. Two template functions return a large and small image.
+   */
+  protected function largeGravatar() { return $this->gravatar(50); }
+  protected function smallGravatar() { return $this->gravatar(25); }
+
+  private function gravatar($size = 50) {
+    $url = $this->gravatarURL($size);
+    return <<<EOT
+<img src="{$url}" width="$size" height="$size">
+EOT;
+  }
+
+  /**
    * Returns a Gravatar URL, based on the content's author's email address
    */
-  protected function gravatarURL() {
+  private function gravatarURL($size = 50) {
     $defaultImage = "http://" . $_SERVER['HTTP_HOST'] . 
                     dirname($_SERVER['SCRIPT_NAME'])  . 
                     "/skins/default/images/unknown_user.png";
-    $size   = "50";
     $rating = "G";
     $border = "000000";
     $url    = "http://www.gravatar.com/avatar.php?gravatar_id=%s".
@@ -222,8 +234,10 @@ EOT;
   private function showUser() {
     return <<<EOT
 <div class="userbar">
-$this->user : <a href="?action=logout">logout</a> 
-            | <a href="?initMockData=true">reset</a>    
+{$this->smallGravatar}
+{$this->user}<br>
+<a href="?action=logout">logout</a>
+| <a href="?initMockData=true">reset</a>
 </div>
 EOT;
   }
