@@ -32,6 +32,10 @@ abstract class Content {
     }
   }
   
+  function hasAuthor( $author ) {
+    return $this->author == $author;
+  }
+
   abstract public function editor();
   abstract public function setData( $data );
   abstract public function render();

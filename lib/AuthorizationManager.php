@@ -73,7 +73,8 @@ class AuthorizationManager extends Singleton {
    * @return Boolean indicating if the user can access the comment
    *         according to the given access style.
    */
-  private function UserCommentContent( $user, $page, $access = 'read' ) {
-    return ! $user->isAnonymous();
+  private function UserCommentContent( $user, $comment, $access = 'read' ) {
+    return $access == "read" ? ! $user->isAnonymous()
+      : $comment->hasAuthor($user) || $user->isAdmin();
   }
 } 
