@@ -64,6 +64,14 @@ class User {
     return in_array( $right, $this->rights );
   }
   
+  function __get($property) {
+    if( $property == "role" ) {
+      return $this->isAdmin() ? "admin" :
+           ( $this->isContributor() ? "constributor" : "" );
+    }
+    return "";
+  }
+
   /**
    * Checks if a supplied pass matches the user's pass.
    * @param $pass to validate

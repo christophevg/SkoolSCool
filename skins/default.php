@@ -235,7 +235,7 @@ EOT;
     return <<<EOT
 <div class="userbar">
 {$this->smallGravatar}
-{$this->user}<br>
+{$this->user} ({$this->user->role})<br>
 <a href="?action=logout">logout</a>
 | <a href="?initMockData=true">reset</a>
 </div>
