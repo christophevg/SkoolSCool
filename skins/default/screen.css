@@ -85,6 +85,65 @@ DIV.comment .editor {
   border: 1px solid red;
 }
 
+/* register popup */
+
+DIV#register-overlay {
+	display: none;
+	top: 0px;
+  left: -10px;
+	background: rgba(0, 0, 0, 0.597656);
+	height: 100%;
+	position: fixed;
+	width: 110%;
+	z-index: 100000;
+}
+
+DIV#register-overlay DIV#popup {
+	height: 80%;
+	margin: 20px 20% 0px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-bottom: 2em;
+	padding-top: 0px;
+	padding-left: 2em;
+	position: fixed;
+	width: 60%;
+	z-index: 1e+06;
+	background-color: white;
+}
+
+.withRoundedCorners {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.actions {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.icon {
+	display: inline-block;
+	height: 24px;
+	margin: 0px 0px -0.75em;
+	overflow: hidden;
+	position: relative;
+	width: 24px;
+	background-image: url( "images/icons.png" );
+}
+
+.close {
+	background-position: -5px -5px;
+}
+
+.icon SPAN {
+	float: left;
+	text-indent: -7000em;
+}
+
 /* to review */
 
 .info {
