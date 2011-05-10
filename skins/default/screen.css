@@ -90,11 +90,11 @@ DIV.comment .editor {
 DIV#register-overlay {
 	display: none;
 	top: 0px;
-  left: -10px;
-	background: rgba(0, 0, 0, 0.597656);
+  left: 0px;
+	background: rgba(0, 0, 0, 0.6);
 	height: 100%;
-	position: fixed;
-	width: 110%;
+	position: absolute;
+	width: 100%;
 	z-index: 100000;
 }
 
@@ -106,7 +106,7 @@ DIV#register-overlay DIV#popup {
 	padding-bottom: 2em;
 	padding-top: 0px;
 	padding-left: 2em;
-	position: fixed;
+	position: absolute;
 	width: 60%;
 	z-index: 1e+06;
 	background-color: white;

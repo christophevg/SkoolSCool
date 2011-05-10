@@ -1,0 +1,9 @@
+DIV#register-overlay {
+	background-color: #ddd;
+	filter: alpha(opacity=80);
+	width: 110%;
+}
+
+DIV#register-overlay DIV#popup {
+	filter: alpha(opacity=140);
+}

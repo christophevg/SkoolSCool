@@ -47,6 +47,9 @@ class DefaultSkin extends Skin {
   <script src="./skins/default/ajax.js"></script>
   <script src="./skins/default/users.js"></script>
   <script src="./skins/default/editing.js"></script>
+  <!--[if lt IE 7]>
+  <link rel="stylesheet" type="text/css" href="./skins/default/screen.ie6.css">
+  <![endif]-->
 </head>
 <body>
   {$this->userBar}
