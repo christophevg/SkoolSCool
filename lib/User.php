@@ -20,7 +20,7 @@ class User {
    * @return User object
    */
   static function get( $name = null ) {
-    if( $name ) { $data = DBI::getInstance()->from( 'users' )->get( $name ); }
+    $data = DBI::getInstance()->from( 'users' )->get( $name );
     if( ! $data ) { $data = array( 'name' => 'anonymous' ); }
     return new User( $data );
   }
@@ -31,9 +31,10 @@ class User {
    */
   final private function __construct( $data ) {
     $this->name   = $data['name'];
-    $this->pass   = $data['pass'];
-    $this->email  = $data['email'];
-    $this->rights = split( ',', $data['rights'] );
+    $this->pass   = isset( $data['pass'] ) ? $data['pass'] : null;
+    $this->email  = isset( $data['email'] ) ? $data['email'] : null;
+    $this->rights = isset( $data['rights'] ) ?
+                      split( ',', $data['rights'] ) : array();
   }
   
   /**

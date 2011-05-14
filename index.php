@@ -19,7 +19,7 @@ $skin = Skin::get();
  * at server level this can be rewritten
  * example: http://skoolscool.org/somePage
  */
-$request = $_GET['cid'];
+$request = isset($_GET['cid']) ? $_GET['cid'] : "";
 
 /**
  * get the current user

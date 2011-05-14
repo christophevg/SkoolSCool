@@ -12,8 +12,8 @@ class MockDriver implements Driver {
   }
   
   public function get( $id ) {
-    return SessionManager::getInstance()
-      ->MockData[$this->set][$this->table][$id];
+    $tbl = SessionManager::getInstance()->MockData[$this->set][$this->table];
+    return isset($tbl[$id]) ? $tbl[$id] : null;
   }
 
   public function in( $table ) {

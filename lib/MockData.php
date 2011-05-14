@@ -1,7 +1,7 @@
 <?php
 
 function initMockData() {
-  if( ! $_GET['initMockData']
+  if( ! isset($_GET['initMockData'])
       and is_array(SessionManager::getInstance()->MockData) ) { return; }
   SessionManager::getInstance()->MockData = array(
     'devel' => array( 

@@ -34,11 +34,11 @@ class SessionManager extends Singleton {
 } 
 
 // process login post
-if( $_POST['login'] && $_POST['pass'] ) {
+if( isset($_POST['login']) && isset($_POST['pass']) ) {
   SessionManager::getInstance()->login( $_POST['login'], $_POST['pass'] );
 }
 
 // process logout get
-if( $_GET['action'] == 'logout' ) {
+if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
   SessionManager::getInstance()->logout();
 }
