@@ -37,6 +37,10 @@ class DefaultSkin extends Skin {
    * on the Skin's implementation.
    */
   protected function body() {
+    return $this->mainTemplate($this->bodyContent());
+  }
+  
+  private function mainTemplate($content) {
     return <<<EOT
 <html>
 <head>
@@ -53,10 +57,14 @@ class DefaultSkin extends Skin {
 </head>
 <body>
   {$this->userBar}
-  <h1>SkoolSCool - Default Skin</h1>
+  <h1 style="margin:0px">SkoolSCool - Default Skin</h1>
+  navigation:
+  [ <a href="./">home</a> ]
+  [ <a href="?cid=info">info</a> ]
+  [ <a href="?cid=pictures">pictures</a> ]
   <hr>
   <div class="body">
-    {$this->bodyContent}
+    {$content}
     <div class="subcontent">
       {$this->subContent}
     </div>
@@ -66,6 +74,7 @@ class DefaultSkin extends Skin {
 </body>
 <!-- this page was generated in {$this->duration} seconds  -->
 </html>
+EOT;
 EOT;
   }
 
@@ -166,6 +175,34 @@ EOT;
 EOT;
   }
   
+  protected function AlbumAsItem() {
+    if( ! $this->contentIsReadable() ) { return ""; }
+    return <<<EOT
+<div class="album">
+  <a href="?cid={$this->content->cid}"><img src="images/75x75/{$this->content->key}"></a>
+</div>
+EOT;
+  }
+
+  protected function PictureAsItem() {
+    if( ! $this->contentIsReadable() ) { return ""; }
+    return <<<EOT
+<div class="preview">
+  <a href="?cid={$this->content->cid}"><img src="images/75x75/{$this->content->data}"></a>
+</div>
+EOT;
+  }
+
+  protected function PictureAsBody() {
+    if( ! $this->contentIsReadable() ) { return ""; }
+    $picture = <<<EOT
+<div class="picture">
+  <img src="images/{$this->content->data}"></a>
+</div>
+EOT;
+    return $this->mainTemplate($picture);
+  }
+
   /**
    * Returns the content that is currently in scope as HTML. Content is stored
    * as a BreakDown encoded string.

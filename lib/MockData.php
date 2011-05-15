@@ -38,24 +38,67 @@ And a second paragraph
 And some more text in a second paragraph.
 EOT
 ,
-                            'children' => array( 'sub1', 'sub2' )
-                          ),
-        'sub1'    => array( 'cid'      => 'sub1',
+                            'children' => array( 'comment1', 'comment2' )
+                          )
+       ,'comment1'    => array( 'cid'      => 'comment1',
+                                'author'   => 'xtof',
+                                'type'     => 'comment',
+                                'time'     => 1299614127,
+                                'data'     => "Hallo iedereen,\n\n" .
+                                              "we zijn terug van vakantie.\n".
+                                              "Hoe was het hier ?\n\n" .
+                                              "Niet te veel ambetante kindjes?",
+                                'children' => array()
+                          )
+       ,'comment2'    => array( 'cid'      => 'comment2',
+                                'author'   => 'kristien',
+                                'type'     => 'comment',
+                                'time'     => 1299614187,
+                                'data'     => 'Hello Comments Again',
+                                'children' => array()
+                          )
+       ,'comment3'    => array( 'cid'      => 'comment3',
+                                'author'   => 'kristien',
+                                'type'     => 'comment',
+                                'time'     => 1299614587,
+                                'data'     => 'What a nice picture',
+                                'children' => array()
+                          )
+       ,'info'    => array( 'cid'      => 'info',
                             'author'   => 'xtof',
-                            'type'     => 'comment',
-                            'time'     => 1299614127,
-                            'data'     => "Hallo iedereen,\n\n" .
-                                          "we zijn terug van vakantie.\n" .
-                                          "Hoe was het hier ?\n\n" .
-                                          "Niet te veel ambetante kindjes?",
-                            'children' => array()
-                          ),
-        'sub2'    => array( 'cid'      => 'sub2',
+                            'type'     => 'page',
+                            'time'     => 1299624987,
+                            'data'     => <<<EOT
+# About our nice school
+
+We really like our school.
+EOT
+,                           'children' => array()
+                          )
+       ,'pictures'    => array( 'cid'      => 'pictures',
+                                'author'   => 'xtof',
+                                'type'     => 'page',
+                                'time'     => 1299625987,
+                                'data'     => <<<EOT
+# Pictures of our school
+
+Below are a bunch of albums with pictures of fun things we do at school...
+EOT
+,                               'children' => array( 'album1' )
+                          )
+       ,'album1'    => array( 'cid'      => 'album1',
+                              'author'   => 'kristien',
+                              'type'     => 'album',
+                              'time'     => 1299624187,
+                              'data'     => 'a:2:{s:4:"body";s:24:"This is our first album.";s:3:"key";s:4:"pic1";}',
+                              'children' => array( 'pic1', 'pic2' )
+                          )
+       ,'pic1'    => array( 'cid'      => 'pic1',
                             'author'   => 'kristien',
-                            'type'     => 'comment',
-                            'time'     => 1299614187,
-                            'data'     => 'Hello Comments Again',
-                            'children' => array()
+                            'type'     => 'picture',
+                            'time'     => 1299624117,
+                            'data'     => 'picture1.jpeg',
+                            'children' => array( 'comment3' )
                           )
                         )
         )

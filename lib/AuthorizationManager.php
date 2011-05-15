@@ -61,6 +61,7 @@ class AuthorizationManager extends Singleton {
    *         according to the given access style.
    */
   private function UserPageContent( $user, $page, $access = 'read' ) {
+    // policy: read access for all / write access for known users only
     return $access == "read" ? true : ! $user->isAnonymous();
   }
 
@@ -74,7 +75,36 @@ class AuthorizationManager extends Singleton {
    *         according to the given access style.
    */
   private function UserCommentContent( $user, $comment, $access = 'read' ) {
+    // policy: read access only for known users / write access for authr/admin
     return $access == "read" ? ! $user->isAnonymous()
       : $comment->hasAuthor($user) || $user->isAdmin();
+  }
+
+  /**
+   * Validator for Users accessing Albums
+   * @param $user accessing an album
+   * @param $album accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the comment
+   *         according to the given access style.
+   */
+  private function UserAlbumContent( $user, $album, $access = 'read' ) {
+    // policy: read access for all / write access for known users only
+    return $access == "read" ? true : ! $user->isAnonymous();
+  }
+
+  /**
+   * Validator for Users accessing Pictures
+   * @param $user accessing a picture
+   * @param $picture accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the comment
+   *         according to the given access style.
+   */
+  private function UserPictureContent( $user, $picture, $access = 'read' ) {
+    // policy: read access for all / write access for known users only
+    return $access == "read" ? true : ! $user->isAnonymous();
   }
 } 
