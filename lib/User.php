@@ -30,6 +30,7 @@ class User {
    * @param $data hash containing user information
    */
   final private function __construct( $data ) {
+    $this->login  = $data['login'];
     $this->name   = $data['name'];
     $this->pass   = isset( $data['pass'] ) ? $data['pass'] : null;
     $this->email  = isset( $data['email'] ) ? $data['email'] : null;
@@ -66,9 +67,13 @@ class User {
   }
   
   function __get($property) {
-    if( $property == "role" ) {
-      return $this->isAdmin() ? "admin" :
-           ( $this->isContributor() ? "constributor" : "" );
+    switch($property) {
+      case 'role':
+        return $this->isAdmin() ? "admin" :
+          ( $this->isContributor() ? "constributor" : "" );
+        break;
+      case 'login':
+        return $this->login;
     }
     return "";
   }
