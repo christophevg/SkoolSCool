@@ -18,11 +18,11 @@ function initMockData() {
                              'rights' => 'contributor' )
       ),
       'content' => array(
-        'default' => array( 'cid'      => 'default',
-                            'author'   => 'xtof',
-                            'type'     => 'page',
-                            'time'     => 1299614027,
-                            'data'     => <<<EOT
+        'home' => array( 'cid'      => 'home',
+                         'author'   => 'xtof',
+                         'type'     => 'page',
+                         'time'     => 1299614027,
+                         'data'     => <<<EOT
 Introduction paragraph
 
 # Heading 1

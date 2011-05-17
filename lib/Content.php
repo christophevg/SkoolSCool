@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/DBI.php';
 
 abstract class Content {
-  static function get( $name = 'default' ) {
+  static function get( $name = 'home' ) {
     if( $data = DBI::getInstance()->from( 'content' )->get( $name ) ) {
       $contentClass = ucfirst($data['type']) . 'Content';
       include_once dirname(__FILE__) . '/' . $contentClass . '.php';
@@ -34,6 +34,11 @@ abstract class Content {
   
   function hasAuthor( $author ) {
     return $this->author == $author;
+  }
+
+  function hasSubContent( $subContent ) {
+    if( ! $subContent ) { return false; }
+    return in_array( $subContent->cid, $this->children );
   }
 
   abstract public function editor();

@@ -30,7 +30,7 @@ class User {
    * @param $data hash containing user information
    */
   final private function __construct( $data ) {
-    $this->login  = $data['login'];
+    $this->login  = isset($data['login']) ? $data['login'] : $data['name'];
     $this->name   = $data['name'];
     $this->pass   = isset( $data['pass'] ) ? $data['pass'] : null;
     $this->email  = isset( $data['email'] ) ? $data['email'] : null;

@@ -41,7 +41,7 @@ class SessionManager extends Singleton implements EventPublisher {
   }
 
   function __get( $key ) {
-    return $_SESSION[$key];
+    return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
   }
   
   function __toString() {

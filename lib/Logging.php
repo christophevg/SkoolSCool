@@ -16,10 +16,7 @@ class Logger extends Singleton implements EventHandler {
   }
   
   function handleEvent( $event ) {
-    fwrite( $this->fp, 
-            date("d/m/Y H:i:s") . " " . 
-            $event->sender . " " .
-            $event->msg . "\n" );
+    fwrite( $this->fp, (string)$event . "\n" );
   }
 }
 

@@ -32,6 +32,8 @@ $user = SessionManager::getInstance()->currentUser;
  */
 $content = Content::get( $request );
 if( ! $content ) { $content = Content::get(); }
+EventBus::getInstance()
+  ->publish( new Event( EventType::NAVIGATION, null, "request", $content ) );
 
 /**
  * show the content to the user using the skin

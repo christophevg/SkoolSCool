@@ -58,8 +58,9 @@ class DefaultSkin extends Skin {
 <body>
   {$this->userBar}
   <h1 style="margin:0px">SkoolSCool - Default Skin</h1>
+  location : {$this->breadCrumbs}<br>
   navigation:
-  [ <a href="./">home</a> ]
+  [ <a href="?cid=home">home</a> ]
   [ <a href="?cid=info">info</a> ]
   [ <a href="?cid=pictures">pictures</a> ]
   <hr>
@@ -76,6 +77,15 @@ class DefaultSkin extends Skin {
 </html>
 EOT;
 EOT;
+  }
+  
+  protected function breadCrumbs() {
+    $path = array();
+    foreach( Context::getInstance()->path->getPath() as $part ) {
+      $cid = $part->cid;
+      $path[] = "<a href=\"?cid=$cid\">$cid</a>";
+    }
+    return join( " &gt;&gt; ", $path );
   }
 
   protected function bodyContent() {
