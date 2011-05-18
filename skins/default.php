@@ -212,10 +212,50 @@ EOT;
     $picture = <<<EOT
 <div class="picture">
   {$this->content->label}<br>
+  {$this->previousPicture}
   <img src="images/{$this->content->file}">
+  {$this->nextPicture}
 </div>
 EOT;
     return $this->mainTemplate($picture);
+  }
+  
+  protected function previousPicture() {
+    if( $album = $this->getCurrentAlbum() ) {
+      $current = array_search( $this->content->cid, $album->children );
+      if( $current > 0 ) {
+        $prev = Content::get($album->children[$current - 1]);
+        return <<<EOT
+  <a href="?cid={$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
+EOT;
+      }
+    }
+    // in case we don't provide a previous picture, provide a placeholder
+    return '<span class="placeholder">&nbsp</span>';
+  }
+  
+  protected function nextPicture() {
+    if( $album = $this->getCurrentAlbum() ) {
+      $current = array_search( $this->content->cid, $album->children );
+      if( $current < count($album->children) - 1 ) {
+        $next = Content::get($album->children[$current + 1]);
+        return <<<EOT
+  <a href="?cid={$next->cid}"><img src="images/75x75/{$next->file}"></a>
+EOT;
+      }
+    }
+    // in case we don't provide a previous picture, provide a placeholder
+    return '<span class="placeholder">&nbsp</span>';
+  }
+
+  private function getCurrentAlbum() {
+    $path = Context::getInstance()->path->getPath();
+    if( count($path) > 1 ) {
+      $album = $path[count($path)-2];
+      if( get_class($album) == "AlbumContent" ) {
+        return $album;
+      }
+    }
   }
 
   /**
