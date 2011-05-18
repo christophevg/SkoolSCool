@@ -2,11 +2,19 @@
 
 class PictureContent extends Content {
   public function setData( $data ) {
-    $this->data = $data;
+    $this->data = unserialize($data);
   }
   
   public function render() {
-    return $this->data;
+    return $this->label;
+  }
+  
+  public function __get( $prop ) {
+    switch($prop) {
+      case "file":
+      case "label":
+        return $this->data[$prop];
+    }
   }
   
   public function editor() {

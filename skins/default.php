@@ -189,7 +189,9 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="album">
-  <a href="?cid={$this->content->cid}"><img src="images/75x75/{$this->content->key}"></a>
+  <a href="?cid={$this->content->cid}"
+    ><img src="images/75x75/{$this->content->key}"><br>
+    {$this->content->label}</a>
 </div>
 EOT;
   }
@@ -198,7 +200,9 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="preview">
-  <a href="?cid={$this->content->cid}"><img src="images/75x75/{$this->content->data}"></a>
+  <a href="?cid={$this->content->cid}"
+    ><img src="images/75x75/{$this->content->file}"><br>
+    {$this->content->label}</a>
 </div>
 EOT;
   }
@@ -207,7 +211,8 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     $picture = <<<EOT
 <div class="picture">
-  <img src="images/{$this->content->data}"></a>
+  {$this->content->label}<br>
+  <img src="images/{$this->content->file}">
 </div>
 EOT;
     return $this->mainTemplate($picture);
@@ -267,6 +272,7 @@ EOT;
   <div id="userActions">
     <a href="javascript:" onclick="showLogon();">log on</a>
   | <a href="javascript:" onclick="showRegister();">register</a>
+  | <a href="?initMockData=true">reset</a>
   </div>
   <div id="logon" style="display:none;">
     <form action="./" method="post">
@@ -276,6 +282,7 @@ EOT;
     </form>
     <a href="javascript:" onclick="showUserActions();">cancel</a>
   | <a href="javascript:" onclick="showRegister();">register</a>
+  | <a href="?initMockData=true">reset</a>
   </div>
 </div>
 

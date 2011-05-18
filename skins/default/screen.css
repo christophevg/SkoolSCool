@@ -144,6 +144,26 @@ DIV#register-overlay DIV#popup {
 	text-indent: -7000em;
 }
 
+/* albums and pictures */
+
+
+DIV.preview, DIV.album {
+  float: left;
+  margin: 10px;
+  text-align: center;
+}
+
+DIV.preview IMG, DIV.album IMG {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+DIV.picture {
+  text-align: center;
+}
+
 /* to review */
 
 .info {

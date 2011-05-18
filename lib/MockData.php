@@ -92,16 +92,31 @@ EOT
                               'author'   => 'kristien',
                               'type'     => 'album',
                               'time'     => 1299624187,
-                              'data'     => 'a:2:{s:4:"body";s:24:"This is our first album.";s:3:"key";s:4:"pic1";}',
-                              'children' => array( 'pic1', 'pic2' )
+                              'data'     => 'a:3:{s:4:"body";s:24:"This is our first album.";s:5:"label";s:11:"First Album";s:3:"key";s:4:"pic1";}',
+                              'children' => array( 'pic1', 'pic2', 'pic3' )
                           )
        ,'pic1'    => array( 'cid'      => 'pic1',
                             'author'   => 'kristien',
                             'type'     => 'picture',
                             'time'     => 1299624117,
-                            'data'     => 'picture1.jpeg',
+                            'data'     => 'a:2:{s:4:"file";s:13:"picture1.jpeg";s:5:"label";s:6:"Foto 1";}',
                             'children' => array( 'comment3' )
                           )
+       ,'pic2'    => array( 'cid'      => 'pic2',
+                            'author'   => 'xtof',
+                            'type'     => 'picture',
+                            'time'     => 1299729117,
+                            'data'     => 'a:2:{s:4:"file";s:13:"picture1.jpeg";s:5:"label";s:6:"Foto 2";}',
+                            'children' => array( '' )
+                          )
+       ,'pic3'    => array( 'cid'      => 'pic3',
+                            'author'   => 'xtof',
+                            'type'     => 'picture',
+                            'time'     => 1299939117,
+                            'data'     => 'a:2:{s:4:"file";s:13:"picture1.jpeg";s:5:"label";s:6:"Foto 3";}',
+                            'children' => array( '' )
+                          )
+
                         )
         )
     );

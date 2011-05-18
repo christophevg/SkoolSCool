@@ -11,12 +11,15 @@ class AlbumContent extends Content {
   
   public function __get( $prop ) {
     switch($prop) {
-      case "key" : return Content::get($this->data['key'])->data; break;
-      case "body": return $this->data['body'];
-      default    : return "";
+      case "key"  :
+        return Content::get($this->data[$prop])->file;
+        break;
+      case "label":
+      case "body" :
+        return $this->data[$prop];
     }
   }
-  
+
   public function editor() {
     return <<<EOT
 <textarea id="{$this->cid}Raw" class="raw">
