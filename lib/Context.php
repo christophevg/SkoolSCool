@@ -75,7 +75,7 @@ class PathBuilder extends ContextBuilder {
   private function findParent( $child ) {
     if( count( $this->path ) < 1 ) { return; }
     $parent = $this->path[count($this->path)-1];
-    if( ! $parent->hasSubContent( $child ) ) { 
+    if( ! $parent instanceof Content or ! $parent->hasSubContent( $child ) ) {
       array_pop( $this->path );
       return $this->findParent( $child );
     }
