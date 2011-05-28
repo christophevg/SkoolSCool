@@ -18,6 +18,17 @@ function initMockData() {
                              'rights' => 'contributor' )
       ),
       'content' => array(
+        '404'  => array( 'cid'      => '404',
+                         'author'   => 'system',
+                         'type'     => 'page',
+                         'time'     => 0,
+                         'data'     => <<<EOT
+# Whoops
+
+Seems you were looking for a page we don't know about.
+EOT
+,                        'children' => array()
+                       ),
         'home' => array( 'cid'      => 'home',
                          'author'   => 'xtof',
                          'type'     => 'page',

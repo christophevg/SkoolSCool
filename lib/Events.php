@@ -12,6 +12,7 @@ class EventType {
   const ANY        = "ANY";
   const SECURITY   = "SECURITY";
   const NAVIGATION = "NAVIGATION";
+  const ERROR      = "ERROR";
 }
 
 class Event {
@@ -60,7 +61,8 @@ class EventBus extends Singleton {
   function init() {
     $this->subscriptions = array( EventType::ANY        => array(),
                                   EventType::SECURITY   => array(),
-                                  EventType::NAVIGATION => array() );
+                                  EventType::NAVIGATION => array(),
+                                  EventType::ERROR      => array() );
   }
   
   function subscribe( $handler, $eventType = EventType::ANY ) {

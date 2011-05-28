@@ -19,7 +19,7 @@ $skin = Skin::get();
  * at server level this can be rewritten
  * example: http://skoolscool.org/somePage
  */
-$request = isset($_GET['cid']) ? $_GET['cid'] : "";
+$request = isset($_GET['cid']) ? $_GET['cid'] : 'home';
 
 /**
  * get the current user
@@ -31,9 +31,13 @@ $user = SessionManager::getInstance()->currentUser;
  * if it returns nothing, we get the default content
  */
 $content = Content::get( $request );
-if( ! $content ) { $content = Content::get(); }
-EventBus::getInstance()
-  ->publish( new Event( EventType::NAVIGATION, null, "request", $content ) );
+if( ! $content ) {
+  $content = Content::get('404');
+  $event = new Event( EventType::ERROR, null, "404", $request );
+} else {
+  $event = new Event( EventType::NAVIGATION, null, "request", $content );
+}
+EventBus::getInstance()->publish( $event );
 
 /**
  * show the content to the user using the skin
