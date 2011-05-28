@@ -63,6 +63,7 @@ class DefaultSkin extends Skin {
   [ <a href="?cid=home">home</a> ]
   [ <a href="?cid=info">info</a> ]
   [ <a href="?cid=pictures">pictures</a> ]
+  [ <a href="?cid=changes">changes</a> ]
   <hr>
   <div class="body">
     {$content}

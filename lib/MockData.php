@@ -29,6 +29,12 @@ Seems you were looking for a page we don't know about.
 EOT
 ,                        'children' => array()
                        ),
+        'changes' => array( 'cid'      => 'changes',
+                            'author'   => 'system',
+                            'type'     => 'page',
+                            'time'     => 0,
+                            'data'     => '',
+                            'children' => array() ),
         'home' => array( 'cid'      => 'home',
                          'author'   => 'xtof',
                          'type'     => 'page',

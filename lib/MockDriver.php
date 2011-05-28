@@ -20,9 +20,15 @@ class MockDriver implements Driver {
     $this->table = $table;
   }
   
-  public function set( $id, $data ) {
-    $all = SessionManager::getInstance()->MockData;
-    $all[$this->set][$this->table][$id]['data'] = $data;
-    SessionManager::getInstance()->MockData = $all;
+  public function set( $id, $data = null, $children = null ) {
+    if( $data or $children ) {
+      $all = SessionManager::getInstance()->MockData;
+      if( $data ) { $all[$this->set][$this->table][$id]['data'] = $data; }
+      if( $children ) { 
+        $all[$this->set][$this->table][$id]['children'] = $children;
+      }
+      $all[$this->set][$this->table][$id]['time'] = time();
+      SessionManager::getInstance()->MockData = $all;
+    }
   }
 }

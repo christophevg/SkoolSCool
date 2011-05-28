@@ -5,6 +5,10 @@ class PictureContent extends Content {
     $this->data = unserialize($data);
   }
   
+  public function getData() {
+    return $this->data;
+  }
+  
   public function render() {
     return $this->label;
   }

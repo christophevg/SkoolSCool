@@ -5,6 +5,10 @@ class CommentContent extends Content {
     $this->data = $data;
   }
   
+  public function getData() {
+    return $this->data;
+  }
+  
   public function render() {
     return $this->data;
   }

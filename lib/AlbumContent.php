@@ -4,6 +4,10 @@ class AlbumContent extends Content {
   public function setData( $data ) {
     $this->data = unserialize($data);
   }
+
+  public function getData() {
+    return $this->data;
+  }
   
   public function render() {
     return $this->body;

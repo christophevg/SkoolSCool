@@ -10,6 +10,7 @@ date_default_timezone_set('Europe/Brussels');
 
 include_once dirname(__FILE__) . '/Events.php';
 include_once dirname(__FILE__) . '/Logging.php';
+include_once dirname(__FILE__) . '/ChangeLog.php';
 
 include_once dirname(__FILE__) . '/User.php'; 
 

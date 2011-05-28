@@ -32,9 +32,9 @@ class DBI extends Singleton {
     $this->driver->in( $table );
     return $this;
   }
-  
-  function set( $id, $data ) {
-    $this->driver->set( $id, $data );
+    
+  function set( $id, $data = null, $children = null ) {
+    $this->driver->set( $id, $data, $children );
     return $this;
   }
 }

@@ -12,6 +12,11 @@ abstract class Content {
     return null;
   }
   
+  function persist() {
+    DBI::getInstance()->in( 'content' )
+      ->set( $this->cid, $this->data, $this->children );
+  }
+  
   public function __construct( $data ) {
     // common data
     $this->cid      = $data['cid'];
@@ -43,5 +48,6 @@ abstract class Content {
 
   abstract public function editor();
   abstract public function setData( $data );
+  abstract public function getData();
   abstract public function render();
 } 
