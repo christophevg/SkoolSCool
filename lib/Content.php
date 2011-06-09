@@ -45,9 +45,15 @@ abstract class Content {
     if( ! $subContent ) { return false; }
     return in_array( $subContent->cid, $this->children );
   }
-
+  
+  public function setData( $data ) {
+    $this->data = $data;
+  }
+  
+  public function getData() {
+    return $this->data;
+  }
+  
   abstract public function editor();
-  abstract public function setData( $data );
-  abstract public function getData();
   abstract public function render();
 } 
