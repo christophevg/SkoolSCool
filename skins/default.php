@@ -60,10 +60,10 @@ class DefaultSkin extends Skin {
   <h1 style="margin:0px">SkoolSCool - Default Skin</h1>
   location : {$this->breadCrumbs}<br>
   navigation:
-  [ <a href="?cid=home">home</a> ]
-  [ <a href="?cid=info">info</a> ]
-  [ <a href="?cid=pictures">pictures</a> ]
-  [ <a href="?cid=changes">changes</a> ]
+  [ <a href="home">home</a> ]
+  [ <a href="info">info</a> ]
+  [ <a href="pictures">pictures</a> ]
+  [ <a href="changes">changes</a> ]
   <hr>
   <div class="body">
     {$content}
@@ -84,7 +84,7 @@ EOT;
     $path = array();
     foreach( Context::getInstance()->path->asArray() as $part ) {
       $cid = $part->cid;
-      $path[] = "<a href=\"?cid=$cid\">$cid</a>";
+      $path[] = "<a href=\"$cid\">$cid</a>";
     }
     return join( " &gt;&gt; ", $path );
   }
@@ -190,7 +190,7 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="album">
-  <a href="?cid={$this->content->cid}"
+  <a href="{$this->content->cid}"
     ><img src="images/75x75/{$this->content->key}"><br>
     {$this->content->label}</a>
 </div>
@@ -201,7 +201,7 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="preview">
-  <a href="?cid={$this->content->cid}"
+  <a href="{$this->content->cid}"
     ><img src="images/75x75/{$this->content->file}"><br>
     {$this->content->label}</a>
 </div>
@@ -227,7 +227,7 @@ EOT;
       if( $current > 0 ) {
         $prev = Content::get($album->children[$current - 1]);
         return <<<EOT
-  <a href="?cid={$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
+  <a href="{$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
 EOT;
       }
     }
@@ -241,7 +241,7 @@ EOT;
       if( $current < count($album->children) - 1 ) {
         $next = Content::get($album->children[$current + 1]);
         return <<<EOT
-  <a href="?cid={$next->cid}"><img src="images/75x75/{$next->file}"></a>
+  <a href="{$next->cid}"><img src="images/75x75/{$next->file}"></a>
 EOT;
       }
     }

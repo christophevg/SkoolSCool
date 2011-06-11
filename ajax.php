@@ -9,10 +9,9 @@
 include_once 'lib/SkoolSCool.php';
 
 /**
- * ajax requests are passed through the 'cid' (content id) post parameter
- * example: http://skoolscool.org/index.php?cid=somePage
- * at server level this can be rewritten
- * example: http://skoolscool.org/somePage
+ * ajax requests pass the object through the 'cid' (content id) post parameter
+ * and the data to update using the 'data' post parameter
+ * example: http://skoolscool.org/ajax.php?cid=somePage
  */
 $request = $_POST['cid'];
 $data    = $_POST['data'];
