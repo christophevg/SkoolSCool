@@ -67,9 +67,11 @@ class PathBuilder extends ContextBuilder {
 
   function handleEvent( $event ) {
     // clean up path up to the parent of the object/sender of the new content
-    $this->findParent( $event->target );
-    // add the new content on top
-    array_push( $this->path, $event->target );
+    $this->findParent( $event->sender );
+    // add the new content on top if it exists
+    if( $event->sender ) {
+      array_push( $this->path, $event->sender );
+    }
   }
 
   private function findParent( $child ) {
