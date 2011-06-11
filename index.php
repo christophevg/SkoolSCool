@@ -33,9 +33,9 @@ $user = SessionManager::getInstance()->currentUser;
 $content = Content::get( $request );
 if( ! $content ) {
   $content = Content::get('404');
-  $event = new Event( EventType::ERROR, null, "404", $request );
+  $event = new Event( EventType::ERROR, "unknown content: $request", $request );
 } else {
-  $event = new Event( EventType::NAVIGATION, null, "request", $content );
+  $event = new Event( EventType::NAVIGATION, "to $request", $content );
 }
 EventBus::getInstance()->publish( $event );
 

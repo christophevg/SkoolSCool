@@ -11,25 +11,27 @@ class SessionManager extends Singleton implements EventPublisher {
     if( ! $this->currentUser ) { 
       $this->logout();
       EventBus::getInstance()
-        ->publish( new Event(EventType::SECURITY, $this, "new session"));
+        ->publish( new Event( EventType::SECURITY, "new session", $this ));
     }
   }
 
   function login( $login = null, $pass = null ) {
-    $this->logout();
+    if( ! $this->currentUser->isAnonymous() ) { $this->logout(); }
     $user = User::get( $login );
     if( $user && $pass && $user->authenticate( $pass ) ) {
       $this->currentUser = $user;
       EventBus::getInstance()
-        ->publish( new Event(EventType::SECURITY, $this, 
-                             "{$this->currentUser->login} logged in") );
+        ->publish( new Event( EventType::SECURITY,
+                              "{$this->currentUser->login} logged in",
+                              $this ) );
     }
   }
 
   function logout() {
     EventBus::getInstance()
-      ->publish( new Event(EventType::SECURITY, $this, 
-                           "{$this->currentUser->login} logged out") );
+      ->publish( new Event( EventType::SECURITY,
+                            "{$this->currentUser->login} logged out",
+                            $this ) );
     // login as an anonymous user to logout
     $this->currentUser = User::get();
     // clean up session a bit

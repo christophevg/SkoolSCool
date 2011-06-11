@@ -22,14 +22,12 @@ class Event {
   private $type;
   private $sender;
   private $msg;
-  private $target;
 
-  function __construct( $type, $sender, $msg, $target = null ) {
+  function __construct( $type, $msg, $sender = null ) {
     $this->time   = time();
     $this->type   = $type;
     $this->sender = $sender;
     $this->msg    = $msg;
-    $this->target = $target;
   }
 
   function __get($prop) {
@@ -38,7 +36,6 @@ class Event {
       case 'type':
       case 'sender':
       case 'msg':
-      case 'target':
         return $this->$prop; 
         break;
       default:
@@ -47,11 +44,8 @@ class Event {
   }
   
   function __toString() {
-    return  date("d/m/Y H:i:s", $this->time ) . " " . 
-            $this->type . " " . 
-            ( is_null($this->sender) ? "app" : $this->sender ) . " " . 
-            $this->msg .
-            ( is_null($this->target) ? "" : " " . $this->target );
+    return date( "d/m/Y H:i:s", $this->time ) . 
+                 ' ' . $this->type . ' ' . $this->msg;
   }
 }
 
