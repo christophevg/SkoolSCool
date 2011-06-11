@@ -8,7 +8,7 @@ include_once dirname(__FILE__) . '/Singleton.php';
 
 class Logger extends Singleton implements EventHandler {
   function init() {
-    $this->fp = fopen( 'info.log', 'a' );
+    $this->fp = fopen( 'skoolscool.log', 'a' );
   }
   
   function __destruct() {
