@@ -1,0 +1,45 @@
+- eventbus
+- logging based on eventbus
+- context based on eventbus
+- breadcrumbs based on context
+- album navigation based on context
+- changelog generator based on eventbus
+
+---
+
+todo before demo 1:
+
+- add new content
+
+- add CompositeContent
+
+- calender content 
+	+ editor 
+- documentlibrary content
+	+ editor
+
+- editor for photo, album
+
+---
+
+- add new style
+- add existing content
+
+---
+
+later :
+
+- implement MySQLDriver
+
+- add history
+- administration of content at multiple levels
+
+- make pages private (e.g. changes)
+
+- registration
+- openid (facebook connect?)
+
+- full documentation
+- clean up notices, logging
+
+- add "make public function"
