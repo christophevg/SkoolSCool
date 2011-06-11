@@ -45,8 +45,10 @@ Introduction paragraph
 # Heading 1
 ## Heading 2
 
-Some text containing **bold** and *italic* parts, as well as [a link to my 
-website](http://christophe.vg) and another one : http://christophe.vg
+Some text containing **bold** and *italic* parts, as well as 
+[http://christophe.vg|a link to my website] and another one : http://christophe.vg
+
+Internal links are also very simple : see our [pictures].
 
 And a second paragraph
 
