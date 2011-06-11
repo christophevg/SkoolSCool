@@ -83,7 +83,7 @@ class PathBuilder extends ContextBuilder {
     }
   }
   
-  function getPath() {
+  function asArray() {
     return $this->path;
   }
 }

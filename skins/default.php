@@ -82,7 +82,7 @@ EOT;
   
   protected function breadCrumbs() {
     $path = array();
-    foreach( Context::getInstance()->path->getPath() as $part ) {
+    foreach( Context::getInstance()->path->asArray() as $part ) {
       $cid = $part->cid;
       $path[] = "<a href=\"?cid=$cid\">$cid</a>";
     }
@@ -250,7 +250,7 @@ EOT;
   }
 
   private function getCurrentAlbum() {
-    $path = Context::getInstance()->path->getPath();
+    $path = Context::getInstance()->path->asArray();
     if( count($path) > 1 ) {
       $album = $path[count($path)-2];
       if( get_class($album) == "AlbumContent" ) {
