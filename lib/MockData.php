@@ -34,6 +34,13 @@ Seems you were looking for a page we don't know about.
 EOT
 ,                        'children' => array()
                        ),
+        'navigation' => array( 'cid' => 'navigation',
+                               'author' => 'system',
+                               'type'   => 'page',
+                               'time'   => 0,
+                               'data'   =>
+'navigation: [home] | [info] | [pictures] | [changes]',
+                               'children' => array() ),
         'changes' => array( 'cid'      => 'changes',
                             'author'   => 'system',
                             'type'     => 'page',

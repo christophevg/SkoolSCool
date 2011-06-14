@@ -59,11 +59,7 @@ class DefaultSkin extends Skin {
   {$this->userBar}
   <h1 style="margin:0px">SkoolSCool - Default Skin</h1>
   location : {$this->breadCrumbs}<br>
-  navigation:
-  [ <a href="home">home</a> ]
-  [ <a href="info">info</a> ]
-  [ <a href="pictures">pictures</a> ]
-  [ <a href="changes">changes</a> ]
+  {$this->includeNavigation}
   <hr>
   <div class="body">
     {$content}
@@ -87,6 +83,18 @@ EOT;
       $path[] = "<a href=\"$cid\">$cid</a>";
     }
     return join( " &gt;&gt; ", $path );
+  }
+
+  protected function includeNavigation() {
+    $navigation = Content::get('navigation');
+    $html = Breakdown::getConverter()->makeHtml((string)$navigation);
+    $html = ereg_replace( '</?p>','', $html );
+    if( AuthorizationManager::getInstance()
+        ->can( $this->user )->update( $navigation ) )
+    {
+      $html .= '<a href="navigation">(goto navigation)</a>';
+    }
+    return $html;
   }
 
   protected function bodyContent() {
