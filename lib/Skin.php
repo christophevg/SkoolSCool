@@ -90,7 +90,7 @@ abstract class Skin {
     // we're dealing with sub-items.
     $type = count($this->contents) > 1 ? 'item' : 'body';
 
-    $contentType = str_replace( 'Content', '' , get_class($this->content) );
+    $contentType = get_class($this->content);
     $skinMethod = $contentType . 'As' . ucfirst( $type );
 
     if( method_exists( $this, $skinMethod ) ) {  // e.g. CommandAsItem

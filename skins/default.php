@@ -181,7 +181,7 @@ EOT;
    * It this case, Comments will be rendered in specific way AND only in case
    * the user is logged on. Anonymous users don't see comments.
    */
-  protected function CommentAsItem() {
+  protected function CommentContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="comment">
@@ -194,7 +194,7 @@ EOT;
 EOT;
   }
   
-  protected function AlbumAsItem() {
+  protected function AlbumContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="album">
@@ -205,7 +205,7 @@ EOT;
 EOT;
   }
 
-  protected function PictureAsItem() {
+  protected function PictureContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="preview">
@@ -216,7 +216,7 @@ EOT;
 EOT;
   }
 
-  protected function PictureAsBody() {
+  protected function PictureContentAsBody() {
     if( ! $this->contentIsReadable() ) { return ""; }
     $picture = <<<EOT
 <div class="picture">

@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/Singleton.php';
-
 class AuthorizationManager extends Singleton {
   private $accessor;
 

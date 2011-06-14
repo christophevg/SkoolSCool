@@ -2,9 +2,9 @@
 
 session_start();
 
-include_once dirname(__FILE__) . '/Singleton.php';
-
 class SessionManager extends Singleton implements EventPublisher {
+  private $store;
+
   function init() {
     // perform dummy logout to initialise to anonymous when session has
     // no currentUser stored
@@ -14,7 +14,7 @@ class SessionManager extends Singleton implements EventPublisher {
         ->publish( new Event( EventType::SECURITY, "new session", $this ));
     }
   }
-
+  
   function login( $login = null, $pass = null ) {
     if( ! $this->currentUser->isAnonymous() ) { $this->logout(); }
     $user = User::get( $login );
@@ -50,13 +50,3 @@ class SessionManager extends Singleton implements EventPublisher {
     return '[' . session_id() . ']';
   }
 } 
-
-// process login post
-if( isset($_POST['login']) && isset($_POST['pass']) ) {
-  SessionManager::getInstance()->login( $_POST['login'], $_POST['pass'] );
-}
-
-// process logout get
-if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
-  SessionManager::getInstance()->logout();
-}

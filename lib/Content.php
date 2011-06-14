@@ -1,30 +1,57 @@
 <?php
 
-include_once dirname(__FILE__) . '/DBI.php';
+// register a transient object cache store
+Objects::addStore( 'transient', new SessionStore( 'ObjectCache' ) );
 
 abstract class Content {
+  // factory method to retrieve a content object.
+  // first we look in the persisted objects, in the ObjectStore
+  // then we look in the transient/session objects in the ObjectCache
   static function get( $name = 'home' ) {
-    if( $data = DBI::getInstance()->from( 'content' )->get( $name ) ) {
-      $contentClass = ucfirst($data['type']) . 'Content';
-      include_once dirname(__FILE__) . '/' . $contentClass . '.php';
-      return new $contentClass( $data );
+    $object = Objects::getStore('persistent')->from( 'content' )->fetch( $name );
+    if( ! $object ) {
+      $object = Objects::getStore('transient') ->from( 'content' )->fetch( $name );
     }
-    return null;
+    return $object;
   }
   
+  // method to create a new content object
+  // it gets stored in the transient/session ObjectCache, until persisted
+  // in a "real" ObjectStore
+  static function create( $type, $name ) {
+    // try to fetch the named content, if we find it, return it, in stead of
+    // creating a new one with the same name
+    $content = Content::get($name);
+    if( $content ) { return $content; }
+    
+    // else instantiate a fresh object and "store" it in the ObjectCache
+    $content = new $type( $name );
+    Objects::getStore( 'transient' )->in( 'content' )->put( $content );
+    return $content;
+  }
+  
+  private $store;
+
   function persist() {
-    DBI::getInstance()->in( 'content' )
-      ->set( $this->cid, $this->data, $this->children );
+    if( $this->store ) { $this->store->in( 'content' )->put( $this ); }
   }
   
-  public function __construct( $data ) {
+  function setStore( $store ) {
+    $this->store = $store;
+    return $this;
+  }
+  
+  public function __construct( $name, $data = array() ) {
     // common data
-    $this->cid      = $data['cid'];
-    $this->author   = User::get( $data['author'] );
-    $this->time     = date( "d M Y (H:i:s)", $data['time'] );
-    $this->children = $data['children'];
-    // custom data
-    $this->setData( $data['data'] );
+    $this->cid      = $name;
+    $this->author   = isset( $data['author'] ) ? 
+                      User::get( $data['author'] ) : 
+                      SessionManager::getInstance()->currentUser;
+    $this->time     = isset($data['time']) ? $data['time'] : time();
+    $this->children = isset( $data['children'] ) ?
+                      $data['children'] : array();
+    // let specific type handle custom data
+    if( isset($data['data']) ) { $this->setData( $data['data'] ); }
   }
   
   public function __toString() {
@@ -48,6 +75,7 @@ abstract class Content {
   
   public function setData( $data ) {
     $this->data = $data;
+    return $this;
   }
   
   public function getData() {

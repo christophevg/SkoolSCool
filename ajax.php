@@ -25,15 +25,17 @@ $user = SessionManager::getInstance()->currentUser;
  * retrieve the relevant content
  */
 $content = Content::get( $request );
+if( ! $content ) {
+  print "unknown content: $request";
+  exit();
+}
 
 /**
  * check if the user can update the requested content, if so, do it, else fail
  */
-if( AuthorizationManager::getInstance()
-      ->can( $user )->update( $content ) )
-{
-  $data = DBI::getInstance()->in( 'content' )->set( $request, $data );
+if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
+  $content->setData( $data )->persist();
   print "ok";
 } else {
-  print "fail";
+  print "not allowed";
 }

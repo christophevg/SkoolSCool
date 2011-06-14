@@ -10,8 +10,6 @@
  * Creation of objects is only available through the factory method "get".
  */
 
-include_once dirname(__FILE__) . '/DBI.php';
-
 class User {
   /**
    * Factory method to create a user object.
@@ -19,17 +17,22 @@ class User {
    *        user object will be returned.
    * @return User object
    */
-  static function get( $name = null ) {
-    $data = DBI::getInstance()->from( 'users' )->get( $name );
-    if( ! $data ) { $data = array( 'name' => 'anonymous' ); }
-    return new User( $data );
+  static function get( $name = '' ) {
+    if( $data = Objects::getStore('persistent')
+          ->from('users')->fetchData( $name ) )
+    {
+      $object = new User( $data );
+    } else {
+      $object = new User( array( 'name' => 'anonymous' ) );
+    }
+    return $object;
   }
   
   /**
    * Private constructor.
    * @param $data hash containing user information
    */
-  final private function __construct( $data ) {
+  function __construct( $data = array() ) {
     $this->login  = isset($data['login']) ? $data['login'] : $data['name'];
     $this->name   = $data['name'];
     $this->pass   = isset( $data['pass'] ) ? $data['pass'] : null;

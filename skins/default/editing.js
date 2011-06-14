@@ -102,3 +102,14 @@ function saveContent(cid) {
     }(cid) );
   }
 }
+
+function get_param( name ) {
+  var expr = "[\\?&]"+name+"=([^&#]*)";
+  var results = new RegExp(expr).exec( window.location.href );
+  if( results == null ) { return null; }
+  return results[1];
+}
+
+if( get_param( 'mode' ) == 'edit' ) {
+  window.onload = function() { editContent('portaal'); };
+}

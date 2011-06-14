@@ -6,13 +6,12 @@
  * loose kind of communication.
  */
 
-include_once dirname(__FILE__) . '/Singleton.php';
-
 class EventType {
   const ANY        = "ANY";
   const SECURITY   = "SECURITY";
   const NAVIGATION = "NAVIGATION";
   const ERROR      = "ERROR";
+  const ACTION     = "ACTION";
 }
 
 class Event {

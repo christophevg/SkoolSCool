@@ -1,6 +1,13 @@
 <?php
 
 class PageContent extends Content {
+  public function __construct( $name, $data = array() ) {
+    if( ! isset( $data['data'] ) ) { 
+      $data['data'] = "# $name\n\nYour content goes here ...";
+    }
+    parent::__construct( $name, $data );
+  }
+  
   public function render() {
     return $this->data;
   }

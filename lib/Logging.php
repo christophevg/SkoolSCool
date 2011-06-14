@@ -4,8 +4,6 @@
  * Logging
  */
 
-include_once dirname(__FILE__) . '/Singleton.php';
-
 class Logger extends Singleton implements EventHandler {
   function init() {
     $this->fp = fopen( 'skoolscool.log', 'a' );
