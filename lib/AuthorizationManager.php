@@ -62,7 +62,10 @@ class AuthorizationManager extends Singleton {
    */
   private function UserPageContent( $user, $page, $access = 'read' ) {
     // policy: read access for all / write access for known users only
-    return $access == "read" ? true : ! $user->isAnonymous();
+    // system-owned pages can only be edited by admins
+    return $access == "read" ? true :
+      ( $page->hasAuthor(User::get('system')) ?
+        $user->isAdmin() : ! $user->isAnonymous() );
   }
 
   /**

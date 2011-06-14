@@ -6,6 +6,11 @@ function initMockData() {
   SessionManager::getInstance()->MockData = array(
     'devel' => array( 
       'users' => array(
+        'system' => array( 'login'  => 'system',
+                           'name'   => 'system',
+                           'pass'   => '',
+                           'email'  => 'system@local',
+                           'rights' => 'admin' ),
         'xtof' => array( 'login'  => 'xtof',
                          'name'   => 'Christophe VG',
                          'pass'   => md5('xtof'),
