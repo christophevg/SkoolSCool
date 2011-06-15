@@ -111,5 +111,5 @@ function get_param( name ) {
 }
 
 if( get_param( 'mode' ) == 'edit' ) {
-  window.onload = function() { editContent('portaal'); };
+  window.onload = function() { editContent(bodyContent); };
 }

@@ -100,6 +100,9 @@ EOT;
   protected function bodyContent() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
+<script>
+var bodyContent = "{$this->content->cid}";
+</script>
 <div id="{$this->content->cid}Container" class="container">
   {$this->editControls}
   <div id="{$this->content->cid}View" class="body">
