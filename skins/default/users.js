@@ -16,8 +16,3 @@ function showRegister() {
 function hideRegister() {
 	document.getElementById("register-overlay").style.display = "none";
 }
-
-addHandler( window, "resize", function() {
-	document.getElementById("register-overlay").style.height =
-		parseInt(document.offsetHeight)+"px";
-} );
