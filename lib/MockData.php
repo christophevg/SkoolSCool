@@ -33,8 +33,17 @@ function initMockData() {
 # Whoops
 
 Seems you were looking for a page we don't know about.
+EOT
+,                      'children' => array()
+                     ),
+      'unknownContent'  => array( 'cid'      => 'unknownContent',
+                                  'author'   => 'system',
+                                  'type'     => 'PageContent',
+                                  'time'     => 0,
+                                  'data'     => <<<EOT
+# This page hasn't been created yet...
 
-If you know this is correct and want to create this content go [?create=true|here].
+If you want to create this content go [?create=true|here].
 EOT
 ,                      'children' => array()
                      ),
