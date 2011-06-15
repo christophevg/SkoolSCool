@@ -87,7 +87,8 @@ DIV.comment .editor {
 
 /* register popup */
 
-DIV#register-overlay {
+DIV#register-overlay,
+DIV#addcontent-overlay {
 	display: none;
 	top: 0px;
   left: 0px;
@@ -98,7 +99,8 @@ DIV#register-overlay {
 	z-index: 100000;
 }
 
-DIV#register-overlay DIV#popup {
+DIV#register-overlay DIV#popup,
+DIV#addcontent-overlay DIV#popup {
 	height: 80%;
 	margin: 20px 20% 0px;
 	overflow-x: hidden;
@@ -145,7 +147,6 @@ DIV#register-overlay DIV#popup {
 }
 
 /* albums and pictures */
-
 
 DIV.preview, DIV.album {
   float: left;

@@ -113,3 +113,11 @@ function get_param( name ) {
 if( get_param( 'mode' ) == 'edit' ) {
   window.onload = function() { editContent(bodyContent); };
 }
+
+function showAddContent() {
+	document.getElementById("addcontent-overlay").style.display = "block";
+}
+
+function hideAddContent() {
+	document.getElementById("addcontent-overlay").style.display = "none";
+}
