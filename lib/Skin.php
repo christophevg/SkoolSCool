@@ -10,6 +10,8 @@
  * for the body() and item() methods.
  */
 abstract class Skin {
+  const EMBED = "EMBED";
+
   /**
    * Factory Method to get a skin object based on its name.
    */
@@ -40,6 +42,17 @@ abstract class Skin {
   function show( $content = "" ) {
     if( ! is_array( $this->contents ) ) { $this->contents = array(); }
     array_push( $this->contents, $content );
+    return $this;
+  }
+  
+  private $style = null;
+  
+  function embed( $content ) {
+    /**
+     * Chaining method to set the content that will be shown, using this skin.
+     */
+    $this->contents = array( $content );
+    $this->style = Skin::EMBED;
     return $this;
   }
 
@@ -86,10 +99,14 @@ abstract class Skin {
    * a different method is chosen if it is available.
    */
   private function applySkin() {
-    // if there is only 1 content object on the stack, it's a body, else
-    // we're dealing with sub-items.
-    $type = count($this->contents) > 1 ? 'item' : 'body';
-
+    if( $this->style == Skin::EMBED ) {
+      $type = 'embedded';
+    } else {
+      // if there is only 1 content object on the stack, it's a body, else
+      // we're dealing with sub-items.
+      $type = count($this->contents) > 1 ? 'item' : 'body';
+    }
+    
     $contentType = get_class($this->content);
     $skinMethod = $contentType . 'As' . ucfirst( $type );
 

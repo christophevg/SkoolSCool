@@ -231,6 +231,18 @@ EOT;
 EOT;
     return $this->mainTemplate($picture);
   }
+
+  protected function PictureContentAsEmbedded() {
+    if( ! $this->contentIsReadable() ) { return ""; }
+    return <<<EOT
+<div class="picture">
+  {$this->content->label}<br>
+  {$this->previousPicture}
+  <img src="images/{$this->content->file}">
+  {$this->nextPicture}
+</div>
+EOT;
+  }
   
   protected function previousPicture() {
     if( $album = $this->getCurrentAlbum() ) {
@@ -420,7 +432,7 @@ function addContent() {
   form.submit();
 }
     </script>
-    <form id="addcontent-form" action="?create=true&mode=edit&type=" method="GET">
+    <form id="addcontent-form" action="?create&mode=edit&type=" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
       name : <input type="text" id="addcontent-name"><br>

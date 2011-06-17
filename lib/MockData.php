@@ -43,7 +43,7 @@ EOT
                                   'data'     => <<<EOT
 # This page hasn't been created yet...
 
-If you want to create this content go [?create=true|here].
+If you want to create this content go [?create|here].
 EOT
 ,                      'children' => array()
                      ),
@@ -56,9 +56,9 @@ EOT
 
 Please choose the kind of content you want to add...
 
-* [?create=true&type=PageContent&mode=edit|Page]
-* [?create=true&type=AlbumContent&mode=edit|Album]
-* [?create=true&type=PictureContent&mode=edit|Picture]
+* [?create&type=PageContent&mode=edit|Page]
+* [?create&type=AlbumContent&mode=edit|Album]
+* [?create&type=PictureContent&mode=edit|Picture]
 EOT
 ,                      'children' => array()
                      ),

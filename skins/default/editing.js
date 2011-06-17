@@ -62,6 +62,7 @@ function renderContent(cid) {
   if( !converter ) { converter = new Breakdown.converter(); }
   with( getEditor(cid) ) {
     view.innerHTML = converter.makeHtml( raw.value );
+    converter.activateHtml();
   }
 }
 
