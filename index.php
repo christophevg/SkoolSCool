@@ -11,7 +11,7 @@ include_once 'lib/SkoolSCool.php';
 /**
  * get the (default) skin (=look & feel)
  */
-$skin = Skin::get();
+$skin = Skin::get( 'vbsg' );
 
 /**
  * content requests are passed through the 'cid' (content id) get parameter

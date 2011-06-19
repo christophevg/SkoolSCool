@@ -46,7 +46,7 @@ function StoreContext() {
 }
 register_shutdown_function( 'StoreContext' );
 
-include_once dirname(__FILE__) . '/MockData.php';
+include_once dirname(__FILE__) . '/MockData.vbsg.php';
 
 // create initial structure for the transient object cache store
 if( ! is_array( SessionManager::getInstance()->ObjectCache ) ) {

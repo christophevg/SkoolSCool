@@ -1,3 +1,6 @@
 [submodule "skins/default/breakdown"]
 	path = skins/default/breakdown
 	url = http://github.com/christophevg/breakdown.git
+[submodule "skins/vbsg/breakdown"]
+	path = skins/vbsg/breakdown
+	url = http://github.com/christophevg/breakdown.git

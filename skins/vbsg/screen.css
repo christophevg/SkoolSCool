@@ -1,0 +1,285 @@
+DIV.comment {
+  clear: both;
+  background-image: url(images/comment_body.png);
+  background-repeat: no-repeat;
+  background-position: 80px 0px;
+  min-height: 80px;
+  margin-top: 5px;  
+}
+
+DIV.comment DIV.commenter {
+  float: left;
+  text-align: center;
+  height: 75px;
+  width: 75px;
+  font-size: 60%;
+  padding-top: 10px;
+}
+
+DIV.comment DIV.container {
+  padding: 1px;
+  padding-left: 20px;
+  width: 540px;
+  min-height: 80px;
+  margin-left: 80px;
+  background-image: url(images/comment_bottom.png);
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}
+
+.editorcontrols {
+  height: 20px;
+  border: 1px solid yellow;
+}
+
+.body {
+  min-height: 80px;
+}
+
+.editor {
+  border: 1px solid blue;
+  margin: 5px;
+}
+
+DIV.comment .editor {
+  margin: 0px;
+}
+
+.raw {
+  width: 100%;
+}
+
+.controls {
+  border: 1px solid #777;
+  padding: 3px;
+  margin: 3px;
+  float: right;
+}
+
+.controls .command {
+  display: none;
+}
+
+.controls .command.active {
+  display: block;
+}
+
+.controls .state {
+  display: none;
+}
+
+.controls .state.active {
+  display: block;
+}
+
+.editor {
+  display: none;
+}
+
+.editor.active {
+  display: block;
+}
+
+/* register popup */
+
+DIV#register-overlay,
+DIV#addcontent-overlay {
+	display: none;
+	top: 0px;
+  left: 0px;
+	background: rgba(0, 0, 0, 0.6);
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	z-index: 100000;
+}
+
+DIV#register-overlay DIV#popup,
+DIV#addcontent-overlay DIV#popup {
+	height: 80%;
+	margin: 20px 20% 0px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-bottom: 2em;
+	padding-top: 0px;
+	padding-left: 2em;
+	position: absolute;
+	width: 60%;
+	z-index: 1e+06;
+	background-color: white;
+}
+
+.withRoundedCorners {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.actions {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.icon {
+	display: inline-block;
+	height: 24px;
+	margin: 0px 0px -0.75em;
+	overflow: hidden;
+	position: relative;
+	width: 24px;
+	background-image: url( "images/icons.png" );
+}
+
+.close {
+	background-position: -5px -5px;
+}
+
+.icon SPAN {
+	float: left;
+	text-indent: -7000em;
+}
+
+/* albums and pictures */
+
+DIV.preview, DIV.album {
+  float: left;
+  margin: 10px;
+  text-align: center;
+}
+
+DIV.preview IMG, DIV.album IMG {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+DIV.picture {
+  text-align: center;
+}
+
+DIV.embedded.picture {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+DIV.picture IMG {
+ vertical-align: middle;
+}
+
+SPAN.placeholder {
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+}
+
+/* home style */
+
+BODY {
+ background-color: #15ACC7;
+}
+
+DIV#site {
+ width: 990px;
+ margin-left: auto;
+ margin-right: auto; 
+}
+
+DIV.embedded {
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
+}
+
+DIV.embedded.news,
+DIV.embedded.pictures {
+  width: 295px;
+}
+
+DIV.embedded.bericht {
+  width: 620px;
+}
+
+DIV.embedded.page {
+  color: white;
+  font: 9pt Verdana;
+  background-image: url( "images/gradient.png" );
+  background-repeat: repeat-x;
+  background-position: 0px 32px;
+  min-height: 200px;
+  cursor: pointer;
+}
+
+DIV.embedded.page H1 {
+  margin: 0px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid white;
+  font: 13pt Verdana;
+  letter-spacing: 2px;
+  text-shadow: #666666 2px 2px 2px;
+}
+
+DIV.postit {
+  margin-right: 37px;
+  clear: both;
+  float: right;
+  width: 290px;
+  height: 100px;
+  background-color: #FFFCED;
+  background-image: url( "images/postit.png" );
+  font: 16pt Comic Sans MS;
+  padding: 15px;
+  text-align: center;
+  color: green;
+}
+
+DIV.postit.belangrijk {
+  color: red;
+  text-transform: uppercase;
+}
+
+DIV.embedded.socialbar {
+  padding: 0px;
+  margin: 0px;
+  width: 30px;
+  height: 25px;
+  background-image: url( "images/socialbar-embed.png" );
+  font: 12pt Verdana;
+  padding-top: 7px;
+  padding-left: 90px;
+}
+
+/* to review */
+
+.info {
+  border: 1px solid #aaa;
+  background-color: #eee;
+  color: #777;
+  font-size: 75%;
+  padding: 3px;
+  margin: 3px;
+}
+
+.userbar {
+  border: 1px solid #aaa;
+  border-bottom: 10px solid #aaa;
+  background-color: #eee;
+  color: #777;
+  font-size: 75%;
+  padding: 3px;
+  margin: 3px;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 200px;
+}
+
+.userbar IMG {
+  float: left;
+  margin-right: 5px;
+  margin-top: 2px;
+}

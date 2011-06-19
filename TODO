@@ -4,42 +4,34 @@
 - breadcrumbs based on context
 - album navigation based on context
 - changelog generator based on eventbus
+- add CompositeContent (using include functionality from Breakdown)
+- improved resizing behaviour of editor when dealing with included content
+- PageContent + embedded with collapsed messages
 
 ---
 
 todo before demo 1:
 
-- add new content
-
-- add CompositeContent
-
-- calender content 
-	+ editor 
-- documentlibrary content
-	+ editor
-
-- editor for photo, album
+- Album + embedded
+- NewsContent
+- CalenderContent
+- LibraryContent
 
 ---
 
-- add new style
+- add new style (as I go along)
 - add existing content
 
 ---
 
 later :
-
 - implement MySQLDriver
-
 - add history
+- add search
 - administration of content at multiple levels
-
 - make pages private (e.g. changes)
-
 - registration
 - openid (facebook connect?)
-
+- add "make public function"
 - full documentation
 - clean up notices, logging
-
-- add "make public function"
