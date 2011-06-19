@@ -75,7 +75,9 @@ class VbsgSkin extends Skin {
       </div>
     </div>
   <br clear="both">
-  {$this->footer}
+  </div>
+  <div id="footer">
+{$this->includeFooter}
   </div>
 {$this->insertPopups}
 </body>
@@ -98,6 +100,19 @@ EOT;
         ->can( $this->user )->update( $navigation ) )
     {
       $html .= '<a href="navigation?mode=edit">(edit)</a>';
+    }
+    return $html;
+  }
+  
+  protected function includeFooter() {
+    $footer = Content::get('footer');
+    $html = Breakdown::getConverter()->makeHtml((string)$footer);
+    $html = ereg_replace( '</?p>','', $html );
+    // add link to directly edit the footer page
+    if( AuthorizationManager::getInstance()
+        ->can( $this->user )->update( $footer ) )
+    {
+      $html .= '<a href="footer?mode=edit">(edit)</a>';
     }
     return $html;
   }
@@ -386,16 +401,6 @@ EOT;
 EOT;
   }
 
-  /**
-   * Returns the footer of the page.
-   */
-  protected function footer() {
-    return <<<EOT
-    <hr>
-    a footer
-EOT;
-  }
-  
   protected function insertPopups() {
     return <<<EOT
 <div id="logon-overlay">

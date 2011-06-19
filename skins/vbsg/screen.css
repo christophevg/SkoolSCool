@@ -337,7 +337,6 @@ DIV.postit {
   float: right;
   width: 290px;
   height: 100px;
-  background-color: #FFFCED;
   background-image: url( "images/postit.png" );
   font: 16pt Comic Sans MS;
   padding: 15px;
@@ -361,23 +360,15 @@ DIV.embedded.socialbar {
   padding-left: 90px;
 }
 
-/* to review */
-
-.info {
-  border: 1px solid #aaa;
-  background-color: #eee;
-  color: #777;
-  font-size: 75%;
-  padding: 3px;
-  margin: 3px;
-}
-
-.userbar {
-  display: inline-block;
-}
-
-.userbar IMG {
-  float: left;
-  margin-right: 5px;
-  margin-top: 4px;
+DIV#footer {
+  color: white;
+  font: 9pt Verdana;
+  text-transform: uppercase;
+  text-align: center;
+  bottom: 0px;
+  height: 23px;
+  padding-top: 80px;
+  background-image: url( "images/footer.png" );
+  background-position: 0px 100%;
+  background-repeat: repeat-x;
 }

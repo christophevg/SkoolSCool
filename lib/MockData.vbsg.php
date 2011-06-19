@@ -78,6 +78,14 @@ EOT
 * [vrijwilligers|vrijwilligers]
 EOT
 ,                            'children' => array() ),
+      'footer' => array( 'cid' => 'footer',
+                         'author' => 'system',
+                         'type'   => 'PageContent',
+                         'time'   => 0,
+                         'data'   => <<<EOT
+&copy; 2011 - Vrije Basisschool van Schriek en Grootlo
+EOT
+,                            'children' => array() ),
       'changes' => array( 'cid'      => 'changes',
                           'author'   => 'system',
                           'type'     => 'PageContent',
