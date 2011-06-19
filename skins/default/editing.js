@@ -62,7 +62,15 @@ function renderContent(cid) {
   if( !converter ) { converter = new Breakdown.converter(); }
   with( getEditor(cid) ) {
     view.innerHTML = converter.makeHtml( raw.value );
-    converter.activateHtml();
+    converter.activateHtml( function() {
+      // images might not yet be loaded at this point, causing incorrect
+      // visual results. temporary solution, wait a bit before actually
+      // resizing the container
+      setTimeout( function() {
+          // match new height of view
+          getEditor(cid).container.style.height = view.offsetHeight + "px";
+      }, 100 );
+    } );
   }
 }
 
