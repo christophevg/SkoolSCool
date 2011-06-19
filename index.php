@@ -63,6 +63,7 @@ if( $content = Content::get( $request ) ) {
     } else {
       // if we're not even requested to create new content ... it's unknown
       $content = Content::get('unknownContent');
+      $content->replace( '{{cid}}', $request );
       $event = new Event( EventType::ACTION, "unknown content: $request", $request );
     }
   }

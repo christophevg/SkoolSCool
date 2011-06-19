@@ -1,6 +1,8 @@
 <?php
 
 class PageContent extends Content {
+  private $replacements = array();
+
   public function __construct( $name, $data = array() ) {
     if( ! isset( $data['data'] ) ) { 
       $data['data'] = "# $name\n\nYour content goes here ...";
@@ -9,7 +11,9 @@ class PageContent extends Content {
   }
   
   public function render() {
-    return $this->data;
+    return str_replace( array_keys($this->replacements),
+                        array_values($this->replacements),
+                        $this->data );
   }
 
   public function append($content) {
@@ -18,6 +22,10 @@ class PageContent extends Content {
 
   public function prepend($content) {
     return $this->data = $content . $this->data;
+  }
+  
+  public function replace($find, $replace) {
+    $this->replacements[$find] = $replace;
   }
   
   public function editor() {
