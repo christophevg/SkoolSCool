@@ -143,13 +143,13 @@ DIV#addcontent-overlay DIV#popup {
 
 /* albums and pictures */
 
-DIV.preview, DIV.album {
+DIV.preview, DIV.albumkey {
   float: left;
   margin: 10px;
   text-align: center;
 }
 
-DIV.preview IMG, DIV.album IMG {
+DIV.preview IMG, DIV.albumkey IMG {
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
   -khtml-border-radius: 8px;
@@ -158,12 +158,6 @@ DIV.preview IMG, DIV.album IMG {
 
 DIV.picture {
   text-align: center;
-}
-
-DIV.embedded.picture {
-  display: inline-block;
-  padding: 10px;
-  border: 1px solid #eee;
 }
 
 DIV.picture IMG {
@@ -194,12 +188,46 @@ DIV.embedded {
   padding: 5px;
 }
 
+DIV.embedded H1 {
+  color: white;
+  margin: 0px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font: 13pt Verdana;
+  letter-spacing: 2px;
+  text-shadow: #666666 2px 2px 2px;
+}
+
+DIV.embedded.page H1 {
+  border-bottom: 1px solid white;
+}
+
+DIV.embedded.album H1 {
+  background-image: url( "images/icons/album.png" );
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+  padding-left: 27px;
+}
+
 DIV.embedded.news,
-DIV.embedded.pictures {
+DIV.embedded.album {
   width: 295px;
 }
 
-DIV.embedded.bericht {
+DIV.embedded.album {
+  height: 250px;
+  background-image: url( "images/album-embed.png" );
+  background-position: 20px 50px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+DIV.embedded.album IMG.key {
+  margin-left: 29px;
+  margin-top: 44px;
+}
+
+DIV.embedded.page.bericht {
   width: 620px;
 }
 
@@ -211,16 +239,6 @@ DIV.embedded.page {
   background-position: 0px 32px;
   min-height: 200px;
   cursor: pointer;
-}
-
-DIV.embedded.page H1 {
-  margin: 0px;
-  padding-bottom: 5px;
-  text-transform: uppercase;
-  border-bottom: 1px solid white;
-  font: 13pt Verdana;
-  letter-spacing: 2px;
-  text-shadow: #666666 2px 2px 2px;
 }
 
 DIV.postit {

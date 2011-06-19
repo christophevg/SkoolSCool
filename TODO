@@ -1,20 +1,20 @@
-- eventbus
-- logging based on eventbus
-- context based on eventbus
+- event-bus
+- logging based on event-bus
+- context based on event-bus
 - breadcrumbs based on context
 - album navigation based on context
-- changelog generator based on eventbus
+- change-log generator based on event-bus
 - add CompositeContent (using include functionality from Breakdown)
-- improved resizing behaviour of editor when dealing with included content
+- improved resizing behavior of editor when dealing with included content
 - PageContent + embedded with collapsed messages
+- Album + embedded
 
 ---
 
 todo before demo 1:
 
-- Album + embedded
 - NewsContent
-- CalenderContent
+- CalendarContent
 - LibraryContent
 
 ---
@@ -31,7 +31,7 @@ later :
 - administration of content at multiple levels
 - make pages private (e.g. changes)
 - registration
-- openid (facebook connect?)
+- OpenID (Facebook connect?)
 - add "make public function"
 - full documentation
 - clean up notices, logging

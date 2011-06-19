@@ -55,7 +55,7 @@ class VbsgSkin extends Skin {
 <body>
   <div id="site">
   {$this->userBar}
-  <h1 style="margin:0px">SkoolSCool - Default Skin</h1>
+  <h1 style="margin:0px">VBSG</h1>
   location : {$this->breadCrumbs}<br>
   {$this->includeNavigation}
   <hr>
@@ -220,13 +220,23 @@ EOT;
   protected function AlbumContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
-<div class="album">
+<div class="albumkey">
   <a href="{$this->content->cid}"
     ><img src="images/75x75/{$this->content->key}"><br>
     {$this->content->label}</a>
 </div>
 EOT;
   }
+
+  protected function AlbumContentAsEmbedded() {
+    return <<<EOT
+<div class="embedded album {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
+  <h1>Fotoboek</h1>
+  <img class="key" src="images/215x139/{$this->content->key}">
+</div>
+EOT;
+  }
+
 
   protected function PictureContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }

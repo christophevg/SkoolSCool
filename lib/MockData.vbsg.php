@@ -87,7 +87,7 @@ EOT
 [style:postit belangrijk|inschrijven? waar. hoe, wanneer?]
 [style:postit|Het nieuwe schooljaar start op donderdag 1 september 2012!]
 
-[include:skins/vbsg/content/fotoboek.html?embed]
+[include:album1?embed]
 [include:skins/vbsg/content/kalender.html?embed]
 EOT
 ,                      'children' => array()
@@ -169,14 +169,14 @@ EOT
                           'author'   => 'xtof',
                           'type'     => 'PictureContent',
                           'time'     => 1299729117,
-                          'data'     => 'a:2:{s:4:"file";s:13:"picture1.jpeg";s:5:"label";s:6:"Foto 2";}',
+                          'data'     => 'a:2:{s:4:"file";s:13:"picture2.jpeg";s:5:"label";s:6:"Foto 2";}',
                           'children' => array( '' )
                         )
      ,'pic3'    => array( 'cid'      => 'pic3',
                           'author'   => 'xtof',
                           'type'     => 'PictureContent',
                           'time'     => 1299939117,
-                          'data'     => 'a:2:{s:4:"file";s:13:"picture1.jpeg";s:5:"label";s:6:"Foto 3";}',
+                          'data'     => 'a:2:{s:4:"file";s:13:"picture3.jpeg";s:5:"label";s:6:"Foto 3";}',
                           'children' => array( '' )
                         )
         )
