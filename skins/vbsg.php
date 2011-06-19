@@ -46,52 +46,58 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
   <script src="./skins/vbsg/notify.js"></script>
   <script src="./skins/vbsg/ajax.js"></script>
-  <script src="./skins/vbsg/users.js"></script>
+  <script src="./skins/vbsg/popup.js"></script>
   <script src="./skins/vbsg/editing.js"></script>
   <!--[if lt IE 7]>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
   <![endif]-->
 </head>
 <body>
-  <div id="site">
-  {$this->userBar}
-  <h1 style="margin:0px">VBSG</h1>
-  location : {$this->breadCrumbs}<br>
-  {$this->includeNavigation}
-  <hr>
-  <div class="body">
-    {$content}
-    <div class="subcontent">
-      {$this->subContent}
+  <div style="background-color: white;">
+    <div id="toolbar">
+      <div id="userbar">
+{$this->insertUserBar}
+        <img id="logo" src="skins/vbsg/images/vbsg-logo.png">
+      </div>
+    </div>
+    <div id="header">
+      <div id="navigation">
+{$this->includeNavigation}
+      </div>
     </div>
   </div>
+  <div id="banner"></div>
+  <div id="site">
+    <div class="body">
+{$content}
+      <div class="subcontent">
+{$this->subContent}
+      </div>
+    </div>
   <br clear="both">
   {$this->footer}
   </div>
+{$this->insertPopups}
 </body>
 <!-- this page was generated in {$this->duration} seconds  -->
 </html>
 EOT;
-EOT;
   }
   
-  protected function breadCrumbs() {
-    $path = array();
-    foreach( Context::getInstance()->path->asArray() as $part ) {
-      $cid = $part->cid;
-      $path[] = "<a href=\"$cid\">$cid</a>";
-    }
-    return join( " &gt;&gt; ", $path );
-  }
-
   protected function includeNavigation() {
     $navigation = Content::get('navigation');
     $html = Breakdown::getConverter()->makeHtml((string)$navigation);
     $html = ereg_replace( '</?p>','', $html );
+    // add class to show current (TODO: do this in a clean way ;-) )
+    $root = Context::getInstance()->path->getRoot()->cid;
+    $html = str_replace( "<li><a href=\"$root\">", 
+                         "<li class=\"selected\"><a href=\"$root\">", 
+                         $html );
+    // add link to directly edit the navigation page
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $navigation ) )
     {
-      $html .= '<a href="navigation">(goto navigation)</a>';
+      $html .= '<a href="navigation?mode=edit">(edit)</a>';
     }
     return $html;
   }
@@ -329,7 +335,7 @@ EOT;
   private function gravatar($size = 50) {
     $url = $this->gravatarURL($size);
     return <<<EOT
-<img src="{$url}" width="$size" height="$size">
+<img class="gravatar" src="{$url}" width="$size" height="$size">
 EOT;
   }
 
@@ -352,7 +358,7 @@ EOT;
   /**
    * Switch between a user logon form or user info and logout actions.
    */  
-  protected function userBar() {
+  protected function insertUserBar() {
     return $this->user->isAnonymous() ? 
       $this->showLogin() : $this->showUser();
   }
@@ -362,30 +368,57 @@ EOT;
    */
   private function showLogin() {
     return <<<EOT
-<div class="userbar">
-  <div id="userActions">
-    <a href="javascript:" onclick="showLogon();">log on</a>
-  | <a href="javascript:" onclick="showRegister();">register</a>
-  | <a href="?initMockData=true">reset</a>
-  </div>
-  <div id="logon" style="display:none;">
+<a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
+| <a href="javascript:" onclick="showPopup('register');">registreren</a>
+| (<a href="?initMockData=true">reset</a>)
+EOT;
+  }
+
+  /**
+   * If a user is logged in, we display his name and a logout action.
+   */
+  private function showUser() {
+    return <<<EOT
+{$this->smallGravatar} {$this->user} ({$this->user->role}) 
+| <a href="?action=logout">afmelden</a>
+| <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
+| (<a href="?initMockData=true">reset</a>)
+EOT;
+  }
+
+  /**
+   * Returns the footer of the page.
+   */
+  protected function footer() {
+    return <<<EOT
+    <hr>
+    a footer
+EOT;
+  }
+  
+  protected function insertPopups() {
+    return <<<EOT
+<div id="logon-overlay">
+  <div id="logon-popup" class="withRoundedCorners">
+    <h1>Logon ...</h1>
+	  <div class="actions">
+		  <a id="closer" href="#" class="icon close"
+			   onclick="hidePopup('logon');"><span>close</span></a>
+	  </div>
     <form action="./" method="post">
-      username : <input name="login">
-      password : <input type="password" name="pass">
+      username : <input name="login"><br>
+      password : <input type="password" name="pass"><br>
       <input type="submit">
     </form>
-    <a href="javascript:" onclick="showUserActions();">cancel</a>
-  | <a href="javascript:" onclick="showRegister();">register</a>
-  | <a href="?initMockData=true">reset</a>
   </div>
 </div>
 
-<div id="register-overlay" onclick="hidePopUp();">
-	<div id="popup" class="withRoundedCorners" onclick="return false;">
+<div id="register-overlay">
+	<div id="register-popup" class="withRoundedCorners">
 		<h1>Ready to register ?</h1>
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
-				 onclick="hideRegister();"><span>close</span></a>
+				 onclick="hidePopup('register');"><span>close</span></a>
 		</div>
 
     <p>
@@ -430,28 +463,13 @@ now.
     </p>
   </div>
 </div>
-EOT;
-  }
-
-  /**
-   * If a user is logged in, we display his name and a logout action.
-   */
-  private function showUser() {
-    return <<<EOT
-<div class="userbar">
-{$this->smallGravatar}
-{$this->user} ({$this->user->role})<br>
-<a href="?action=logout">logout</a>
-| <a href="?initMockData=true">reset</a>
-| <a href="javascript:" onclick="showAddContent();">add...</a>
-</div>
 
 <div id="addcontent-overlay">
-	<div id="popup" class="withRoundedCorners" onclick="return false;">
+	<div id="addcontent-popup" class="withRoundedCorners">
 		<h1>Add new Content...</h1>
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
-				 onclick="hideAddContent();"><span>close</span></a>
+				 onclick="hidePopup('addcontent');"><span>close</span></a>
 		</div>
     <script>
 function addContent() {
@@ -475,16 +493,6 @@ function addContent() {
     </form>
   </div>
 </div>
-EOT;
-  }
-
-  /**
-   * Returns the footer of the page.
-   */
-  protected function footer() {
-    return <<<EOT
-    <hr>
-    a footer
 EOT;
   }
   

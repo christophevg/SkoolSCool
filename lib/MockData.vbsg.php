@@ -67,9 +67,17 @@ EOT
                              'author' => 'system',
                              'type'   => 'PageContent',
                              'time'   => 0,
-                             'data'   =>
-'navigation: [home] | [info] | [pictures] | [changes]',
-                             'children' => array() ),
+                             'data'   => <<<EOT
+* [home|home]
+* [onze-school|onze school]
+* [de-klassen|de klassen]
+* [fotoboek|fotoboek]
+* [faq|faq]
+* [nieuws|nieuws]
+* [kalender|kalender]
+* [vrijwilligers|vrijwilligers]
+EOT
+,                            'children' => array() ),
       'changes' => array( 'cid'      => 'changes',
                           'author'   => 'system',
                           'type'     => 'PageContent',

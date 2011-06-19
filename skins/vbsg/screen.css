@@ -80,9 +80,10 @@ DIV.comment .editor {
   display: block;
 }
 
-/* register popup */
+/* popups */
 
 DIV#register-overlay,
+DIV#logon-overlay,
 DIV#addcontent-overlay {
 	display: none;
 	top: 0px;
@@ -94,8 +95,9 @@ DIV#addcontent-overlay {
 	z-index: 100000;
 }
 
-DIV#register-overlay DIV#popup,
-DIV#addcontent-overlay DIV#popup {
+DIV#register-popup,
+DIV#logon-popup,
+DIV#addcontent-popup {
 	height: 80%;
 	margin: 20px 20% 0px;
 	overflow-x: hidden;
@@ -172,8 +174,96 @@ SPAN.placeholder {
 
 /* home style */
 
+HTML { 
+  height: 100%; 
+  margin-bottom: 1px;
+}
+
 BODY {
- background-color: #15ACC7;
+  margin: 0px;
+  padding: 0px;
+  background-color: #15ACC7;
+}
+
+DIV#toolbar {
+  height: 48px;
+  background-image: url( "images/header-background.png" );
+  position: relative;
+  z-index: 5;
+}
+
+DIV#header {
+ padding-top: 10px;
+}
+
+IMG#logo {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  border: 2px solid white;
+}
+
+DIV#userbar {
+  margin-top: 4px;
+  width: 990px;
+  margin-left: auto;
+  margin-right: auto; 
+  text-align: right;
+  font: 10pt Verdana;
+  color: white;
+}
+
+DIV#userbar A {
+  color: white;
+}
+
+DIV#userbar IMG.gravatar {
+  padding-top: 2px;
+  vertical-align: middle;
+}
+
+DIV#navigation {
+  margin: 0px;
+  padding: 0px;
+}
+
+DIV#navigation UL {
+  display: inline;
+  padding: 0px;
+  padding-left: 20px;
+  margin: 0px;
+}
+
+DIV#navigation LI {
+  display: inline;
+  list-style-type: none;
+  padding: 10px;
+  padding-top: 20px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+  font: 11pt Verdana;
+}
+
+DIV#navigation LI A {
+  text-decoration: none;
+  color: #15ACC7;
+  text-transform: uppercase;
+}
+
+DIV#navigation LI.selected {
+  background-color: #85D4E1;
+}
+
+DIV#navigation LI.selected A {
+  color: white;
+}
+
+DIV#banner {
+  height: 230px;
+  background: white;
+  background-image: url( "images/banner.png" );
 }
 
 DIV#site {
@@ -224,7 +314,7 @@ DIV.embedded.album {
 
 DIV.embedded.album IMG.key {
   margin-left: 29px;
-  margin-top: 44px;
+  margin-top: 45px;
 }
 
 DIV.embedded.page.bericht {
@@ -283,21 +373,11 @@ DIV.embedded.socialbar {
 }
 
 .userbar {
-  border: 1px solid #aaa;
-  border-bottom: 10px solid #aaa;
-  background-color: #eee;
-  color: #777;
-  font-size: 75%;
-  padding: 3px;
-  margin: 3px;
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 200px;
+  display: inline-block;
 }
 
 .userbar IMG {
   float: left;
   margin-right: 5px;
-  margin-top: 2px;
+  margin-top: 4px;
 }

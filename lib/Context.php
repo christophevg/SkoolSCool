@@ -86,4 +86,8 @@ class PathBuilder extends ContextBuilder {
   function asArray() {
     return $this->path;
   }
+
+  function getRoot() {
+    return count($this->path) > 0 ? $this->path[0] : null;
+  }
 }
