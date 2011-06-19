@@ -17,7 +17,9 @@ class User {
    *        user object will be returned.
    * @return User object
    */
-  static function get( $name = '' ) {
+  static function get( $name = null ) {
+    if( is_null($name) ) { return new User( array( 'name' => 'anonymous' ) ); }
+
     if( $data = Objects::getStore('persistent')
           ->from('users')->fetchData( $name ) )
     {
