@@ -29,7 +29,6 @@ DIV.comment DIV.container {
 
 .editorcontrols {
   height: 20px;
-  border: 1px solid yellow;
 }
 
 .body {
@@ -37,7 +36,6 @@ DIV.comment DIV.container {
 }
 
 .editor {
-  border: 1px solid blue;
   margin: 5px;
 }
 
@@ -50,14 +48,18 @@ DIV.comment .editor {
 }
 
 .controls {
-  border: 1px solid #777;
   padding: 3px;
   margin: 3px;
   float: right;
 }
 
+.command {
+  cursor: pointer;
+}
+
 .controls .command {
   display: none;
+  cursor: pointer;
 }
 
 .controls .command.active {
@@ -126,16 +128,55 @@ DIV#addcontent-popup {
 
 .icon {
 	display: inline-block;
+	width: 24px;
 	height: 24px;
-	margin: 0px 0px -0.75em;
+  margin-top: 0px;
 	overflow: hidden;
 	position: relative;
-	width: 24px;
 	background-image: url( "images/icons.png" );
 }
 
-.close {
+.icon.close {
 	background-position: -5px -5px;
+}
+
+.icon.refresh {
+	background-position: -35px -37px;
+}
+
+.icon.edit {
+	background-position: -259px -69px;
+}
+
+.icon.preview {
+	background-position: -163px -37px;
+}
+
+.icon.save {
+	background-position: -260px -549px;
+}
+
+.icon.cancel {
+	background-position: -3px -549px;
+}
+
+.icon.wait {
+	background-image: url( "images/icons/spinner.gif" );
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+DIV#userbar DIV.icon.refresh {
+  position: absolute;
+}
+
+DIV#navigation DIV.icon.edit {
+  position: relative;
+  top: 5px;
+}
+
+DIV#footer DIV.icon.edit {
+  position: absolute;
 }
 
 .icon SPAN {
@@ -145,13 +186,14 @@ DIV#addcontent-popup {
 
 /* albums and pictures */
 
-DIV.preview, DIV.albumkey {
+DIV.picture.preview, DIV.albumkey {
   float: left;
   margin: 10px;
   text-align: center;
 }
 
-DIV.preview IMG, DIV.albumkey IMG {
+DIV.picture.preview IMG,
+DIV.albumkey IMG {
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
   -khtml-border-radius: 8px;

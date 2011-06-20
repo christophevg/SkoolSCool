@@ -99,7 +99,7 @@ EOT;
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $navigation ) )
     {
-      $html .= '<a href="navigation?mode=edit">(edit)</a>';
+      $html .= '<a href="navigation?mode=edit"><div class="icon edit"></div></a>';
     }
     return $html;
   }
@@ -112,7 +112,7 @@ EOT;
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $footer ) )
     {
-      $html .= '<a href="footer?mode=edit">(edit)</a>';
+      $html .= '<div class="icon edit command" onclick="javascript:window.location=\'footer?mode=edit\'"></div></a>';
     }
     return $html;
   }
@@ -135,15 +135,13 @@ EOT;
 
   private function generateCommands( $commands ) {
     $html = "";
-    foreach( $commands as $command => $isActive ) 
-    {
+    foreach( $commands as $command => $isActive ) {
       $lc_command = strtolower($command);
       $state = $isActive ? " active" : " inactive";
       $html .= <<<EOT
-      <span id="{$this->content->cid}{$command}Command" class="command{$state}">
-        <a href="javascript:" onclick="{$lc_command}Content('{$this->content->cid}');">{$lc_command}</a>
-      </span>
-
+      <div id="{$this->content->cid}{$command}Command" 
+           class="icon {$lc_command} command{$state}"
+           onclick="{$lc_command}Content('{$this->content->cid}');"></div>
 EOT;
     }
     return $html;
@@ -158,8 +156,7 @@ EOT;
     foreach( array( "Saving" => false ) as $state => $isActive ) {
       $activation = $isActive ? " active" : "";
       $states .= <<<EOT
-      <span id="{$this->content->cid}{$state}State" class="state{$activation}">{$state}</span>
-    
+      <div id="{$this->content->cid}{$state}State" class="icon wait state{$activation}"></div>
 EOT;
     }
     return <<<EOT
@@ -262,7 +259,7 @@ EOT;
   protected function PictureContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
-<div class="preview">
+<div class="picture preview">
   <a href="{$this->content->cid}"
     ><img src="images/75x75/{$this->content->file}"><br>
     {$this->content->label}</a>
@@ -385,7 +382,7 @@ EOT;
     return <<<EOT
 <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
 | <a href="javascript:" onclick="showPopup('register');">registreren</a>
-| (<a href="?initMockData=true">reset</a>)
+<a href="?initMockData=true"><div class="icon refresh"></div></a>
 EOT;
   }
 
@@ -397,7 +394,7 @@ EOT;
 {$this->smallGravatar} {$this->user} ({$this->user->role}) 
 | <a href="?action=logout">afmelden</a>
 | <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
-| (<a href="?initMockData=true">reset</a>)
+<a href="?initMockData=true"><div class="icon refresh"></div></a>
 EOT;
   }
 

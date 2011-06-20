@@ -8,11 +8,13 @@
 - improved resizing behavior of editor when dealing with included content
 - PageContent + embedded with collapsed messages
 - Album + embedded
+- icons
 
 ---
 
 todo before demo 1:
 
+- add sub-content
 - NewsContent
 - CalendarContent
 - LibraryContent

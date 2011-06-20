@@ -51,8 +51,8 @@ function cancelContent(cid) {
     container.style.height = view.offsetHeight + "px";
     controls.all.style.display = "block";
     editor.style.display = "none";
-    controls.save.className = "command inactive";
-    controls.cancel.className = "command inactive";
+    controls.save.className = "icon save command inactive";
+    controls.cancel.className = "icon cancel command inactive";
   }
 }
 
@@ -84,28 +84,28 @@ function previewContent(cid) {
     editor.style.display = "none";
     if( raw.value != current ) {
       // activate save/cancel actions
-      controls.save.className = "command active";
-      controls.cancel.className = "command active";
+      controls.save.className = "icon save command active";
+      controls.cancel.className = "icon cancel command active";
     }
   }
 }
 
 function saveContent(cid) {
   with( getEditor(cid) ) {
-    controls.edit.className   = "command inactive";
-    controls.save.className   = "command inactive";
-    controls.cancel.className = "command inactive";
-    controls.saving.className = "state active";
+    controls.edit.className   = "icon edit command inactive";
+    controls.save.className   = "icon save command inactive";
+    controls.cancel.className = "icon cancel command inactive";
+    controls.saving.className = "icon wait state active";
     __remote__.store( cid, raw.value, function(cid) {
       return function confirmSave( response ) {
         with( getEditor(cid) ) {
           if( response != "ok" ) { 
             notify( "saving failed: " + response );
-            controls.save.className = "command active";
-            controls.cancel.className = "command active";
+            controls.save.className = "icon save command active";
+            controls.cancel.className = "icon cancel command active";
           }
-          controls.edit.className = "command active";
-          controls.saving.className = "state inactive";
+          controls.edit.className = "icon edit command active";
+          controls.saving.className = "icon wait state inactive";
         }
       }
     }(cid) );
