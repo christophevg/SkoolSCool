@@ -494,11 +494,11 @@ now.
 
 <div class="overlay" id="addcontent-overlay">
 	<div id="addcontent-popup" class="popup withRoundedCorners">
-		<h1>Add new Content...</h1>
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
 				 onclick="hidePopup('addcontent');"><span>close</span></a>
 		</div>
+		<h1>Voeg nieuwe inhoud toe...</h1>
     <script>
 function addContent() {
   var form = document.getElementById('addcontent-form');
@@ -511,13 +511,13 @@ function addContent() {
     <form id="addcontent-form" action="?create&mode=edit&type=" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
-      name : <input type="text" id="addcontent-name"><br>
-      type : <select name="type">
-              <option value="PageContent">Page</option>
-              <option value="AlbumContent">Album</option>
-              <option value="PictureContent">Picture</option>
-            </select><br>
-      <input type="submit" value="add..." onclick="addContent();">
+      <span class="label">Soort</span><select name="type">
+              <option value="PageContent">Een nieuwe tekstpagina</option>
+              <option value="AlbumContent">Een nieuw fotoalbum</option>
+              <option value="PictureContent">Een foto</option>
+            </select><br><br>
+      <span class="label">Naam</span><input type="text" id="addcontent-name"><br>
+      <center><input type="submit" class="button" value="voeg toe..." onclick="addContent();"></center>
     </form>
   </div>
 </div>

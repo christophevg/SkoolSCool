@@ -316,6 +316,7 @@ DIV.embedded.album IMG.key {
 
 .raw {
   width: 100%;
+  min-height: 100px;
 }
 
 .controls {
@@ -414,17 +415,16 @@ DIV.credentials FORM {
   text-align: center;
 }
 
-FORM INPUT {
+FORM INPUT, FORM SELECT {
   font-size: 12pt;
   padding: 10px;
   border: none;
   background-color: #C9EDF4;
 }
 
-FORM INPUT.button {
+FORM INPUT.button, FORM SELECT {
   margin-top: 20px;
   color: white;
-
   text-transform: uppercase;
   background-color: #2890BD;
   border: 1px solid #1F78A2;
