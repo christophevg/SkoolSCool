@@ -144,20 +144,46 @@ P {
 	text-indent: -7000em;
 }
 
-.toolbar {
-  height: 48px;
+.toolbar-wrapper {
   background-image: url( "images/header-background.png" );
+  background-repeat: repeat-x;
   position: relative;
-  z-index: 5;
+  z-index: 15;
 }
 
-.header {
- padding-top: 10px;
+.toolbar {
+  width: 990px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#user-toolbar {
+  height: 48px;
+  text-align: right;
+}
+
+#user-toolbar P {
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 12pt;
+}
+
+#navigation-toolbar {
+  position: relative;
+  top: -10px;
+  height: 42px;
+  z-index: 10;
+}
+
+#navigation-toolbar .icon.command.edit {
+  position: relative;
+  top: 20px;
 }
 
 .logo {
   float: left;
-  margin: 0px;
+  margin: 5px;
   padding: 0px;
   border: 2px solid white;
 }
@@ -167,7 +193,6 @@ P {
   width: 990px;
   margin-left: auto;
   margin-right: auto; 
-  text-align: right;
   font: 10pt Verdana;
   color: white;
 }
@@ -180,52 +205,13 @@ P {
   vertical-align: middle;
 }
 
-.navigation {
-  margin-left: auto;
-  margin-right:auto;
-  width: 980px;
-}
-
-.navigation UL {
-  display: inline;
-  padding: 0px;
-  padding-left: 20px;
-  margin: 0px;
-}
-
-.navigation LI {
-  display: inline;
-  list-style-type: none;
-  padding: 10px;
-  padding-top: 20px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  border-radius: 8px;
-  font: 11pt Verdana;
-}
-
-.navigation LI A {
-  text-decoration: none;
-  color: #15ACC7;
-  text-transform: uppercase;
-}
-
-.navigation LI.selected {
-  background-color: #85D4E1;
-}
-
-.navigation LI.selected A {
-  color: white;
-}
-
 /* BANNER */
 
 .banner {
   height: 120px;
 }
 
-.home .banner {
+.page-home .banner {
   height: 230px;
   background-image: url( "images/banner-welkom.gif" );
   background-repeat: no-repeat;
@@ -239,7 +225,7 @@ P {
  padding-bottom: 150px;
 }
 
-.home .site {
+.page-home .site {
   padding-bottom: 40px;
 }
 
@@ -382,11 +368,10 @@ DIV.postit.belangrijk {
 }
 
 ._footer {
-	height: 108px;
   position: relative;
+  z-index: -200;
   background-image: url( "images/footer.png" );
   height: 108px;
-  z-index: -200;
 }
     
 ._footer DIV.info {

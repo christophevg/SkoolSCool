@@ -68,14 +68,21 @@ EOT
                              'type'   => 'PageContent',
                              'time'   => 0,
                              'data'   => <<<EOT
-* [home|home]
-* [onze-school|onze school]
-* [de-klassen|de klassen]
-* [fotoboek|fotoboek]
-* [faq|faq]
-* [nieuws|nieuws]
-* [kalender|kalender]
-* [vrijwilligers|vrijwilligers]
+* [home]
+* [onze school]
+** [onze missie]
+** [ons team]
+** [vestiging]
+** [schoolbrocure]
+** [oudercomite]
+** [schoolkrant]
+** [links]
+* [de klassen]
+* [fotoboek]
+* [faq]
+* [nieuws]
+* [kalender]
+* [vrijwilligers]
 EOT
 ,                            'children' => array() ),
       'footer' => array( 'cid' => 'footer',

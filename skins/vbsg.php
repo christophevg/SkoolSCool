@@ -41,6 +41,7 @@ class VbsgSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
 
   <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
@@ -53,19 +54,22 @@ class VbsgSkin extends Skin {
   <![endif]-->
 </head>
 <body>
-  <div class="page {$this->content->cid}">
-  
+  <div class="page-{$this->content->cid}">
+    
     <div class="wrapper">
     
-      <div class="toolbar">
-        <div class="userbar">
+      <div class="toolbar-wrapper">
+        <div id="user-toolbar" class="toolbar">
           <img class="logo" src="skins/vbsg/images/vbsg-logo.png">
+          <p>Vrije Basisschool Schriek &amp; Grootlo</p>
+          <div class="userbar">
 {$this->insertUserBar}
+          </div>
         </div>
       </div>
 
-      <div class="header">
-        <div class="navigation">
+      <div id="navigation-toolbar" class="toolbar">
+        <div class="_navigation">
 {$this->includeNavigation}
         </div>
       </div>
@@ -109,7 +113,7 @@ EOT;
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $navigation ) )
     {
-      $html .= '<a href="navigation?mode=edit"><div class="icon edit"></div></a>';
+      $html .= '<div class="icon command edit" onclick="window.location=\'navigation?mode=edit\'"></div>';
     }
     return $html;
   }
