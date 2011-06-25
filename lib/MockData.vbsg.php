@@ -101,7 +101,7 @@ EOT
 [include:bericht?embed]
 
 [style:postit belangrijk|inschrijven? waar. hoe, wanneer?]
-[style:postit|Het nieuwe schooljaar start op donderdag 1 september 2012!]
+[style:postit|Het nieuwe schooljaar start op donderdag 1 september 2011!]
 
 [include:album1?embed]
 [include:skins/vbsg/content/kalender.html?embed]

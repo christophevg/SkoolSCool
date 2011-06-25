@@ -41,7 +41,7 @@ class VbsgSkin extends Skin {
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
-  <!--<link rel="stylesheet" type="text/css" href="./skins/vbsg/debug.css">-->
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
 
   <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
   <script src="./skins/vbsg/notify.js"></script>
@@ -53,32 +53,42 @@ class VbsgSkin extends Skin {
   <![endif]-->
 </head>
 <body>
-  <div style="background-color: white;">
-    <div id="toolbar">
-      <div id="userbar">
+  <div class="page {$this->content->cid}">
+  
+    <div class="wrapper">
+    
+      <div class="toolbar">
+        <div class="userbar">
+          <img class="logo" src="skins/vbsg/images/vbsg-logo.png">
 {$this->insertUserBar}
-        <img id="logo" src="skins/vbsg/images/vbsg-logo.png">
+        </div>
       </div>
-    </div>
-    <div id="header">
-      <div id="navigation">
+
+      <div class="header">
+        <div class="navigation">
 {$this->includeNavigation}
+        </div>
       </div>
-    </div>
-  </div>
-  <div id="banner"></div>
-  <div id="site">
-    <div class="body">
+
+      <div class="banner"></div>
+  
+      <div class="site">
+        <div class="body">
 {$content}
-      <div class="subcontent">
+          <div class="subcontent">
 {$this->subContent}
+          </div>
+        </div>
       </div>
+
     </div>
-  <br clear="both">
-  </div>
-  <div id="footer">
+
+    <div class="_footer">
 {$this->includeFooter}
+    </div>
+
   </div>
+
 {$this->insertPopups}
 </body>
 <!-- this page was generated in {$this->duration} seconds  -->
@@ -112,7 +122,7 @@ EOT;
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $footer ) )
     {
-      $html .= '<div class="icon edit command" onclick="javascript:window.location=\'footer?mode=edit\'"></div></a>';
+      $html = '<div class="info">'.$html.'<div class="icon edit command" onclick="javascript:window.location=\'footer?mode=edit\'"></div></a></div>';
     }
     return $html;
   }
@@ -382,7 +392,7 @@ EOT;
     return <<<EOT
 <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
 | <a href="javascript:" onclick="showPopup('register');">registreren</a>
-<a href="?initMockData=true"><div class="icon refresh"></div></a>
+<div class="icon command refresh" onclick="javascript:window.location='?initMockData=true';"></div>
 EOT;
   }
 
@@ -400,8 +410,8 @@ EOT;
 
   protected function insertPopups() {
     return <<<EOT
-<div id="logon-overlay">
-  <div id="logon-popup" class="withRoundedCorners">
+<div class="overlay" id="logon-overlay">
+  <div id="logon-popup" class="popup withRoundedCorners">
     <h1>Logon ...</h1>
 	  <div class="actions">
 		  <a id="closer" href="#" class="icon close"
@@ -415,8 +425,8 @@ EOT;
   </div>
 </div>
 
-<div id="register-overlay">
-	<div id="register-popup" class="withRoundedCorners">
+<div class="overlay" id="register-overlay">
+	<div id="register-popup" class="popup withRoundedCorners">
 		<h1>Ready to register ?</h1>
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
@@ -466,8 +476,8 @@ now.
   </div>
 </div>
 
-<div id="addcontent-overlay">
-	<div id="addcontent-popup" class="withRoundedCorners">
+<div class="overlay" id="addcontent-overlay">
+	<div id="addcontent-popup" class="popup withRoundedCorners">
 		<h1>Add new Content...</h1>
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
