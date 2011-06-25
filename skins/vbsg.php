@@ -412,16 +412,32 @@ EOT;
     return <<<EOT
 <div class="overlay" id="logon-overlay">
   <div id="logon-popup" class="popup withRoundedCorners">
-    <h1>Logon ...</h1>
 	  <div class="actions">
 		  <a id="closer" href="#" class="icon close"
 			   onclick="hidePopup('logon');"><span>close</span></a>
 	  </div>
-    <form action="./" method="post">
-      username : <input name="login"><br>
-      password : <input type="password" name="pass"><br>
-      <input type="submit">
-    </form>
+
+    <h1>Aanmelden</h1>
+
+	  <div class="openid">
+	    <p>Meld je aan met een van je bestaande profielen:</p>
+	    <div class="providers">
+      <a href="javascript:" class="openid google"></a>
+      <a href="javascript:" class="openid facebook"></a>
+      <a href="javascript:" class="openid yahoo"></a>
+      <a href="javascript:" class="openid myopenid"></a>
+      </div>
+	  </div>
+	  
+	  <div class="credentials">
+	    <p>Beschik je over een specifieke gebruikersnaam en paswoord voor deze
+	      site, geef die dan hier in ...</p>
+      <form action="./" method="post">
+        <span class="label">Naam</span> <input name="login">
+        <span class="label">Paswoord</span> <input type="password" name="pass"><br>
+        <input class="button" type="submit" value="meld aan...">
+      </form>
+    </div>
   </div>
 </div>
 
