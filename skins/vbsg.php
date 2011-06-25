@@ -122,9 +122,9 @@ EOT;
     if( AuthorizationManager::getInstance()
         ->can( $this->user )->update( $footer ) )
     {
-      $html = '<div class="info">'.$html.'<div class="icon edit command" onclick="javascript:window.location=\'footer?mode=edit\'"></div></a></div>';
+      $html .= '<div class="icon edit command" onclick="javascript:window.location=\'footer?mode=edit\'"></div></a>';
     }
-    return $html;
+    return '<div class="info">' . $html . '</div>';
   }
 
   protected function bodyContent() {
