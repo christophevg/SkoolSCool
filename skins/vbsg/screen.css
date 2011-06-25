@@ -386,6 +386,7 @@ DIV.postit.belangrijk {
   position: relative;
   background-image: url( "images/footer.png" );
   height: 108px;
+  z-index: -200;
 }
     
 ._footer DIV.info {
