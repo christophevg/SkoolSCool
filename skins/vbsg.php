@@ -84,6 +84,8 @@ class VbsgSkin extends Skin {
 {$content}
           <div class="subcontent">
 {$this->subContent}
+<br clear="both"><br>
+{$this->addNewComment}
           </div>
         </div>
       </div>
@@ -258,10 +260,40 @@ EOT;
     return <<<EOT
 <div class="comment">
   <div class="commenter">
-    {$this->largeGravatar}<br>
     {$this->content->author}
   </div>
-  {$this->bodyContent}
+  <div class="time">
+    {$this->content->timeLabel}
+  </div>
+  <div class="balloon">
+    {$this->bodyContent}
+  </div>
+</div>
+EOT;
+  }
+
+  private function contentAllowsComments() {
+    return  ( ! $this->user->isAnonymous() )
+         && $this->content->cid != "home" 
+         && $this->content->cid != "fotoboek"
+         && $this->content->author != "system";
+  }
+  
+  protected function addNewComment() {
+    if( ! $this->contentAllowsComments() ) { return; }
+    return <<<EOT
+<div class="comment">
+  <div class="commenter">Jij</div>
+  <div class="balloon">
+    <div class="container">
+      <div class="add">
+        <form method="post">
+          <textarea class="newComment" name="comment" type="text"></textarea><br>
+          <div class="icon command save" onclick="this.parentNode.submit();"></div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 EOT;
   }
@@ -281,10 +313,9 @@ EOT;
   protected function AlbumContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
-<div class="albumkey">
-  <a href="{$this->content->cid}"
-    ><img src="images/75x75/{$this->content->key}"><br>
-    {$this->content->label}</a>
+<div class="embedded album {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
+  <img class="key" src="images/215x139/{$this->content->key}"><br>
+  <p class="label">{$this->content->label}</p>
 </div>
 EOT;
   }
@@ -293,17 +324,21 @@ EOT;
     return <<<EOT
 <div class="embedded album {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
   <h1>Fotoboek</h1>
-  <img class="key" src="images/215x139/{$this->content->key}">
+  <img class="key" src="images/215x139/{$this->content->key}"><br>
+  <p class="label">{$this->content->label}</p>
 </div>
 EOT;
   }
 
-
   protected function PictureContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
+    $albumPrefix = "";
+    if( $album = $this->content->parent ) {
+      $albumPrefix = "{$album->cid}/";
+    }
     return <<<EOT
 <div class="picture preview">
-  <a href="{$this->content->cid}"
+  <a href="$albumPrefix{$this->content->cid}"
     ><img src="images/75x75/{$this->content->file}"><br>
     {$this->content->label}</a>
 </div>
@@ -334,14 +369,15 @@ EOT;
 </div>
 EOT;
   }
-  
+
   protected function previousPicture() {
     if( $album = $this->getCurrentAlbum() ) {
       $current = array_search( $this->content->cid, $album->children );
+      $albumPrefix = "{$album->cid}/";
       if( $current > 0 ) {
         $prev = Content::get($album->children[$current - 1]);
         return <<<EOT
-  <a href="{$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
+  <a href="$albumPrefix{$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
 EOT;
       }
     }
@@ -352,10 +388,11 @@ EOT;
   protected function nextPicture() {
     if( $album = $this->getCurrentAlbum() ) {
       $current = array_search( $this->content->cid, $album->children );
+      $albumPrefix = "{$album->cid}/";
       if( $current < count($album->children) - 1 ) {
         $next = Content::get($album->children[$current + 1]);
         return <<<EOT
-  <a href="{$next->cid}"><img src="images/75x75/{$next->file}"></a>
+  <a href="$albumPrefix{$next->cid}"><img src="images/75x75/{$next->file}"></a>
 EOT;
       }
     }
@@ -364,12 +401,9 @@ EOT;
   }
 
   private function getCurrentAlbum() {
-    $path = Context::getInstance()->path->asArray();
-    if( count($path) > 1 ) {
-      $album = $path[count($path)-2];
-      if( get_class($album) == "AlbumContent" ) {
-        return $album;
-      }
+    $album = Content::get(Context::getInstance()->path->getRootID());
+    if( get_class($album) == "AlbumContent" ) {
+      return $album;
     }
   }
 
@@ -381,35 +415,6 @@ EOT;
     return Breakdown::getConverter()->makeHtml((string)$this->content);    
   }
   
-  /**
-   * Gravatar support. Two template functions return a large and small image.
-   */
-  protected function largeGravatar() { return $this->gravatar(50); }
-  protected function smallGravatar() { return $this->gravatar(25); }
-
-  private function gravatar($size = 50) {
-    $url = $this->gravatarURL($size);
-    return <<<EOT
-<img class="gravatar" src="{$url}" width="$size" height="$size">
-EOT;
-  }
-
-  /**
-   * Returns a Gravatar URL, based on the content's author's email address
-   */
-  private function gravatarURL($size = 50) {
-    $defaultImage = "http://" . $_SERVER['HTTP_HOST'] . 
-                    dirname($_SERVER['SCRIPT_NAME'])  . 
-                    "/skins/vbsg/images/unknown_user.png";
-    $rating = "G";
-    $border = "000000";
-    $url    = "http://www.gravatar.com/avatar.php?gravatar_id=%s".
-              "&default=%s&size=%s&border=%s&rating=%s";
-
-    return sprintf(	$url, md5($this->content->author->email), 
-                    $defaultImage, $size, $border, $rating );
-  }
-
   /**
    * Switch between a user logon form or user info and logout actions.
    */  
@@ -434,7 +439,7 @@ EOT;
    */
   private function showUser() {
     return <<<EOT
-{$this->smallGravatar} {$this->user} ({$this->user->role}) 
+{$this->user} ({$this->user->role}) 
 | <a href="?action=logout">afmelden</a>
 | <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
 <a href="?initMockData=true"><div class="icon refresh"></div></a>

@@ -1,31 +1,62 @@
-DIV.comment {
-  clear: both;
-  background-image: url(images/comment_body.png);
-  background-repeat: no-repeat;
-  background-position: 80px 0px;
-  min-height: 80px;
-  margin-top: 5px;  
+/* COMMENTS */
+
+.comment {
+  width: 610px;
+  margin-bottom: 20px;
 }
 
-DIV.comment DIV.commenter {
-  float: left;
-  text-align: center;
-  height: 75px;
-  width: 75px;
-  font-size: 60%;
+.comment .commenter {
+  display: inline-block;
+  width: 290px;
+  font: 10pt Verdana;
+  color: white;
+  padding-left: 10px;
+}
+
+.comment .time {
+  display: inline-block;
+  width: 290px;
+  padding-right: 10px;
+  text-align: right;
+  font: 10pt Verdana;
+  color: white;
+}
+
+.comment .balloon {
   padding-top: 10px;
+  background-image: url( "images/comment-indicator.gif" );
+  background-repeat: no-repeat;
+    
 }
 
-DIV.comment DIV.container {
-  padding: 1px;
-  padding-left: 20px;
-  width: 540px;
-  min-height: 80px;
-  margin-left: 80px;
-  background-image: url(images/comment_bottom.png);
-  background-repeat: no-repeat;
-  background-position: left bottom;
+.comment .container {
+  background-color: #C3ECF2;
+  background-image: url( "images/comment-background.gif" );
+  background-position: 0px 100%;
+  background-repeat: repeat-x;
 }
+
+.comment .container .controls {
+}
+
+.comment .container .body,
+.comment .container .add {
+  width: 570px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  min-height: 70px;
+}
+
+.comment .container .body P {
+  color: #10616E;
+}
+
+.comment .add .newComment {
+  width: 530px;
+  height: 65px;
+}
+
 
 /* albums and pictures */
 

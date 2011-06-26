@@ -33,11 +33,12 @@ class SessionStore implements ObjectStore, DataStore {
   public function put( $object ) {
     $buckets = SessionManager::getInstance()->{$this->name};
     $buckets[$this->bucket][$object->cid] = array(
-      'cid'    => $object->cid,
-      'type'   => get_class( $object ),
-      'author' => $object->author->login,
-      'time'   => $object->time,
-      'data'   => $object->getData()
+      'cid'      => $object->cid,
+      'type'     => get_class( $object ),
+      'author'   => $object->author->login,
+      'time'     => $object->time,
+      'data'     => $object->getData(),
+      'children' => $object->children
     );
     SessionManager::getInstance()->{$this->name} = $buckets;
   }

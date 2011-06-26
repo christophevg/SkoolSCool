@@ -29,6 +29,7 @@ $request = isset($_GET['cid']) ? $_GET['cid'] : 'home';
  * a context.
  */
 $path = split( "/", $request );
+if( !is_array($path) ) { $path = array( $path ); }
 $request = array_pop( $path );
 
 // publish the contextual path
@@ -84,6 +85,20 @@ if( $content = Content::get( $request ) ) {
   }
 }
 EventBus::getInstance()->publish( $event );
+
+/**
+ * process incoming new content
+ */
+if( isset($_POST['comment']) ) {
+  // create new CommentConente object
+  $data = $_POST['comment'];
+  $cid = time();
+  $comment = new CommentContent( $cid, array( "author" => $user->login, "data" => $data ) );
+  Objects::getStore( 'persistent' )->in( 'content' )->put( $comment );
+  // add object to children of current content
+  $content->addChild( $comment );
+}
+
 
 /**
  * show the content to the user using the skin

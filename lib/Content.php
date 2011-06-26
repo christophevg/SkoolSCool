@@ -82,6 +82,15 @@ abstract class Content {
     return $this->data;
   }
   
+  public function timeLabel() {
+    return strftime( "%e %B %Y - %H:%m", $this->time );
+  }
+  
+  public function addChild( $childContent ) {
+    $this->children[] = $childContent->cid;
+    $this->persist();
+  }
+  
   abstract public function editor();
   abstract public function render();
 } 

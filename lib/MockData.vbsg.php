@@ -118,7 +118,7 @@ EOT
                           'data'     => '',
                           'children' => array() ),
       'home' => array( 'cid'      => 'home',
-                       'author'   => 'xtof',
+                       'author'   => 'system',
                        'type'     => 'PageContent',
                        'time'     => 1299614027,
                        'data'     => <<<EOT
@@ -134,7 +134,7 @@ EOT
 ,                      'children' => array()
                      ),
       'bericht' => array( 'cid'      => 'bericht',
-                          'author'   => 'xtof',
+                          'author'   => 'system',
                           'type'     => 'PageContent',
                           'time'     => 1299614027,
                           'data'     => <<<EOT
@@ -147,7 +147,7 @@ EOT
 ,                      'children' => array( 'comment1', 'comment2' )
                      ),
       'onze missie' => array( 'cid'      => 'onze missie',
-                              'author'   => 'xtof',
+                              'author'   => 'system',
                               'type'     => 'PageContent',
                               'time'     => 1299614027,
                               'data'     => <<<EOT
@@ -170,54 +170,57 @@ EOT
      ,'comment1'    => array( 'cid'      => 'comment1',
                               'author'   => 'xtof',
                               'type'     => 'CommentContent',
-                              'time'     => 1299614127,
-                              'data'     => "Hallo iedereen,\n\n" .
-                                            "we zijn terug van vakantie.\n".
-                                            "Hoe was het hier ?\n\n" .
-                                            "Niet te veel ambetante kindjes?",
+                              'time'     => time(),
+                              'data'     => <<<EOT
+Meester Patrick,
+
+het feit dat al die kindjes zich zo goed amuseren is een beloning op zich.
+
+Maar een frisse pint op jouw kosten, die komen we graag drinken ;-)
+EOT
+,
                               'children' => array()
                         )
      ,'comment2'    => array( 'cid'      => 'comment2',
                               'author'   => 'kristien',
                               'type'     => 'CommentContent',
-                              'time'     => 1299614187,
-                              'data'     => 'Hello Comments Again',
+                              'time'     => time(),
+                              'data'     => <<<EOT
+Zie maar dat hem snel naar huis komt, want die website moet wel af geraken.                          
+EOT
+,
                               'children' => array()
                         )
      ,'comment3'    => array( 'cid'      => 'comment3',
                               'author'   => 'kristien',
                               'type'     => 'CommentContent',
                               'time'     => 1299614587,
-                              'data'     => 'What a nice picture',
+                              'data'     => 'Zie ze vliegen ...',
                               'children' => array()
                         )
-     ,'info'    => array( 'cid'      => 'info',
-                          'author'   => 'xtof',
-                          'type'     => 'PageContent',
-                          'time'     => 1299624987,
-                          'data'     => <<<EOT
-# About our nice school
-
-We really like our school.
-EOT
-,                         'children' => array()
-                        )
-     ,'pictures'    => array( 'cid'      => 'pictures',
+     ,'fotoboek'    => array( 'cid'      => 'fotoboek',
                               'author'   => 'xtof',
                               'type'     => 'PageContent',
                               'time'     => 1299625987,
                               'data'     => <<<EOT
-# Pictures of our school
+# fotoboek
 
-Below are a bunch of albums with pictures of fun things we do at school...
+Hieronder vind je enkele fotoboeken met foto's van de verschillende activiteiten die we met de kinderen doorheen het jaar gedaan hebben.
 EOT
-,                             'children' => array( 'album1' )
+,                             'children' => array( 'album1', 'album2' )
                         )
      ,'album1'    => array( 'cid'      => 'album1',
                             'author'   => 'kristien',
                             'type'     => 'AlbumContent',
                             'time'     => 1299624187,
-                            'data'     => 'a:3:{s:4:"body";s:24:"This is our first album.";s:5:"label";s:11:"First Album";s:3:"key";s:4:"pic1";}',
+                            'data'     => 'a:3:{s:4:"body";s:20:"Ons eerste fotoboek.";s:5:"label";s:20:"Ons eerste fotoboek.";s:3:"key";s:4:"pic1";}',
+                            'children' => array( 'pic1', 'pic2', 'pic3' )
+                        )
+     ,'album2'    => array( 'cid'      => 'album2',
+                            'author'   => 'kristien',
+                            'type'     => 'AlbumContent',
+                            'time'     => 1299624187,
+                            'data'     => 'a:3:{s:4:"body";s:20:"Ons tweede fotoboek.";s:5:"label";s:20:"Ons tweede fotoboek.";s:3:"key";s:4:"pic2";}',
                             'children' => array( 'pic1', 'pic2', 'pic3' )
                         )
      ,'pic1'    => array( 'cid'      => 'pic1',

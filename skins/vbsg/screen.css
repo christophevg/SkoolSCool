@@ -299,6 +299,13 @@ DIV.embedded.album H1 {
   padding-left: 27px;
 }
 
+.page-fotoboek DIV.embedded.album H1 {
+  display: none;
+}
+
+.page-fotoboek DIV.embedded.album IMG.key {
+  margin-top: 70px;
+}
 
 DIV.embedded.album {
   height: 250px;
@@ -308,9 +315,24 @@ DIV.embedded.album {
   cursor: pointer;
 }
 
+.subcontent>DIV.embedded.album {
+  height: 200px;
+  background-position: 20px 0px;
+}
+
 DIV.embedded.album IMG.key {
   margin-left: 29px;
   margin-top: 39px;
+}
+
+.subcontent DIV.embedded.album IMG.key {
+  margin-top: 21px;
+}
+
+
+DIV.embedded.album P.label {
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* EDTIOR */
