@@ -30,9 +30,9 @@ function initMockData() {
                        'type'     => 'PageContent',
                        'time'     => 0,
                        'data'     => <<<EOT
-# Whoops
+# Oei...
 
-Seems you were looking for a page we don't know about.
+Je hebt een pagina gevraagd die we niet kennen.
 EOT
 ,                      'children' => array()
                      ),
@@ -41,9 +41,9 @@ EOT
                                   'type'     => 'PageContent',
                                   'time'     => 0,
                                   'data'     => <<<EOT
-# This page hasn't been created yet...
+# Deze pagina is nog niet aangemaakt...
 
-If you want to create this content go [{{cid}}?create|here].
+Om inhoud te maken voor deze pagina, volg [{{cid}}?create|deze link].
 EOT
 ,                      'children' => array()
                      ),
@@ -52,13 +52,32 @@ EOT
                               'type'     => 'PageContent',
                               'time'     => 0,
                               'data'     => <<<EOT
-# Create New Content
+# Maak nieuwe inhoud aan...
 
-Please choose the kind of content you want to add...
+Kies het soort inhoud dat je graag wil aanmaken:
 
-* [?create&type=PageContent&mode=edit|Page]
-* [?create&type=AlbumContent&mode=edit|Album]
-* [?create&type=PictureContent&mode=edit|Picture]
+## Een pagina
+
+... laat je toe om een tekstuele inhoud toe te voegen aan de website.
+Je kan vervolgens naar deze pagina een link leggen vanuit andere pagina's of
+vanuit de navigatie.
+
+[{{cid}}?create&type=PageContent&mode=edit|maak een pagina...]
+
+## Een fotoboek
+
+... is een verzameling van foto's. Je kan er foto's aan toewijzen, er
+in ordenen, ...
+
+[{{cid}}?create&type=AlbumContent&mode=edit|maak een fotoboek...]
+
+## Een foto
+
+Wil je een gewone losse foto toevoegen aan de site, dan kan ke dat langs deze
+weg. Foto's kunnen nadien in pagina's gebruikt worden of toegewezen worden aan
+een fotoboek.
+
+[{{cid}}?create&type=PictureContent&mode=edit|voeg een foto toe...]
 EOT
 ,                      'children' => array()
                      ),

@@ -17,6 +17,10 @@ BODY {
   background-position: center 0px;
 }
 
+A {
+  color: #ABE3EC;
+}
+
 H1 {
   color: white;
   margin: 0px;
@@ -27,6 +31,16 @@ H1 {
   letter-spacing: 2px;
   text-shadow: #666666 2px 2px 2px;
   border-bottom: 1px solid white;
+}
+
+H2 {
+  color: white;
+  margin: 0px;
+  margin-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font: 11pt Verdana;
+  letter-spacing: 2px;
 }
 
 P {

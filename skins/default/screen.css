@@ -48,6 +48,7 @@ DIV.comment .editor {
 
 .raw {
   width: 100%;
+  min-height: 100px;
 }
 
 .controls {
