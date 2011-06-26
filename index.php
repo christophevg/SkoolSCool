@@ -73,6 +73,7 @@ if( $content = Content::get( $request ) ) {
     } elseif( $newContent ) {
       // else if don't know the type, show the newContent "wizard" page
       $content = Content::get('newContent');
+      $content->replace( '{{cid}}', $request );
       $event = new Event( EventType::ACTION, "new content: $request", $request );
     } else {
       // if we're not even requested to create new content ... it's unknown
