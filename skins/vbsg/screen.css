@@ -20,7 +20,7 @@ BODY {
 H1 {
   color: white;
   margin: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   padding-bottom: 5px;
   text-transform: uppercase;
   font: 13pt Verdana;
@@ -32,6 +32,7 @@ H1 {
 P {
   color: white;
   font: 10pt Verdana;
+  margin-bottom: 10px;
 }
 
 .overlay {
@@ -357,6 +358,67 @@ DIV.postit.belangrijk {
   display: block;
 }
 
+/* CONTENT */
+
+.body.withSubNavigation {
+  display: inline-block;
+  width: 730px;
+}
+
+._subnavigation {
+  display: inline-block;
+  vertical-align: top;
+  width: 220px;
+  margin: 0px;
+  padding: 0px;
+  margin-top: 20  px;
+}
+
+._subnavigation UL {
+  padding: 0px;
+  margin: 5px;
+}
+
+._subnavigation LI {
+  margin: 0px;
+  list-style-type: none;    
+  display: block;
+  width: 180px;
+  font: 13pt Verdana;
+  padding:5px;
+  padding-left: 15px;
+  margin-bottom: 5px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+._subnavigation LI A {
+  color: white;
+  text-decoration: none;
+}
+
+._subnavigation LI.selected {
+  background-color: #85D4E1;
+}
+
+._subnavigation LI.selected A {
+  color: #027789;
+}
+
+._subnavigation LI:hover {
+  background-color: #C0E6EB;
+}
+
+._subnavigation LI:hover A {
+  color: #027789;
+}
+
+._subnavigation LI A:hover {
+  color: #027789;
+  text-decoration: underline;
+}
 
 /* FOOTER */
 

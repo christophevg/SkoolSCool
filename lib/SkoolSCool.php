@@ -56,6 +56,8 @@ if( ! is_array( SessionManager::getInstance()->ObjectCache ) ) {
   );
 }
 
+include_once dirname(__FILE__) . '/Navigator.php';
+
 // process login post
 if( isset($_POST['login']) && isset($_POST['pass']) ) {
   SessionManager::getInstance()->login( $_POST['login'], $_POST['pass'] );

@@ -77,7 +77,7 @@ class VbsgSkin extends Skin {
       <div class="banner"></div>
   
       <div class="site">
-        <div class="body">
+        <div class="content">
 {$content}
           <div class="subcontent">
 {$this->subContent}
@@ -102,7 +102,7 @@ EOT;
   
   protected function includeNavigation() {
     $navigation = Content::get('navigation');
-    $html = Breakdown::getConverter()->makeHtml((string)$navigation);
+    $html = Breakdown::getConverter()->makeHtml("* [home]\n".(string)$navigation);
     $html = ereg_replace( '</?p>','', $html );
     // add class to show current (TODO: do this in a clean way ;-) )
     $root = Context::getInstance()->path->getRoot()->cid;
@@ -133,17 +133,45 @@ EOT;
 
   protected function bodyContent() {
     if( ! $this->contentIsReadable() ) { return ""; }
+    $withSubNavigation = $this->hasSubNavigation() ? "withSubNavigation" : "";
     return <<<EOT
 <script>
 var bodyContent = "{$this->content->cid}";
 </script>
 <div id="{$this->content->cid}Container" class="container">
   {$this->editControls}
-  <div id="{$this->content->cid}View" class="body">
+  {$this->insertSectionNavigation}
+  <div id="{$this->content->cid}View" class="body {$withSubNavigation}">
     {$this->contentAsHtml}
   </div>
   {$this->itemEditor}
 </div>
+EOT;
+  }
+  
+  protected function hasSubNavigation() {
+    return ( ( $this->content->cid != "home" ) and 
+             ( get_class($this->content) == "PageContent" ) and
+             ( Navigator::getInstance()
+                ->getSectionOf(str_replace("-", " ", $this->content->cid)) ));
+  }
+  
+  protected function insertSectionNavigation() {
+    if( ! $this->hasSubNavigation() ) { return; }
+    $section = Navigator::getInstance()
+                  ->getSectionOf(str_replace("-"," ", $this->content->cid ));
+    $navigation = "";
+    foreach( $section as $page ) {
+      $navigation .= "* [$page]\n";
+    }
+    $html = Breakdown::getConverter()->makeHtml($navigation);
+    $html = str_replace( "<li><a href=\"{$this->content->cid}\">", 
+                         "<li class=\"selected\"><a href=\"{$this->content->cid}\">", 
+                         $html );
+    return <<<EOT
+    <div id="_subnavigation" class="_subnavigation">
+    $html
+    </div>
 EOT;
   }
 

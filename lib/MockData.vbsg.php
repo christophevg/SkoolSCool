@@ -68,7 +68,6 @@ EOT
                              'type'   => 'PageContent',
                              'time'   => 0,
                              'data'   => <<<EOT
-* [home]
 * [onze school]
 ** [onze missie]
 ** [ons team]
