@@ -8,8 +8,7 @@
  */
 
 class Navigator extends Singleton {
-  private $tree = array();
-  private $reverse = array();
+  private $sections = array();
   
   function init() {
     $lines = split("\n", (string)Content::get('navigation') );
@@ -17,14 +16,23 @@ class Navigator extends Singleton {
     foreach( $lines as $line ) {
       if( preg_match( "/^\*[^\*\[]*\[([^\]]*)\]/", $line, $matches ) ) {
         $section = $matches[1];
-        $this->tree[$section] = array();
+        $this->sections[$section] = array();
       }
       if( preg_match( "/^\*\*[^\[]*\[([^\]]*)\]/", $line, $matches ) ) {
-        $subSection = $matches[1];
-        $this->tree[$section][] = $subSection;
-        $this->reverse[$subSection] = $section;
+        $subSection = $matches[0];
+        $this->sections[$section][] = $subSection;
       }
     }
+  }
+  
+  function currentSectionHasNavigation() {
+    return $this->getCurrentSectionNavigation() != "";
+  }
+  
+  function getCurrentSectionNavigation() {
+    $currentSectionID = Context::getInstance()->path->getRootID();    
+    $section = $this->sections[$currentSectionID];
+    return $section ? join( "\n", $section ) : "";
   }
 
   function getSectionOf( $page ) {

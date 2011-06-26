@@ -18,8 +18,22 @@ $skin = Skin::get( 'vbsg' );
  * example: http://skoolscool.org/index.php?cid=somePage
  * at server level this can be rewritten
  * example: http://skoolscool.org/somePage
+ * By default we show the home-page.
  */
 $request = isset($_GET['cid']) ? $_GET['cid'] : 'home';
+
+/**
+ * a request can contain a path and an object identifier:
+ * http://skoolscool.org/someSection/someSubSection/somePage
+ * An object can be called through many different paths, which just creates
+ * a context.
+ */
+$path = split( "/", $request );
+$request = array_pop( $path );
+
+// publish the contextual path
+EventBus::getInstance()->publish( 
+  new Event(EventType::NAVIGATION, "access path: " . join("/", $path), $path));
 
 /**
  * get the current user

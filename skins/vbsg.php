@@ -37,9 +37,11 @@ class VbsgSkin extends Skin {
   }
   
   private function mainTemplate($content) {
+    $pathPrefix = str_repeat( '../', count(Context::getInstance()->path->asArray()) );
     return <<<EOT
 <html>
 <head>
+  <base href="./${pathPrefix}">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
@@ -50,7 +52,7 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/popup.js"></script>
   <script src="./skins/vbsg/editing.js"></script>
   <!--[if lt IE 7]>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
+  <link rel="stylesheet" type="text/css" href="./${pathPrefix}skins/vbsg/screen.ie6.css">
   <![endif]-->
 </head>
 <body>
@@ -60,7 +62,7 @@ class VbsgSkin extends Skin {
     
       <div class="toolbar-wrapper">
         <div id="user-toolbar" class="toolbar">
-          <img class="logo" src="skins/vbsg/images/vbsg-logo.png">
+          <img class="logo" src="./skins/vbsg/images/vbsg-logo.png">
           <p>Vrije Basisschool Schriek &amp; Grootlo</p>
           <div class="userbar">
 {$this->insertUserBar}
@@ -76,7 +78,8 @@ class VbsgSkin extends Skin {
 
       <div class="banner"></div>
   
-      <div class="site">
+      <div class="site {$this->toggleSubNavigation}">
+        {$this->insertSectionNavigation}
         <div class="content">
 {$content}
           <div class="subcontent">
@@ -105,7 +108,7 @@ EOT;
     $html = Breakdown::getConverter()->makeHtml("* [home]\n".(string)$navigation);
     $html = ereg_replace( '</?p>','', $html );
     // add class to show current (TODO: do this in a clean way ;-) )
-    $root = Context::getInstance()->path->getRoot()->cid;
+    $root = str_replace( " ", "-", Context::getInstance()->path->getRootID() );
     $html = str_replace( "<li><a href=\"$root\">", 
                          "<li class=\"selected\"><a href=\"$root\">", 
                          $html );
@@ -133,39 +136,37 @@ EOT;
 
   protected function bodyContent() {
     if( ! $this->contentIsReadable() ) { return ""; }
-    $withSubNavigation = $this->hasSubNavigation() ? "withSubNavigation" : "";
     return <<<EOT
 <script>
 var bodyContent = "{$this->content->cid}";
 </script>
 <div id="{$this->content->cid}Container" class="container">
   {$this->editControls}
-  {$this->insertSectionNavigation}
-  <div id="{$this->content->cid}View" class="body {$withSubNavigation}">
+  <div id="{$this->content->cid}View" class="body">
     {$this->contentAsHtml}
   </div>
   {$this->itemEditor}
 </div>
 EOT;
   }
+
+  protected function toggleSubNavigation() {
+    return $this->hasSubNavigation() ? "withSubNavigation" : "";
+  }
   
   protected function hasSubNavigation() {
     return ( ( $this->content->cid != "home" ) and 
              ( get_class($this->content) == "PageContent" ) and
-             ( Navigator::getInstance()
-                ->getSectionOf(str_replace("-", " ", $this->content->cid)) ));
+             ( Navigator::getInstance()->currentSectionHasNavigation() ) );
   }
   
   protected function insertSectionNavigation() {
     if( ! $this->hasSubNavigation() ) { return; }
-    $section = Navigator::getInstance()
-                  ->getSectionOf(str_replace("-"," ", $this->content->cid ));
-    $navigation = "";
-    foreach( $section as $page ) {
-      $navigation .= "* [$page]\n";
-    }
+    $navigation = Navigator::getInstance()->getCurrentSectionNavigation();
     $html = Breakdown::getConverter()->makeHtml($navigation);
-    $html = str_replace( "<li><a href=\"{$this->content->cid}\">", 
+    // TODO: do this in a "nicer" way ;-)
+    $self = Context::getInstance()->path->asString();
+    $html = str_replace( "<li><a href=\"$self\">", 
                          "<li class=\"selected\"><a href=\"{$this->content->cid}\">", 
                          $html );
     return <<<EOT

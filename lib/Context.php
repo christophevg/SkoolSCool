@@ -64,22 +64,13 @@ class PathBuilder extends ContextBuilder {
   }
   
   var $path = array();
+  var $page;
 
   function handleEvent( $event ) {
-    // clean up path up to the parent of the object/sender of the new content
-    $this->findParent( $event->sender );
-    // add the new content on top if it exists
-    if( $event->sender ) {
-      array_push( $this->path, $event->sender );
-    }
-  }
-
-  private function findParent( $child ) {
-    if( count( $this->path ) < 1 ) { return; }
-    $parent = $this->path[count($this->path)-1];
-    if( ! $parent instanceof Content or ! $parent->hasSubContent( $child ) ) {
-      array_pop( $this->path );
-      return $this->findParent( $child );
+    if( is_array( $event->sender ) ) {
+      $this->path = $event->sender;
+    } elseif( get_class( $event->sender ) == "PageContent" ) {
+      $this->page = $event->sender;
     }
   }
   
@@ -87,7 +78,12 @@ class PathBuilder extends ContextBuilder {
     return $this->path;
   }
 
-  function getRoot() {
-    return count($this->path) > 0 ? $this->path[0] : null;
+  function getRootID() {
+    return str_replace( "-", " ", count($this->path) > 0 ? 
+                        $this->path[0] : $this->page->cid );
+  }
+  
+  function asString() {
+    return join( "/", $this->asArray() ) . "/" . $this->page->cid;
   }
 }

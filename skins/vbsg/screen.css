@@ -35,6 +35,11 @@ P {
   margin-bottom: 10px;
 }
 
+LI {
+  color: white;
+  font: 10pt Verdana;
+}
+
 .overlay {
 	display: none;
 	top: 0px;
@@ -238,6 +243,10 @@ DIV.embedded {
   padding: 5px;
 }
 
+DIV.embedded H1 {
+  margin-bottom: 5  px;
+}
+
 DIV.embedded.news,
 DIV.embedded.album {
   width: 295px;
@@ -254,7 +263,7 @@ DIV.embedded.page {
 }
 
 DIV.embedded.page.bericht {
-  width: 620px;
+  width: 640px;
 }
 
 DIV.embedded.socialbar {
@@ -319,7 +328,6 @@ DIV.embedded.album IMG.key {
 /* POST-ITS */
 
 DIV.postit {
-  margin-right: 37px;
   clear: both;
   float: right;
   width: 290px;
@@ -360,9 +368,17 @@ DIV.postit.belangrijk {
 
 /* CONTENT */
 
-.body.withSubNavigation {
+.body {
+ width: 960px; /* site=990 - 30 for controls on the right */
+}
+
+.site.withSubNavigation .body {
+  width: 730px; /* normal body - 220 -10 for subnavigation */
+}
+
+.site.withSubNavigation .content {
   display: inline-block;
-  width: 730px;
+  width: 766px;
 }
 
 ._subnavigation {
@@ -418,6 +434,12 @@ DIV.postit.belangrijk {
 ._subnavigation LI A:hover {
   color: #027789;
   text-decoration: underline;
+}
+
+/* SUBCONTENT */
+
+.subcontent {
+  margin-top: 40px;
 }
 
 /* FOOTER */

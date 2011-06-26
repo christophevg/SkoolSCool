@@ -69,12 +69,12 @@ EOT
                              'time'   => 0,
                              'data'   => <<<EOT
 * [onze school]
-** [onze missie]
-** [ons team]
-** [vestiging]
-** [schoolbrocure]
-** [oudercomite]
-** [schoolkrant]
+** [onze school/onze missie|onze missie]
+** [onze school/ons team|ons team]
+** [onze school/vestigingen|vestigingen]
+** [onze school/schoolbrocure|schoolbrochure]
+** [onze school/oudercomite|oudercomite]
+** [onze school/schoolkrant|schoolkrant]
 ** [links]
 * [de klassen]
 * [fotoboek]
@@ -126,7 +126,28 @@ Vrijwilliger, wat ben ik onder de indruk van je werk. Telkens weer sta je er voo
 We willen jullie bedanken voor alles wat julle voor onze kinderen, de juffen en meesters en voro de school hebben gedaan. Allemaal welkom op dinsdag 27 juni van 20:30u tot 23u inde Magneet in Grootlo.
 EOT
 ,                      'children' => array( 'comment1', 'comment2' )
+                     ),
+      'onze missie' => array( 'cid'      => 'onze missie',
+                              'author'   => 'xtof',
+                              'type'     => 'PageContent',
+                              'time'     => 1299614027,
+                              'data'     => <<<EOT
+# onze missie
+
+De school van Schriek en Grootlo is een school van de Zusters van de Christelijke scholen van Vorselaar en behoort tot de regio OZCS Keerbergen vzw, een van de zes regio's van Vorselaar. 
+
+Samen met de scholen van Booischot, Heist-Goor, Houtvenne en Grasheide vormen we de pedagogische entiteit Zuiderkempen.
+We behoren tot de scholengemeenschap Kansrijk die zich uitstrekt van de Elzestraat in Sint-Katelijne-Waver tot Schaffen bij Diest.
+
+De school van Schriek en Grootlo is een school van de Zusters van de Christelijke scholen van Vorselaar en behoort tot de regio OZCS Keerbergen vzw, één van de zes regio%u2019s van Vorselaar. 
+
+Samen met de scholen van Booischot, Heist-Goor, Houtvenne en Grasheide vormen we de pedagogische entiteit Zuiderkempen.
+We behoren tot de scholengemeenschap Kansrijk die zich uitstrekt van de Elzestraat in Sint-Katelijne-Waver tot Schaffen bij Diest.
+EOT
+,                      'children' => array( 'comment1', 'comment2' )
                      )
+                     
+                     
      ,'comment1'    => array( 'cid'      => 'comment1',
                               'author'   => 'xtof',
                               'type'     => 'CommentContent',
