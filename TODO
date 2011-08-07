@@ -1,4 +1,4 @@
-- add Calendar
+- add offline-notification based on sentinel file
 - add news based on contentpages
 - create dataprovider for picasaweb
 - add album/photo upload via zipfile + tagging

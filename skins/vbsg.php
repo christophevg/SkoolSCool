@@ -47,12 +47,18 @@ class VbsgSkin extends Skin {
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
 
   <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
+
+  <script src="http://www.google.com/jsapi"></script>
+  <script src="./skins/vbsg/cal.js/src/cal.js"></script>
+  <script src="./skins/vbsg/cal.js/src/providers/google.js"></script>
+  <link rel="stylesheet" type="text/css"href="./skins/vbsg/cal.css">
+
   <script src="./skins/vbsg/notify.js"></script>
   <script src="./skins/vbsg/ajax.js"></script>
   <script src="./skins/vbsg/popup.js"></script>
   <script src="./skins/vbsg/editing.js"></script>
   <!--[if lt IE 7]>
-  <link rel="stylesheet" type="text/css" href="./${pathPrefix}skins/vbsg/screen.ie6.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
   <![endif]-->
 </head>
 <body>
@@ -138,9 +144,11 @@ EOT;
 
   protected function bodyContent() {
     if( ! $this->contentIsReadable() ) { return ""; }
+    $contentClass = get_class( $this->content );
     return <<<EOT
 <script>
 var bodyContent = "{$this->content->id}";
+var contentClass = "$contentClass";
 </script>
 <div id="{$this->content->id}Container" class="container">
   {$this->editControls}
@@ -412,10 +420,12 @@ EOT;
 
   /**
    * Returns the content that is currently in scope as HTML. Content is stored
-   * as a BreakDown encoded string.
+   * as a BreakDown encoded string unless the content object tells us, it 
+   * already produces HTML.
    */ 
   protected function contentAsHtml() {
-    return Breakdown::getConverter()->makeHtml((string)$this->content);    
+    return $this->content->isHtml() ? (string)$this->content :
+      Breakdown::getConverter()->makeHtml((string)$this->content);    
   }
   
   /**

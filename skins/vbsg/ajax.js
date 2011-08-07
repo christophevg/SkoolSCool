@@ -43,7 +43,7 @@ var __remote__ = (function() {
         }
       }
     };
-    xmlhttp.send("id=" + id + "&data=" + escape(data));
+    xmlhttp.send("id=" + id + "&data=" + encodeURIComponent(data));
   }
 
   return {

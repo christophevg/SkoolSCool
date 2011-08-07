@@ -4,3 +4,6 @@
 [submodule "skins/vbsg/breakdown"]
 	path = skins/vbsg/breakdown
 	url = http://github.com/christophevg/breakdown.git
+[submodule "skins/vbsg/cal.js"]
+	path = skins/vbsg/cal.js
+	url = http://github.com/christophevg/cal.js.git

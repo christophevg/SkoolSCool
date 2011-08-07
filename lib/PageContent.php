@@ -7,10 +7,14 @@ class PageContent extends Content {
 
   public function __construct( $data = array() ) {
     parent::__construct( $data );
-    
+
     $name = $data['id'];
-    $this->body = isset( $data['body'] ) ? $data['body'] :
-                  "# $name\n\nYour content goes here ...";
+    $this->body = isset( $data['body'] ) ? $data['body'] : 
+                  $this->createDefaultBody($name);
+  }
+  
+  public function createDefaultBody($name) {
+    return str_replace( '%%name%%', $name, Config::$defaultPageBody );
   }
   
   public function toHash() {

@@ -36,7 +36,8 @@ INSERT INTO allObjects ( type, id, name, pass, email, rights )
 VALUES
 ( 'User', 'system',  'system',          '', '', 'admin'             ),
 ( 'User', 'xtof',    'Christophe VG',   '', '', 'contributor,admin' ),
-( 'User', 'patrick', 'Meester Patrick', '', '', 'contributor,admin' );
+( 'User', 'patrick', 'Meester Patrick', '', '', 'contributor,admin' ),
+( 'User', 'user',    'Simple User',     '', '', '' );
 
 -- PAGECONTENT
 INSERT INTO allObjects ( type, id, author, children, body )
@@ -106,4 +107,6 @@ een fotoboek.
 Vrijwilliger, wat ben ik onder de indruk van je werk. Telkens weer sta je er voor onze kinderen. Je warmte, inzet, hulp, begrip,... er zijn geen woorden voor. Zo fantastisch dat je dat allemaal doet. Vrijwilliger, je verdient minstens 1000 pluimen op je hoed! Bedankt!
 
 We willen jullie bedanken voor alles wat julle voor onze kinderen, de juffen en meesters en voro de school hebben gedaan. Allemaal welkom op dinsdag 27 juni van 20:30u tot 23u inde Magneet in Grootlo.
-');
+'),
+( 'HtmlContent', 'kalender', 'system', '', 
+  '<h1>Kalender</h1><br>' );

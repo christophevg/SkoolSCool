@@ -67,6 +67,20 @@ class AuthorizationManager extends Singleton {
   }
 
   /**
+   * Validator for Users accessing HtmlPages
+   * @param $user accessing a page
+   * @param $page accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the page
+   *         according to the given access style.
+   */
+  private function UserHtmlContent( $user, $page, $access = 'read' ) {
+    // policy: read access for all / write access for admin only
+    return $access == "read" ? true : $user->isAdmin();
+  }
+
+  /**
    * Validator for Users accessing Comments
    * @param $user accessing a comment
    * @param $comment accessed by the user

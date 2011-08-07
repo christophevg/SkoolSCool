@@ -28,9 +28,12 @@ include_once dirname(__FILE__) . '/User.php';
 
 include_once dirname(__FILE__) . '/Content.php';
 include_once dirname(__FILE__) . '/PageContent.php';
+include_once dirname(__FILE__) . '/HtmlContent.php';
+
+include_once dirname(__FILE__) . '/CommentContent.php';
+
 include_once dirname(__FILE__) . '/AlbumContent.php';
 include_once dirname(__FILE__) . '/PictureContent.php';
-include_once dirname(__FILE__) . '/CommentContent.php';
 
 include_once dirname(__FILE__) . '/Skin.php';
 

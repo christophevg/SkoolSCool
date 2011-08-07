@@ -78,6 +78,8 @@ abstract class Content extends Object {
     $this->persist();
   }
   
+  public function isHtml() { return false; }
+  
   abstract public function editor();
   abstract public function render();
 } 

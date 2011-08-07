@@ -12,6 +12,9 @@ class Config {
   
   // email
   static $feedbackMail = 'xtof';
+  
+  // default content
+  static $defaultPageBody = "# %%name%%\n\nYour content goes here ...";
 }
 
 // include the local configuration (if available in directory of index.php)

@@ -59,6 +59,14 @@ function cancelContent(id) {
 var converter = null;
 
 function renderContent(id) {
+  console.log( window.contentClass );
+  if( window.contentClass == "HtmlContent" ) {
+    with( getEditor(id) ) {
+      view.innerHTML = raw.value;
+    }
+    return;
+  }
+  
   if( !converter ) { converter = new Breakdown.converter(); }
   with( getEditor(id) ) {
     view.innerHTML = converter.makeHtml( raw.value );
