@@ -16,8 +16,8 @@ var __remote__ = (function() {
 
   init();
 
-  function get(cid, callback) {
-    xmlhttp.open( "GET", "./ajax.php?cid="+cid, true );
+  function get(id, callback) {
+    xmlhttp.open( "GET", "./ajax.php?id="+id, true );
     xmlhttp.onreadystatechange = function() {
       if( xmlhttp.readyState  == 4 ) {
         if( xmlhttp.status == 200 ) {
@@ -30,7 +30,7 @@ var __remote__ = (function() {
     xmlhttp.send(null);
   }
 
-  function post(cid, data, callback) {
+  function post(id, data, callback) {
     xmlhttp.open( "POST", "./ajax.php", true );
     xmlhttp.setRequestHeader( 'Content-Type',
                               'application/x-www-form-urlencoded' );
@@ -43,7 +43,7 @@ var __remote__ = (function() {
         }
       }
     };
-    xmlhttp.send("cid=" + cid + "&data=" + escape(data));
+    xmlhttp.send("id=" + id + "&data=" + escape(data));
   }
 
   return {

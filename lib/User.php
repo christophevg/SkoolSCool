@@ -10,7 +10,12 @@
  * Creation of objects is only available through the factory method "get".
  */
 
-class User {
+class User extends Object {
+  var $name;
+  var $pass;
+  var $email;
+  var $rights;
+  
   /**
    * Factory method to create a user object.
    * @param (optional) $name of the user. when omitted, the default/anonymous
@@ -20,11 +25,7 @@ class User {
   static function get( $name = null ) {
     if( is_null($name) ) { return new User( array( 'name' => 'anonymous' ) ); }
 
-    if( $data = Objects::getStore('persistent')
-          ->from('users')->fetchData( $name ) )
-    {
-      $object = new User( $data );
-    } else {
+    if( ! $object = Objects::getStore('persistent')->fetch( $name ) ) {
       $object = new User( array( 'name' => 'anonymous' ) );
     }
     return $object;
@@ -35,12 +36,22 @@ class User {
    * @param $data hash containing user information
    */
   function __construct( $data = array() ) {
-    $this->login  = isset($data['login']) ? $data['login'] : $data['name'];
-    $this->name   = $data['name'];
-    $this->pass   = isset( $data['pass'] ) ? $data['pass'] : null;
-    $this->email  = isset( $data['email'] ) ? $data['email'] : null;
+    parent::__construct( $data );
+    
+    $this->name   = isset( $data['name']   ) ? $data['name'] : null;
+    $this->pass   = isset( $data['pass']   ) ? $data['pass'] : null;
+    $this->email  = isset( $data['email']  ) ? $data['email'] : null;
     $this->rights = isset( $data['rights'] ) ?
-                      split( ',', $data['rights'] ) : array();
+                    split( ',', $data['rights'] ) : array();
+  }
+  
+  function toHash() {
+    $hash = parent::toHash();
+    $hash['name']   = $this->name;
+    $hash['pass']   = $this->pass;
+    $hash['email']  = $this->email;
+    $hash['rights'] = join(',', $this->rights );
+    return $hash;
   }
   
   /**
@@ -77,8 +88,9 @@ class User {
         return $this->isAdmin() ? "admin" :
           ( $this->isContributor() ? "constributor" : "" );
         break;
-      case 'login':
-        return $this->login;
+      case 'id':
+      case 'login':      
+        return $this->id;
     }
     return "";
   }

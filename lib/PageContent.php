@@ -1,27 +1,36 @@
 <?php
 
 class PageContent extends Content {
+  var $body;
+
   private $replacements = array();
 
-  public function __construct( $name, $data = array() ) {
-    if( ! isset( $data['data'] ) ) { 
-      $data['data'] = "# $name\n\nYour content goes here ...";
-    }
-    parent::__construct( $name, $data );
+  public function __construct( $data = array() ) {
+    parent::__construct( $data );
+    
+    $name = $data['id'];
+    $this->body = isset( $data['body'] ) ? $data['body'] :
+                  "# $name\n\nYour content goes here ...";
+  }
+  
+  public function toHash() {
+    $hash = parent::toHash();
+    $hash['body'] = $this->body;
+    return $hash;
   }
   
   public function render() {
-    return str_replace( array_keys($this->replacements),
+    return str_replace( array_keys  ($this->replacements),
                         array_values($this->replacements),
-                        $this->data );
+                        $this->body );
   }
 
   public function append($content) {
-    return $this->data .= $content;
+    return $this->body .= $content;
   }
 
   public function prepend($content) {
-    return $this->data = $content . $this->data;
+    return $this->body = $content . $this->body;
   }
   
   public function replace($find, $replace) {
@@ -30,8 +39,8 @@ class PageContent extends Content {
   
   public function editor() {
     return <<<EOT
-<textarea id="{$this->cid}Raw" class="raw">
-$this->data
+<textarea id="{$this->id}Raw" class="raw">
+$this->body
 </textarea><br>
 EOT;
   }

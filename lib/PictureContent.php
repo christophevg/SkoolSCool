@@ -1,10 +1,6 @@
 <?php
 
 class PictureContent extends Content {
-  public function setData( $data ) {
-    $this->data = unserialize($data);
-  }
-  
   public function render() {
     return $this->label;
   }
@@ -13,13 +9,13 @@ class PictureContent extends Content {
     switch($prop) {
       case "file":
       case "label":
-        return $this->data[$prop];
+        return $this->$prop;
     }
   }
   
   public function editor() {
     return <<<EOT
-<textarea id="{$this->cid}Raw" class="raw">
+<textarea id="{$this->id}Raw" class="raw">
 $this->data
 </textarea><br>
 EOT;

@@ -262,8 +262,12 @@ DIV.embedded H1 {
 }
 
 DIV.embedded.news,
-DIV.embedded.album {
+DIV.embedded.album1 {
   width: 295px;
+}
+
+DIV.placeholder.album1 {
+  border: 1px solid #15ACC7; /* needed on Safari to avoid bad rendering */
 }
 
 DIV.embedded.page {
@@ -276,7 +280,7 @@ DIV.embedded.page {
   cursor: pointer;
 }
 
-DIV.embedded.page.bericht {
+DIV.embedded.page.bedankt2011 {
   width: 640px;
 }
 

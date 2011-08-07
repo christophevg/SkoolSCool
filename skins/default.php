@@ -79,8 +79,8 @@ EOT;
   protected function breadCrumbs() {
     $path = array();
     foreach( Context::getInstance()->path->asArray() as $part ) {
-      $cid = $part->cid;
-      $path[] = "<a href=\"$cid\">$cid</a>";
+      $id = $part->id;
+      $path[] = "<a href=\"$id\">$id</a>";
     }
     return join( " &gt;&gt; ", $path );
   }
@@ -101,11 +101,11 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <script>
-var bodyContent = "{$this->content->cid}";
+var bodyContent = "{$this->content->id}";
 </script>
-<div id="{$this->content->cid}Container" class="container">
+<div id="{$this->content->id}Container" class="container">
   {$this->editControls}
-  <div id="{$this->content->cid}View" class="body">
+  <div id="{$this->content->id}View" class="body">
     {$this->contentAsHtml}
   </div>
   {$this->itemEditor}
@@ -120,8 +120,8 @@ EOT;
       $lc_command = strtolower($command);
       $state = $isActive ? " active" : " inactive";
       $html .= <<<EOT
-      <span id="{$this->content->cid}{$command}Command" class="command{$state}">
-        <a href="javascript:" onclick="{$lc_command}Content('{$this->content->cid}');">{$lc_command}</a>
+      <span id="{$this->content->id}{$command}Command" class="command{$state}">
+        <a href="javascript:" onclick="{$lc_command}Content('{$this->content->id}');">{$lc_command}</a>
       </span>
 
 EOT;
@@ -138,12 +138,12 @@ EOT;
     foreach( array( "Saving" => false ) as $state => $isActive ) {
       $activation = $isActive ? " active" : "";
       $states .= <<<EOT
-      <span id="{$this->content->cid}{$state}State" class="state{$activation}">{$state}</span>
+      <span id="{$this->content->id}{$state}State" class="state{$activation}">{$state}</span>
     
 EOT;
     }
     return <<<EOT
-<div id="{$this->content->cid}Controls" class="controls">
+<div id="{$this->content->id}Controls" class="controls">
 {$commands}{$states}</div>
 EOT;
   }
@@ -151,7 +151,7 @@ EOT;
   protected function itemEditor() {
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
-<div id="{$this->content->cid}Editor" class="editor">
+<div id="{$this->content->id}Editor" class="editor">
   {$this->content->editor}
   {$this->editorControls}
 </div>
@@ -162,7 +162,7 @@ EOT;
     $commands = $this->generateCommands( array( "preview" => true,
                                                 "cancel"  => true ) );
     return <<<EOT
-<div id="{$this->content->cid}EditorControls" class="editorcontrols">
+<div id="{$this->content->id}EditorControls" class="editorcontrols">
   {$commands}
 </div>
 EOT;
@@ -201,7 +201,7 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="album">
-  <a href="{$this->content->cid}"
+  <a href="{$this->content->id}"
     ><img src="images/75x75/{$this->content->key}"><br>
     {$this->content->label}</a>
 </div>
@@ -212,7 +212,7 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="preview">
-  <a href="{$this->content->cid}"
+  <a href="{$this->content->id}"
     ><img src="images/75x75/{$this->content->file}"><br>
     {$this->content->label}</a>
 </div>
@@ -246,11 +246,11 @@ EOT;
   
   protected function previousPicture() {
     if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->cid, $album->children );
+      $current = array_search( $this->content->id, $album->children );
       if( $current > 0 ) {
         $prev = Content::get($album->children[$current - 1]);
         return <<<EOT
-  <a href="{$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
+  <a href="{$prev->id}"><img src="images/75x75/{$prev->file}"></a>
 EOT;
       }
     }
@@ -260,11 +260,11 @@ EOT;
   
   protected function nextPicture() {
     if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->cid, $album->children );
+      $current = array_search( $this->content->id, $album->children );
       if( $current < count($album->children) - 1 ) {
         $next = Content::get($album->children[$current + 1]);
         return <<<EOT
-  <a href="{$next->cid}"><img src="images/75x75/{$next->file}"></a>
+  <a href="{$next->id}"><img src="images/75x75/{$next->file}"></a>
 EOT;
       }
     }

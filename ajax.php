@@ -9,11 +9,10 @@
 include_once 'lib/SkoolSCool.php';
 
 /**
- * ajax requests pass the object through the 'cid' (content id) post parameter
+ * ajax requests pass the object through the 'id' (content id) post parameter
  * and the data to update using the 'data' post parameter
- * example: http://skoolscool.org/ajax.php?cid=somePage
  */
-$request = $_POST['cid'];
+$request = $_POST['id'];
 $data    = $_POST['data'];
 
 /**
@@ -25,7 +24,7 @@ $user = SessionManager::getInstance()->currentUser;
  * retrieve the relevant content
  */
 $content = Content::get( $request );
-if( ! $content ) {
+if( $content == null ) {
   print "unknown content: $request";
   exit();
 }
@@ -34,7 +33,8 @@ if( ! $content ) {
  * check if the user can update the requested content, if so, do it, else fail
  */
 if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
-  $content->setData( $data )->persist();
+  $content->body = $data;
+  Objects::getStore('persistent')->put($content);
   print "ok";
 } else {
   print "not allowed";

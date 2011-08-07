@@ -1,39 +1,35 @@
-- event-bus
-- logging based on event-bus
-- context based on event-bus
-- breadcrumbs based on context
-- album navigation based on context
-- change-log generator based on event-bus
-- add CompositeContent (using include functionality from Breakdown)
-- improved resizing behavior of editor when dealing with included content
-- PageContent + embedded with collapsed messages
-- Album + embedded
-- icons
-
----
-
-todo before demo 1:
-
+- add Config
 - add sub-content
-- NewsContent
-- CalendarContent
-- LibraryContent
-
----
-
-- add new style (as I go along)
-- add existing content
-
----
-
-later :
-- implement MySQLDriver
-- add history
-- add search
-- administration of content at multiple levels
-- make pages private (e.g. changes)
-- registration
+- NewsContent extends PageContent
+- add contact link + popup
+- create filter + session/cookie storage
+- complete registration page + procedure
+- implement moderation
 - OpenID (Facebook connect?)
-- add "make public function"
 - full documentation
 - clean up notices, logging
+- dataprovider for picasaweb
+- add album/photo upload via zipfile + tagging
+- news based on contentpages
+- 
+
+---
+
+bugs
+- preview with dynamic replaced content e.g. {{id}}
+- (albumpreview) included embedded content sometimes doesn't load
+
+---
+
+enhancements
+- reload page after structural change to reflect changes without manual action
+
+---
+
+after launch:
+- sept: LibraryContent
+
+---
+
+to deide:
+- later: add search

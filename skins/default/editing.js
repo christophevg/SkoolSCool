@@ -5,36 +5,36 @@ var editors = {};
  * factory function
  * TODO: create real class/object with methods in stead of style changes
  */
-function getEditor(cid) {
-  if( typeof editors[cid] == "undefined" ) {
-    editors[cid] = {
-      container : document.getElementById(cid + "Container"),
+function getEditor(id) {
+  if( typeof editors[id] == "undefined" ) {
+    editors[id] = {
+      container : document.getElementById(id + "Container"),
       controls  : {
-        all     : document.getElementById(cid + "Controls"),
-        edit    : document.getElementById(cid + "EditCommand"),
-        save    : document.getElementById(cid + "SaveCommand"),
-        cancel  : document.getElementById(cid + "CancelCommand"),
-        saving  : document.getElementById(cid + "SavingState"),
+        all     : document.getElementById(id + "Controls"),
+        edit    : document.getElementById(id + "EditCommand"),
+        save    : document.getElementById(id + "SaveCommand"),
+        cancel  : document.getElementById(id + "CancelCommand"),
+        saving  : document.getElementById(id + "SavingState"),
       },
-      view      : document.getElementById(cid + "View"),      
-      editor    : document.getElementById(cid + "Editor"),
-      raw       : document.getElementById(cid + "Raw"),
-      current   : document.getElementById(cid + "Raw").value
+      view      : document.getElementById(id + "View"),      
+      editor    : document.getElementById(id + "Editor"),
+      raw       : document.getElementById(id + "Raw"),
+      current   : document.getElementById(id + "Raw").value
     }
   }
   // update editor settings
   // lock container height to avoid reflowing when switching view <-> editor
-  editors[cid].container.style.height = editors[cid].container.offsetHeight - 2 + "px";
+  editors[id].container.style.height = editors[id].container.offsetHeight - 2 + "px";
   // make editor as big as the view
-  editors[cid].editor.style.height = editors[cid].view.offsetHeight - 10 + "px";
+  editors[id].editor.style.height = editors[id].view.offsetHeight - 10 + "px";
   // prepare the raw editor (reserve 20px for the editorcontrols
-  editors[cid].raw.style.height = editors[cid].view.offsetHeight - 30 + "px";
+  editors[id].raw.style.height = editors[id].view.offsetHeight - 30 + "px";
 
-  return editors[cid];
+  return editors[id];
 }
 
-function editContent(cid) {
-  with( getEditor(cid) ) {
+function editContent(id) {
+  with( getEditor(id) ) {
     current = raw.value;
     view.style.display = "none";
     controls.all.style.display = "none";
@@ -42,10 +42,10 @@ function editContent(cid) {
   }
 }
 
-function cancelContent(cid) {
-  with( getEditor(cid) ) {
+function cancelContent(id) {
+  with( getEditor(id) ) {
     raw.value = current;
-    renderContent(cid);
+    renderContent(id);
     view.style.display = "block";
     // match new height of view
     container.style.height = view.offsetHeight + "px";
@@ -58,9 +58,9 @@ function cancelContent(cid) {
 
 var converter = null;
 
-function renderContent(cid) {
+function renderContent(id) {
   if( !converter ) { converter = new Breakdown.converter(); }
-  with( getEditor(cid) ) {
+  with( getEditor(id) ) {
     view.innerHTML = converter.makeHtml( raw.value );
     converter.activateHtml( function() {
       // images might not yet be loaded at this point, causing incorrect
@@ -68,15 +68,15 @@ function renderContent(cid) {
       // resizing the container
       setTimeout( function() {
           // match new height of view
-          getEditor(cid).container.style.height = view.offsetHeight + "px";
+          getEditor(id).container.style.height = view.offsetHeight + "px";
       }, 100 );
     } );
   }
 }
 
-function previewContent(cid) {
-  renderContent(cid);
-  with( getEditor(cid) ) {
+function previewContent(id) {
+  renderContent(id);
+  with( getEditor(id) ) {
     view.style.display = "block";
     // match new height of view
     container.style.height = view.offsetHeight + "px";
@@ -90,15 +90,15 @@ function previewContent(cid) {
   }
 }
 
-function saveContent(cid) {
-  with( getEditor(cid) ) {
+function saveContent(id) {
+  with( getEditor(id) ) {
     controls.edit.className   = "command inactive";
     controls.save.className   = "command inactive";
     controls.cancel.className = "command inactive";
     controls.saving.className = "state active";
-    __remote__.store( cid, raw.value, function(cid) {
+    __remote__.store( id, raw.value, function(id) {
       return function confirmSave( response ) {
-        with( getEditor(cid) ) {
+        with( getEditor(id) ) {
           if( response != "ok" ) { 
             notify( "saving failed: " + response );
             controls.save.className = "command active";
@@ -108,7 +108,7 @@ function saveContent(cid) {
           controls.saving.className = "state inactive";
         }
       }
-    }(cid) );
+    }(id) );
   }
 }
 

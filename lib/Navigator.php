@@ -30,7 +30,7 @@ class Navigator extends Singleton {
   }
   
   function getCurrentSectionNavigation() {
-    $currentSectionID = Context::getInstance()->path->getRootID();    
+    $currentSectionID = str_replace( "-", " ", Context::$request->url[0] );
     $section = $this->sections[$currentSectionID];
     return $section ? join( "\n", $section ) : "";
   }

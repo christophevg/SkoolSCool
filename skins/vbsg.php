@@ -37,7 +37,7 @@ class VbsgSkin extends Skin {
   }
   
   private function mainTemplate($content) {
-    $pathPrefix = str_repeat( '../', count(Context::getInstance()->path->asArray()) );
+    $pathPrefix = str_repeat( '../', count(Context::$request->path) );
     return <<<EOT
 <html>
 <head>
@@ -56,7 +56,7 @@ class VbsgSkin extends Skin {
   <![endif]-->
 </head>
 <body>
-  <div class="page-{$this->content->cid}">
+  <div class="page-{$this->content->id}">
     
     <div class="wrapper">
     
@@ -110,7 +110,7 @@ EOT;
     $html = Breakdown::getConverter()->makeHtml("* [home]\n".(string)$navigation);
     $html = ereg_replace( '</?p>','', $html );
     // add class to show current (TODO: do this in a clean way ;-) )
-    $root = str_replace( " ", "-", Context::getInstance()->path->getRootID() );
+    $root = Context::$request->url[0];
     $html = str_replace( "<li><a href=\"$root\">", 
                          "<li class=\"selected\"><a href=\"$root\">", 
                          $html );
@@ -140,11 +140,11 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <script>
-var bodyContent = "{$this->content->cid}";
+var bodyContent = "{$this->content->id}";
 </script>
-<div id="{$this->content->cid}Container" class="container">
+<div id="{$this->content->id}Container" class="container">
   {$this->editControls}
-  <div id="{$this->content->cid}View" class="body">
+  <div id="{$this->content->id}View" class="body">
     {$this->contentAsHtml}
   </div>
   {$this->itemEditor}
@@ -157,7 +157,7 @@ EOT;
   }
   
   protected function hasSubNavigation() {
-    return ( ( $this->content->cid != "home" ) and 
+    return ( ( $this->content->id != "home" ) and 
              ( get_class($this->content) == "PageContent" ) and
              ( Navigator::getInstance()->currentSectionHasNavigation() ) );
   }
@@ -167,9 +167,9 @@ EOT;
     $navigation = Navigator::getInstance()->getCurrentSectionNavigation();
     $html = Breakdown::getConverter()->makeHtml($navigation);
     // TODO: do this in a "nicer" way ;-)
-    $self = Context::getInstance()->path->asString();
+    $self = join( '/', Context::$request->url );
     $html = str_replace( "<li><a href=\"$self\">", 
-                         "<li class=\"selected\"><a href=\"{$this->content->cid}\">", 
+                         "<li class=\"selected\"><a href=\"{$this->content->id}\">", 
                          $html );
     return <<<EOT
     <div id="_subnavigation" class="_subnavigation">
@@ -184,9 +184,9 @@ EOT;
       $lc_command = strtolower($command);
       $state = $isActive ? " active" : " inactive";
       $html .= <<<EOT
-      <div id="{$this->content->cid}{$command}Command" 
+      <div id="{$this->content->id}{$command}Command" 
            class="icon {$lc_command} command{$state}"
-           onclick="{$lc_command}Content('{$this->content->cid}');"></div>
+           onclick="{$lc_command}Content('{$this->content->id}');"></div>
 EOT;
     }
     return $html;
@@ -201,11 +201,11 @@ EOT;
     foreach( array( "Saving" => false ) as $state => $isActive ) {
       $activation = $isActive ? " active" : "";
       $states .= <<<EOT
-      <div id="{$this->content->cid}{$state}State" class="icon wait state{$activation}"></div>
+      <div id="{$this->content->id}{$state}State" class="icon wait state{$activation}"></div>
 EOT;
     }
     return <<<EOT
-<div id="{$this->content->cid}Controls" class="controls">
+<div id="{$this->content->id}Controls" class="controls">
 {$commands}{$states}</div>
 EOT;
   }
@@ -213,7 +213,7 @@ EOT;
   protected function itemEditor() {
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
-<div id="{$this->content->cid}Editor" class="editor">
+<div id="{$this->content->id}Editor" class="editor">
   {$this->content->editor}
   {$this->editorControls}
 </div>
@@ -224,7 +224,7 @@ EOT;
     $commands = $this->generateCommands( array( "preview" => true,
                                                 "cancel"  => true ) );
     return <<<EOT
-<div id="{$this->content->cid}EditorControls" class="editorcontrols">
+<div id="{$this->content->id}EditorControls" class="editorcontrols">
   {$commands}
 </div>
 EOT;
@@ -274,8 +274,8 @@ EOT;
 
   private function contentAllowsComments() {
     return  ( ! $this->user->isAnonymous() )
-         && $this->content->cid != "home" 
-         && $this->content->cid != "fotoboek"
+         && $this->content->id != "home" 
+         && $this->content->id != "fotoboek"
          && $this->content->author != "system";
   }
   
@@ -300,8 +300,11 @@ EOT;
 
   protected function PageContentAsEmbedded() {
     $commentCount = count($this->content->children);
+    // check if requested content is actual embedded content
+    $requested = Context::$request->object;
+    $requested = $requested == $this->content->id ? "" : $requested;
     return <<<EOT
-<div class="embedded page {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
+<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
   {$this->contentAsHtml}
   <div class="embedded socialbar">
     {$commentCount}
@@ -313,7 +316,7 @@ EOT;
   protected function AlbumContentAsItem() {
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
-<div class="embedded album {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
+<div class="embedded album {$this->content->id}" onclick="javascript:window.location='{$this->content->id}';">
   <img class="key" src="images/215x139/{$this->content->key}"><br>
   <p class="label">{$this->content->label}</p>
 </div>
@@ -322,7 +325,7 @@ EOT;
 
   protected function AlbumContentAsEmbedded() {
     return <<<EOT
-<div class="embedded album {$this->content->cid}" onclick="javascript:window.location='{$this->content->cid}';">
+<div class="embedded album {$this->content->id}" onclick="javascript:window.location='{$this->content->id}';">
   <h1>Fotoboek</h1>
   <img class="key" src="images/215x139/{$this->content->key}"><br>
   <p class="label">{$this->content->label}</p>
@@ -334,11 +337,11 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     $albumPrefix = "";
     if( $album = $this->content->parent ) {
-      $albumPrefix = "{$album->cid}/";
+      $albumPrefix = "{$album->id}/";
     }
     return <<<EOT
 <div class="picture preview">
-  <a href="$albumPrefix{$this->content->cid}"
+  <a href="$albumPrefix{$this->content->id}"
     ><img src="images/75x75/{$this->content->file}"><br>
     {$this->content->label}</a>
 </div>
@@ -362,7 +365,7 @@ EOT;
     if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="embedded picture">
-<a href="{$this->content->cid}">
+<a href="{$this->content->id}">
   <img src="images/{$this->content->file}"><br>
   {$this->content->label}
 </a>
@@ -372,12 +375,12 @@ EOT;
 
   protected function previousPicture() {
     if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->cid, $album->children );
-      $albumPrefix = "{$album->cid}/";
+      $current = array_search( $this->content->id, $album->children );
+      $albumPrefix = "{$album->id}/";
       if( $current > 0 ) {
         $prev = Content::get($album->children[$current - 1]);
         return <<<EOT
-  <a href="$albumPrefix{$prev->cid}"><img src="images/75x75/{$prev->file}"></a>
+  <a href="$albumPrefix{$prev->id}"><img src="images/75x75/{$prev->file}"></a>
 EOT;
       }
     }
@@ -387,12 +390,12 @@ EOT;
   
   protected function nextPicture() {
     if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->cid, $album->children );
-      $albumPrefix = "{$album->cid}/";
+      $current = array_search( $this->content->id, $album->children );
+      $albumPrefix = "{$album->id}/";
       if( $current < count($album->children) - 1 ) {
         $next = Content::get($album->children[$current + 1]);
         return <<<EOT
-  <a href="$albumPrefix{$next->cid}"><img src="images/75x75/{$next->file}"></a>
+  <a href="$albumPrefix{$next->id}"><img src="images/75x75/{$next->file}"></a>
 EOT;
       }
     }
@@ -430,7 +433,6 @@ EOT;
     return <<<EOT
 <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
 | <a href="javascript:" onclick="showPopup('register');">registreren</a>
-<div class="icon command refresh" onclick="javascript:window.location='?initMockData=true';"></div>
 EOT;
   }
 
@@ -442,7 +444,6 @@ EOT;
 {$this->user} ({$this->user->role}) 
 | <a href="?action=logout">afmelden</a>
 | <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
-<a href="?initMockData=true"><div class="icon refresh"></div></a>
 EOT;
   }
 
@@ -519,14 +520,13 @@ provide us with the information below and we'll start your registration right
 now.
     </p>
 
-    <p>
-      <form action="./" method="post">
-        username : <input name="login"><br>
-        password : <input type="password" name="pass"><br>
-        repeat password : <input type="password" name="pass"><br>
-        <input type="submit" value="register">
-      </form>
-    </p>
+    <form action="./" method="post">
+      username : <input name="login"><br>
+      password : <input type="password" name="pass"><br>
+      repeat password : <input type="password" name="pass"><br>
+      <input type="submit" value="register">
+    </form>
+
   </div>
 </div>
 

@@ -13,38 +13,10 @@ include_once 'lib/SkoolSCool.php';
  */
 $skin = Skin::get( 'vbsg' );
 
-/**
- * content requests are passed through the 'cid' (content id) get parameter
- * example: http://skoolscool.org/index.php?cid=somePage
- * at server level this can be rewritten
- * example: http://skoolscool.org/somePage
- * By default we show the home-page.
- */
-$request = isset($_GET['cid']) ? $_GET['cid'] : 'home';
-
-/**
- * a request can contain a path and an object identifier:
- * http://skoolscool.org/someSection/someSubSection/somePage
- * An object can be called through many different paths, which just creates
- * a context.
- */
-$path = split( "/", $request );
-if( !is_array($path) ) { $path = array( $path ); }
-$request = array_pop( $path );
-
-// publish the contextual path
-EventBus::getInstance()->publish( 
-  new Event(EventType::NAVIGATION, "access path: " . join("/", $path), $path));
-
-/**
- * get the current user
- */
-$user = SessionManager::getInstance()->currentUser;
-
-/**
- * content can be SHOWn in full or be EMBEDded
- */
-$style = isset( $_GET['embed'] ) ? "embed" : "show";
+// a few short-hands from the request
+$user    = Context::$currentUser;
+$request = Context::$request->object;
+$style   = Context::$request->style;
 
 /**
  * retrieve the relevant content
@@ -74,12 +46,12 @@ if( $content = Content::get( $request ) ) {
     } elseif( $newContent ) {
       // else if don't know the type, show the newContent "wizard" page
       $content = Content::get('newContent');
-      $content->replace( '{{cid}}', $request );
+      $content->replace( '{{id}}', $request );
       $event = new Event( EventType::ACTION, "new content: $request", $request );
     } else {
       // if we're not even requested to create new content ... it's unknown
       $content = Content::get('unknownContent');
-      $content->replace( '{{cid}}', $request );
+      $content->replace( '{{id}}', $request );
       $event = new Event( EventType::ACTION, "unknown content: $request", $request );
     }
   }
@@ -92,9 +64,12 @@ EventBus::getInstance()->publish( $event );
 if( isset($_POST['comment']) ) {
   // create new CommentConente object
   $data = $_POST['comment'];
-  $cid = time();
-  $comment = new CommentContent( $cid, array( "author" => $user->login, "data" => $data ) );
-  Objects::getStore( 'persistent' )->in( 'content' )->put( $comment );
+  print $data;
+  $id = time();
+  $comment = new CommentContent( array( id     => $id, 
+                                        author => $user->login, 
+                                        body   => $data ) );
+  Objects::getStore( 'persistent' )->put( $comment );
   // add object to children of current content
   $content->addChild( $comment );
 }

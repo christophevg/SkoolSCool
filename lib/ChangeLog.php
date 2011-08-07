@@ -9,8 +9,16 @@
 class ChangeLog extends Singleton implements EventHandler {
   function handleEvent( $event ) {
     $changes = Content::get( 'changes' );
+    if( ! $changes ) { $changes = $this->create(); }
     $changes->prepend( "* " . (string)$event ."\n" );
     $changes->persist();
+  }
+  
+  private function create() {
+    $changes = new PageContent( array( id     => 'changes', 
+                                       author => User::get('system'),
+                                       body   => "# Changelog\n\n" ) );
+    return Objects::getStore('persistent')->put( $changes );
   }
 }
 

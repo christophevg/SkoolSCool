@@ -1,10 +1,6 @@
 <?php
 
 class AlbumContent extends Content {
-  public function setData( $data ) {
-    $this->data = unserialize($data);
-  }
-
   public function render() {
     return $this->body;
   }
@@ -12,17 +8,17 @@ class AlbumContent extends Content {
   public function __get( $prop ) {
     switch($prop) {
       case "key"  :
-        return Content::get($this->data[$prop])->file;
+        return Content::get($this->$prop)->file;
         break;
       case "label":
       case "body" :
-        return $this->data[$prop];
+        return $this->$prop;
     }
   }
 
   public function editor() {
     return <<<EOT
-<textarea id="{$this->cid}Raw" class="raw">
+<textarea id="{$this->id}Raw" class="raw">
 {$this->data->body}
 </textarea><br>
 EOT;

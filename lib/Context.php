@@ -2,88 +2,53 @@
 
 /**
  * Context
- * A central object representing the context in which a given request is
- * processed. It registers a lot of handlers with the EventBus to receive
- * information about what is happening within the application. This
- * information is correlated and the resulting contextual state is then
- * offered to the application for querying.
+ * A central static object representing the context in which a given request 
+ * is processed.
+ * It contains a request object that can be queried for information about
+ * the current request.
  */
 
 class Context {
-  static $singleton;
-  
-  var $items = array();
-  
-  function getInstance() {
-    if( ! isset(self::$singleton) ) {
-      self::$singleton = new Context();
-      self::$singleton->init();
-    }
-    return self::$singleton;
-  }
-
-  private function __construct() {}
-  
-  function init() {
-    foreach( array( "path" ) as $item ) {
-      $builderName = ucfirst($item) . "Builder";
-      $builder = new $builderName();
-      $this->items[$item] = $builder;
-    }
-  }
-  
-  function refresh() {
-    foreach( $this->items as $name => $builder ) {
-      $builder->registerWith( EventBus::getInstance() );
-    }
-  }
-  
-  function __get($item) {
-    return $this->items[$item];
-  }
+  static $request;     
+  static $currentUser;
 }
 
-abstract class ContextBuilder implements EventHandler {
-  function registerWith( $eventBus ) {
-    foreach( $this->getEventTypes() as $type ) {
-      $eventBus->subscribe( $this, $type );
-    }
-  }
-
-  abstract function getEventTypes();
-}
+// populate context
+Context::$request     = Request::getInstance();
+Context::$currentUser = SessionManager::getInstance()->currentUser;
 
 /**
- * PathBuilder looks at ContentRequest Events and builds a path leading up to
- * the currently rendered object.
+ * content requests are passed through the 'id' (content id) get parameter
+ * example: http://skoolscool.org/index.php?id=somePage
+ * at server level this can be rewritten
+ * example: http://skoolscool.org/somePage
+ * By default we show the home-page.
+ *
+ * A request can contain a path and an object identifier:
+ * http://skoolscool.org/someSection/someSubSection/somePage
+ * An object can be called through many different paths, which just creates
+ * a context.
  */
-class PathBuilder extends ContextBuilder {
+class Request extends Singleton {
+  var $url;       // path + object
+  var $path;      // URL path leading up to the $object
+  var $object;    // Actually requested object == last part of the path
+  var $style;     // e.g. Embedded
   
-  function getEventTypes() {
-    return array( EventType::NAVIGATION );
-  }
-  
-  var $path = array();
-  var $page;
+  function init() {
+    $request = isset($_GET['id']) ? $_GET['id'] : 'home';
 
-  function handleEvent( $event ) {
-    if( is_array( $event->sender ) ) {
-      $this->path = $event->sender;
-    } elseif( get_class( $event->sender ) == "PageContent" ) {
-      $this->page = $event->sender;
-    }
-  }
-  
-  function asArray() {
-    return $this->path;
-  }
+    // path = array
+    $this->path = split( "/", $request );
+    if( !is_array($this->path) ) { $this->path = array( $this->path ); }
 
-  function getRootID() {
-    return str_replace( "-", " ", count($this->path) > 0 ? 
-                        $this->path[0] : $this->page->cid );
-  }
-  
-  function asString() {
-    return join( "/", $this->asArray() ) . "/" . $this->page->cid;
+    // url = path + object
+    $this->url = $this->path;
+
+    // object = last part of path
+    $this->object = array_pop( $this->path );
+
+    // style = embedded or show
+    $this->style = isset( $_GET['embed'] ) ? "embed" : "show";
   }
 }

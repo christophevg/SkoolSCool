@@ -80,9 +80,8 @@ abstract class Skin {
   protected function subContent() {
     $subContent = "";
     foreach( $this->content->children as $child ) {
-      $obj = Content::get($child);
-      $obj->parent = $this->content;
-      $subContent .= $this->show( $obj );
+      $child->parent = $this->content;
+      $subContent .= $this->show( $child );
     }
     return $subContent;
   }
