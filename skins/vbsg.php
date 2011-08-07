@@ -433,6 +433,7 @@ EOT;
     return <<<EOT
 <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
 | <a href="javascript:" onclick="showPopup('register');">registreren</a>
+| <a href="javascript:" onclick="showPopup('contact');">contacteer ons</a>
 EOT;
   }
 
@@ -444,6 +445,7 @@ EOT;
 {$this->user} ({$this->user->role}) 
 | <a href="?action=logout">afmelden</a>
 | <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
+| <a href="javascript:" onclick="showPopup('contact');">contacteer ons</a>
 EOT;
   }
 
@@ -556,6 +558,24 @@ function addContent() {
             </select><br><br>
       <span class="label">Naam</span><input type="text" id="addcontent-name"><br>
       <center><input type="submit" class="button" value="voeg toe..." onclick="addContent();"></center>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="contact-overlay">
+	<div id="contact-popup" class="popup withRoundedCorners">
+		<div class="actions">
+			<a id="closer" href="#" class="icon close"
+				 onclick="hidePopup('addcontent');"><span>close</span></a>
+		</div>
+		<h1>Contacteer ons...</h1>
+    <form id="contact-form" method="POST">
+      <span class="label">Naam</span>
+      <input name="name" type="text" id="contact-name"><br>
+      <br>
+      <span class="label">Boodschap</span>
+      <textarea name="message" id="contact-boodschap" rows="4" cols="30"></textarea>
+      <center><input type="submit" class="button" value="verzend..." onclick=""></center>
     </form>
   </div>
 </div>

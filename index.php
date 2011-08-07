@@ -6,7 +6,6 @@
  * @author Christophe VG <contact+skoolscool@christophe.vg>
  */
 
-
 // include all functionality
 include_once 'lib/SkoolSCool.php';
 
@@ -61,8 +60,13 @@ EventBus::getInstance()->publish( $event );
 /**
  * process incoming new content
  */
+if( isset($_POST['message']) ) {
+  mail( Config::$feedbackMail, "Nieuw Bericht op de website",
+        "Van : {$_POST['name']}:\n\n{$_POST['message']}\n" );
+}
+
 if( isset($_POST['comment']) ) {
-  // create new CommentConente object
+  // create new CommentContent object
   $data = $_POST['comment'];
   print $data;
   $id = time();

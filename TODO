@@ -1,28 +1,18 @@
 - add Calendar
-- add sub-content
-- NewsContent extends PageContent
-- add contact link + popup
-- create filter + session/cookie storage
-- complete registration page + procedure
-- implement moderation
-- OpenID (Facebook connect?)
-- full documentation
-- clean up notices, logging
-- dataprovider for picasaweb
+- add news based on contentpages
+- create dataprovider for picasaweb
 - add album/photo upload via zipfile + tagging
-- news based on contentpages
-- 
+- create registration page + procedure
+- add moderation
+- add OpenID support
+- add Facebook connect
+- clean up notices, logging
+- add full documentation
 
 ---
 
 bugs
 - preview with dynamic replaced content e.g. {{id}}
-- (albumpreview) included embedded content sometimes doesn't load
-
----
-
-enhancements
-- reload page after structural change to reflect changes without manual action
 
 ---
 
@@ -31,5 +21,6 @@ after launch:
 
 ---
 
-to deide:
+to decide/review:
 - later: add search
+- filter + session/cookie storage

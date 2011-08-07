@@ -102,6 +102,7 @@ LI {
 
 .popup .label {
   display: inline-block;
+  vertical-align: top;
   width: 100px;
 }
 
@@ -508,7 +509,7 @@ DIV.postit.belangrijk {
   bottom: 4px;
 }
 
-/* REGISTRATION / LOGON */
+/* REGISTRATION / LOGON / CONTACT */
 
 DIV.openid .providers {
   padding-left: 40px;
@@ -525,7 +526,7 @@ DIV.credentials FORM {
   text-align: center;
 }
 
-FORM INPUT, FORM SELECT {
+FORM INPUT, FORM SELECT, FORM TEXTAREA {
   font-size: 12pt;
   padding: 10px;
   border: none;
