@@ -38,14 +38,9 @@ include_once dirname(__FILE__) . '/AuthorizationManager.php';
 
 include_once dirname(__FILE__) . '/SessionManager.php';
 
-include_once dirname(__FILE__) . '/Context.php';
-
 // create initial structure for the transient object cache store
 if( ! is_array( SessionManager::getInstance()->ObjectCache ) ) {
-  SessionManager::getInstance()->ObjectCache = array(
-    'users'   => array(),
-    'content' => array()
-  );
+  SessionManager::getInstance()->ObjectCache = array();
 }
 
 include_once dirname(__FILE__) . '/Navigator.php';
@@ -59,3 +54,5 @@ if( isset($_POST['login']) && isset($_POST['pass']) ) {
 if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
   SessionManager::getInstance()->logout();
 }
+
+include_once dirname(__FILE__) . '/Context.php';

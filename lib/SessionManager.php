@@ -34,10 +34,12 @@ class SessionManager extends Singleton implements EventPublisher {
                               "{$this->currentUser->login} logged out",
                               $this ) );
     }
-    // login as an anonymous user to logout
+    // destroy session
+    $_SESSION = array();
+    session_destroy();
+    session_start();
+    // retrieve an anonymous user
     $this->currentUser = User::get();
-    // clean up session a bit
-    session_regenerate_id();
   }
   
   function __set( $key, $value ) {
