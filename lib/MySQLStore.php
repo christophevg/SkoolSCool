@@ -89,4 +89,6 @@ class MySQLStore implements ObjectStore {
   }
 }
 
-Objects::addStore( 'persistent', new MySQLStore( 'vbsg', 'vbsg', 'vbsg' ) );
+Objects::addStore( 'persistent', new MySQLStore( Config::$dbname, 
+                                                 Config::$user, 
+                                                 Config::$pass ) );

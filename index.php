@@ -6,17 +6,17 @@
  * @author Christophe VG <contact+skoolscool@christophe.vg>
  */
 
-include_once 'lib/SkoolSCool.php';
 
-/**
- * get the (default) skin (=look & feel)
- */
-$skin = Skin::get( 'vbsg' );
+// include all functionality
+include_once 'lib/SkoolSCool.php';
 
 // a few short-hands from the request
 $user    = Context::$currentUser;
 $request = Context::$request->object;
 $style   = Context::$request->style;
+
+// get the (default) skin (=look & feel)
+$skin = Skin::get( 'vbsg' );
 
 /**
  * retrieve the relevant content
