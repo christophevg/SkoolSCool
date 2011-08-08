@@ -4,7 +4,19 @@
  * Logging
  */
 
-class Logger extends Singleton implements EventHandler {
+class Logger implements EventHandler {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new Logger();
+      self::$instance->init();
+    }
+    return self::$instance;
+  }
+
   function init() {
     $this->fp = fopen( 'skoolscool.log', 'a' );
   }
@@ -19,4 +31,4 @@ class Logger extends Singleton implements EventHandler {
 }
 
 // register the logger with the eventbus (implicitly for ANY event)
-EventBus::getInstance()->subscribe( Logger::getInstance() );
+// EventBus::getInstance()->subscribe( Logger::getInstance() );

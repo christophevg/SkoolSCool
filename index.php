@@ -68,7 +68,6 @@ if( isset($_POST['message']) ) {
 if( isset($_POST['comment']) ) {
   // create new CommentContent object
   $data = $_POST['comment'];
-  print $data;
   $id = time();
   $comment = new CommentContent( array( id     => $id, 
                                         author => $user->login, 

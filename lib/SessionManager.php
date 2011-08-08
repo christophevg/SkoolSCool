@@ -2,7 +2,19 @@
 
 session_start();
 
-class SessionManager extends Singleton implements EventPublisher {
+class SessionManager implements EventPublisher {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new SessionManager();
+      self::$instance->init();
+    }
+    return self::$instance;
+  }
+
   private $store;
 
   function init() {

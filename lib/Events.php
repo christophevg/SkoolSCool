@@ -48,7 +48,19 @@ class Event {
   }
 }
 
-class EventBus extends Singleton {
+class EventBus {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new EventBus();
+      self::$instance->init();
+    }
+    return self::$instance;
+  }
+
   private $subscriptions;
   
   function init() {

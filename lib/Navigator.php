@@ -7,7 +7,19 @@
  * tree and provides information about it.
  */
 
-class Navigator extends Singleton {
+class Navigator {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new Navigator();
+      self::$instance->init();
+    }
+    return self::$instance;
+  }
+
   private $sections = array();
   
   function init() {

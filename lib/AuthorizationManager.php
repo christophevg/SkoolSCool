@@ -1,6 +1,17 @@
 <?php
 
-class AuthorizationManager extends Singleton {
+class AuthorizationManager {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new AuthorizationManager();
+    }
+    return self::$instance;
+  }
+
   private $accessor;
 
   /**

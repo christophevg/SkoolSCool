@@ -29,7 +29,19 @@ Context::$currentUser = SessionManager::getInstance()->currentUser;
  * An object can be called through many different paths, which just creates
  * a context.
  */
-class Request extends Singleton {
+class Request {
+  private static $instance = null;
+
+  final private function __construct() {}
+  final private function __clone() {}
+  final static public function getInstance() {
+    if( !isset(self::$instance) ) {
+      self::$instance = new Request();
+      self::$instance->init();
+    }
+    return self::$instance;
+  }
+
   var $url;       // path + object
   var $path;      // URL path leading up to the $object
   var $object;    // Actually requested object == last part of the path

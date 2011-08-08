@@ -13,8 +13,6 @@ include_once dirname(__FILE__) . '/Config.php';
 
 include_once dirname(__FILE__) . '/Console.php';
 
-include_once dirname(__FILE__) . '/Singleton.php';
-
 include_once dirname(__FILE__) . '/Objects.php';
 
 include_once dirname(__FILE__) . '/SessionStore.php';

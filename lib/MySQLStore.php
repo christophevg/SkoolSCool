@@ -79,12 +79,14 @@ class MySQLStore implements ObjectStore {
       array_push( $placeholders, ":$prop" );
     }
 
-    $stmt = $this->dbh->prepare( 'INSERT INTO allobjects ( ' . 
+    $stmt = $this->dbh->prepare( 'INSERT INTO allObjects ( ' . 
                                  join( ', ', $columns ) . 
                                  ' ) VALUES ( ' .
                                  join( ', ', $placeholders ) . ' );' );
-    $stmt->execute( $props );
-    
+    if( $stmt->execute( $props ) === false ) {
+      print_r( $stmt->errorInfo() );
+    }
+
     return $object;
   }
 }

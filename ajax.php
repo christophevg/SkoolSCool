@@ -8,8 +8,6 @@
 
 include_once 'lib/SkoolSCool.php';
 
-sleep(1);
-
 /**
  * ajax requests pass the object through the 'id' (content id) post parameter
  * and the data to update using the 'data' post parameter
