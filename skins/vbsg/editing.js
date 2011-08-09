@@ -19,7 +19,8 @@ function getEditor(id) {
       view      : document.getElementById(id + "View"),      
       editor    : document.getElementById(id + "Editor"),
       raw       : document.getElementById(id + "Raw"),
-      current   : document.getElementById(id + "Raw").value
+      current   : document.getElementById(id + "Raw").value,
+      subcontent: document.getElementById("subcontent")
     }
   }
   // update editor settings
@@ -39,6 +40,7 @@ function editContent(id) {
     view.style.display = "none";
     controls.all.style.display = "none";
     editor.style.display = "block";
+    subcontent.style.display = "none";
   }
 }
 
@@ -47,6 +49,7 @@ function cancelContent(id) {
     raw.value = current;
     renderContent(id);
     view.style.display = "block";
+    subcontent.style.display = "block";
     // match new height of view
     container.style.height = view.offsetHeight + "px";
     controls.all.style.display = "block";
@@ -59,7 +62,6 @@ function cancelContent(id) {
 var converter = null;
 
 function renderContent(id) {
-  console.log( window.contentClass );
   if( window.contentClass == "HtmlContent" ) {
     with( getEditor(id) ) {
       view.innerHTML = raw.value;

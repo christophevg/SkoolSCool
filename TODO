@@ -1,10 +1,11 @@
-- add offline-notification based on sentinel file
-- add news based on contentpages
-- create dataprovider for picasaweb
-- add album/photo upload via zipfile + tagging
+minimal before 1/9:
+- create js front-end for picasaweb
+- add album/photo upload via zipfile
+- add OpenID support using LightOpenID
+
+optionally later:
 - create registration page + procedure
 - add moderation
-- add OpenID support
 - add Facebook connect
 - clean up notices, logging
 - add full documentation

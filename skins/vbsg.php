@@ -88,7 +88,7 @@ class VbsgSkin extends Skin {
         {$this->insertSectionNavigation}
         <div class="content">
 {$content}
-          <div class="subcontent">
+          <div id="subcontent" class="subcontent">
 {$this->subContent}
 <br clear="both"><br>
 {$this->addNewComment}
@@ -155,7 +155,7 @@ var contentClass = "$contentClass";
   <div id="{$this->content->id}View" class="body">
     {$this->contentAsHtml}
   </div>
-  {$this->itemEditor}
+  {$this->bodyEditor}
 </div>
 EOT;
   }
@@ -218,7 +218,7 @@ EOT;
 EOT;
   }
   
-  protected function itemEditor() {
+  protected function bodyEditor() {
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
 <div id="{$this->content->id}Editor" class="editor">
@@ -280,10 +280,11 @@ EOT;
 EOT;
   }
 
+  // TODO : move this to AuthorizationManager
   private function contentAllowsComments() {
     return  ( ! $this->user->isAnonymous() )
-         && $this->content->id != "home" 
-         && $this->content->id != "fotoboek"
+         && $this->content->id     != "home" 
+         && $this->content->id     != "fotoboek"
          && $this->content->author != "system";
   }
   
@@ -320,104 +321,18 @@ EOT;
 </div>
 EOT;
   }
-  
-  protected function AlbumContentAsItem() {
-    if( ! $this->contentIsReadable() ) { return ""; }
+
+  protected function NewsListAsEmbedded() {
+    // check if requested content is actual embedded content
+    $requested = Context::$request->object;
+    $requested = $requested == $this->content->id ? "" : $requested;
     return <<<EOT
-<div class="embedded album {$this->content->id}" onclick="javascript:window.location='{$this->content->id}';">
-  <img class="key" src="images/215x139/{$this->content->key}"><br>
-  <p class="label">{$this->content->label}</p>
+<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
+  {$this->contentAsHtml}
 </div>
 EOT;
-  }
-
-  protected function AlbumContentAsEmbedded() {
-    return <<<EOT
-<div class="embedded album {$this->content->id}" onclick="javascript:window.location='{$this->content->id}';">
-  <h1>Fotoboek</h1>
-  <img class="key" src="images/215x139/{$this->content->key}"><br>
-  <p class="label">{$this->content->label}</p>
-</div>
-EOT;
-  }
-
-  protected function PictureContentAsItem() {
-    if( ! $this->contentIsReadable() ) { return ""; }
-    $albumPrefix = "";
-    if( $album = $this->content->parent ) {
-      $albumPrefix = "{$album->id}/";
-    }
-    return <<<EOT
-<div class="picture preview">
-  <a href="$albumPrefix{$this->content->id}"
-    ><img src="images/75x75/{$this->content->file}"><br>
-    {$this->content->label}</a>
-</div>
-EOT;
-  }
-
-  protected function PictureContentAsBody() {
-    if( ! $this->contentIsReadable() ) { return ""; }
-    $picture = <<<EOT
-<div class="picture">
-  {$this->content->label}<br>
-  {$this->previousPicture}
-  <img src="images/{$this->content->file}">
-  {$this->nextPicture}
-</div>
-EOT;
-    return $this->mainTemplate($picture);
-  }
-
-  protected function PictureContentAsEmbedded() {
-    if( ! $this->contentIsReadable() ) { return ""; }
-    return <<<EOT
-<div class="embedded picture">
-<a href="{$this->content->id}">
-  <img src="images/{$this->content->file}"><br>
-  {$this->content->label}
-</a>
-</div>
-EOT;
-  }
-
-  protected function previousPicture() {
-    if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->id, $album->children );
-      $albumPrefix = "{$album->id}/";
-      if( $current > 0 ) {
-        $prev = Content::get($album->children[$current - 1]);
-        return <<<EOT
-  <a href="$albumPrefix{$prev->id}"><img src="images/75x75/{$prev->file}"></a>
-EOT;
-      }
-    }
-    // in case we don't provide a previous picture, provide a placeholder
-    return '<span class="placeholder">&nbsp</span>';
   }
   
-  protected function nextPicture() {
-    if( $album = $this->getCurrentAlbum() ) {
-      $current = array_search( $this->content->id, $album->children );
-      $albumPrefix = "{$album->id}/";
-      if( $current < count($album->children) - 1 ) {
-        $next = Content::get($album->children[$current + 1]);
-        return <<<EOT
-  <a href="$albumPrefix{$next->id}"><img src="images/75x75/{$next->file}"></a>
-EOT;
-      }
-    }
-    // in case we don't provide a previous picture, provide a placeholder
-    return '<span class="placeholder">&nbsp</span>';
-  }
-
-  private function getCurrentAlbum() {
-    $album = Content::get(Context::getInstance()->path->getRootID());
-    if( get_class($album) == "AlbumContent" ) {
-      return $album;
-    }
-  }
-
   /**
    * Returns the content that is currently in scope as HTML. Content is stored
    * as a BreakDown encoded string unless the content object tells us, it 
@@ -442,7 +357,6 @@ EOT;
   private function showLogin() {
     return <<<EOT
 <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
-| <a href="javascript:" onclick="showPopup('register');">registreren</a>
 | <a href="javascript:" onclick="showPopup('contact');">contacteer ons</a>
 EOT;
   }
@@ -563,8 +477,7 @@ function addContent() {
       <input type="hidden" name="mode"   value="edit">
       <span class="label">Soort</span><select name="type">
               <option value="PageContent">Een nieuwe tekstpagina</option>
-              <option value="AlbumContent">Een nieuw fotoalbum</option>
-              <option value="PictureContent">Een foto</option>
+              <option value="NewsContent">Een nieuws bericht</option>
             </select><br><br>
       <span class="label">Naam</span><input type="text" id="addcontent-name"><br>
       <center><input type="submit" class="button" value="voeg toe..." onclick="addContent();"></center>
@@ -576,7 +489,7 @@ function addContent() {
 	<div id="contact-popup" class="popup withRoundedCorners">
 		<div class="actions">
 			<a id="closer" href="#" class="icon close"
-				 onclick="hidePopup('addcontent');"><span>close</span></a>
+				 onclick="hidePopup('contact');"><span>close</span></a>
 		</div>
 		<h1>Contacteer ons...</h1>
     <form id="contact-form" method="POST">

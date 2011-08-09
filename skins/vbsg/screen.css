@@ -259,15 +259,19 @@ DIV.embedded {
 }
 
 DIV.embedded H1 {
-  margin-bottom: 5  px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  white-space: nowrap; 
 }
 
-DIV.embedded.news,
-DIV.embedded.album1 {
+DIV.embedded.nieuws,
+DIV.embedded.laatste-foto,
+DIV.embedded.agenda {
   width: 295px;
 }
 
-DIV.placeholder.album1 {
+DIV.placeholder.laatste-foto,
+DIV.placeholder.agenda {
   border: 1px solid #15ACC7; /* needed on Safari to avoid bad rendering */
 }
 
@@ -534,11 +538,14 @@ FORM INPUT, FORM SELECT, FORM TEXTAREA {
 }
 
 FORM INPUT.button, FORM SELECT {
-  margin-top: 20px;
   color: white;
-  text-transform: uppercase;
   background-color: #2890BD;
   border: 1px solid #1F78A2;
+}
+
+FORM INPUT.button {
+  margin-top: 20px;
+  text-transform: uppercase;
 }
 
 A.openid {

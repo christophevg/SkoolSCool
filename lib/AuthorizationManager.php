@@ -78,6 +78,34 @@ class AuthorizationManager {
   }
 
   /**
+   * Validator for Users accessing NewsPages
+   * @param $user accessing a newspage
+   * @param $page accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the page
+   *         according to the given access style.
+   */
+  private function UserNewsContent( $user, $page, $access = 'read' ) {
+    // policy: read access for all / write access for known users only
+    return $access == "read" ? true : ! $user->isAnonymous();
+  }
+
+  /**
+   * Validator for Users accessing NewsLists
+   * @param $user accessing a newslist
+   * @param $page accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the page
+   *         according to the given access style.
+   */
+  private function UserNewsList( $user, $page, $access = 'read' ) {
+    // policy: read access for all / no write access
+    return $access == "read";
+  }
+
+  /**
    * Validator for Users accessing HtmlPages
    * @param $user accessing a page
    * @param $page accessed by the user
@@ -104,33 +132,5 @@ class AuthorizationManager {
     // policy: read access only for known users / write access for authr/admin
     return $access == "read" ? ! $user->isAnonymous()
       : $comment->hasAuthor($user) || $user->isAdmin();
-  }
-
-  /**
-   * Validator for Users accessing Albums
-   * @param $user accessing an album
-   * @param $album accessed by the user
-   * @param $access string representation of the access type. 
-   *        possible values: read, update
-   * @return Boolean indicating if the user can access the comment
-   *         according to the given access style.
-   */
-  private function UserAlbumContent( $user, $album, $access = 'read' ) {
-    // policy: read access for all / write access for known users only
-    return $access == "read" ? true : ! $user->isAnonymous();
-  }
-
-  /**
-   * Validator for Users accessing Pictures
-   * @param $user accessing a picture
-   * @param $picture accessed by the user
-   * @param $access string representation of the access type. 
-   *        possible values: read, update
-   * @return Boolean indicating if the user can access the comment
-   *         according to the given access style.
-   */
-  private function UserPictureContent( $user, $picture, $access = 'read' ) {
-    // policy: read access for all / write access for known users only
-    return $access == "read" ? true : ! $user->isAnonymous();
   }
 } 

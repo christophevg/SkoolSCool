@@ -52,5 +52,8 @@ abstract class Object {
 interface ObjectStore {
   public function fetch( $id       );
   public function put  ( $object   );
-  /* public function find ( $criteria ); */
+
+  public function filter( $property, $value );
+  public function orderBy( $by, $desc );
+  public function retrieve( $limit );
 }

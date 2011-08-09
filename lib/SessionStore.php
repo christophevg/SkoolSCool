@@ -17,4 +17,17 @@ class SessionStore implements ObjectStore {
     $set[$object->id] = $object;
     SessionManager::getInstance()->{$this->name} = $set;
   }
+  
+  // TODO:
+  public function filter( $property, $value ) {
+    return $this;
+  }
+  
+  public function orderBy( $by, $desc ) {
+    return $this;
+  }
+  
+  public function retrieve( $limit ) {
+    return array();
+  }
 }

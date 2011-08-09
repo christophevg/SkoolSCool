@@ -34,10 +34,10 @@ if( $content == null ) {
     $newContent = isset( $_GET['create'] );
     $type = isset( $_GET['type'] ) 
             && in_array( $_GET['type'], 
-              array( 'PageContent', 'AlbumContent', 'PictureContent' ) ) ?
+              array( 'PageContent', 'NewsContent' ) ) ?
               $_GET['type'] : null;
     // if we're requested to create new content and a known type (get param 
-    // type=[page|album|picture]) is provided, create a new content object
+    // type=[page|news]) is provided, create a new content object
     if( $newContent && $type ) {
       $content = Content::create($type, $request);
     } elseif( $newContent ) {

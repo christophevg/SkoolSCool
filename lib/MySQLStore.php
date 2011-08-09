@@ -13,6 +13,10 @@ class MySQLStore implements ObjectStore {
   private $dbname;
   
   private $fetchStmt; // prepared fetch statement to retrieve objects by id
+  
+  private $filters;
+  private $orderBy;
+  private $order;
 
   /**
    * The constructor accepts the name of the database instance along with a
@@ -22,6 +26,7 @@ class MySQLStore implements ObjectStore {
     $this->dbname = $dbname;
     $this->user   = $user;
     $this->pass   = $pass;
+    $this->clear();
     $this->connect();
   }
   
@@ -88,6 +93,54 @@ class MySQLStore implements ObjectStore {
     }
 
     return $object;
+  }
+  
+  public function filter( $property, $value ) {
+    $this->filters[$property] = $value;
+    return $this;
+  }
+  
+  public function orderBy( $by, $desc ) {
+    $this->orderBy = $by;
+    $this->order   = $desc;
+    return $this;
+  }
+  
+  public function retrieve($limit) {
+    $clauses = array();
+    // TODO: preparing stmt can be put in a caching factory
+    foreach( $this->filters as $column => $value ) {
+      $clauses[] = "$column = \"$value\"";
+    }
+    $orderBy = isset($this->orderBy) ? 
+      " ORDER BY {$this->orderBy}" . ( $this->order ? " DESC" : "") : "";
+    $limit = isset($limit) ? " LIMIT $limit" : "";
+
+    $stmt = $this->dbh->prepare( 'SELECT * FROM objects WHERE ' . 
+                                 join( ' AND ', $clauses ) .
+                                 $orderBy .
+                                 $limit );
+
+    if( $stmt->execute( $props ) === false ) {
+      print_r( $stmt->errorInfo() );
+    }
+
+    $this->clear();
+
+    // fetch all rows, and construct objects
+    $rows = $stmt->fetchAll();
+    $objects = array();
+    foreach( $rows as $row ) {
+      array_push( $objects, $this->constructObject( $row ) );
+    }
+
+    return $objects;
+  }
+  
+  public function clear() {
+    $this->filters = array();
+    $this->orderBy = null;
+    $this->order   = null;
   }
 }
 
