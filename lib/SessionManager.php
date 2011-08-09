@@ -2,7 +2,7 @@
 
 session_start();
 
-class SessionManager implements EventPublisher {
+class SessionManager {
   private static $instance = null;
 
   final private function __construct() {}
@@ -22,8 +22,6 @@ class SessionManager implements EventPublisher {
     // no currentUser stored
     if( ! $this->currentUser ) { 
       $this->logout();
-      EventBus::getInstance()
-        ->publish( new Event( EventType::SECURITY, "new session", $this ));
     }
   }
   
@@ -32,20 +30,10 @@ class SessionManager implements EventPublisher {
     $user = User::get( $login );
     if( $user && $pass && $user->authenticate( $pass ) ) {
       $this->currentUser = $user;
-      EventBus::getInstance()
-        ->publish( new Event( EventType::SECURITY,
-                              "{$this->currentUser->login} logged in",
-                              $this ) );
     }
   }
 
   function logout() {
-    if( $this->currentUser ) {
-      EventBus::getInstance()
-        ->publish( new Event( EventType::SECURITY,
-                              "{$this->currentUser->login} logged out",
-                              $this ) );
-    }
     // destroy session
     $_SESSION = array();
     session_destroy();

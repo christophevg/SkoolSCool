@@ -20,13 +20,12 @@ $skin = Skin::get( 'vbsg' );
 /**
  * retrieve the relevant content
  */
-if( $content = Content::get( $request ) ) {
-  $event = new Event( EventType::NAVIGATION, "$style $request", $content );    
-} else {
+$content = Content::get( $request );
+
+if( $content == null ) {
   // unknown user finding unknown content == missing content
   if( $user->isAnonymous() ) {
     $content = Content::get('404');
-    $event = new Event( EventType::ERROR, "missing content: $request", $request );
   } else {
     // if the current user has write access, he might be requesting to create
     // new content
@@ -41,21 +40,17 @@ if( $content = Content::get( $request ) ) {
     // type=[page|album|picture]) is provided, create a new content object
     if( $newContent && $type ) {
       $content = Content::create($type, $request);
-      $event = new Event( EventType::ACTION, "new content ($type): $request", $request );
     } elseif( $newContent ) {
       // else if don't know the type, show the newContent "wizard" page
       $content = Content::get('newContent');
       $content->replace( '{{id}}', $request );
-      $event = new Event( EventType::ACTION, "new content: $request", $request );
     } else {
       // if we're not even requested to create new content ... it's unknown
       $content = Content::get('unknownContent');
       $content->replace( '{{id}}', $request );
-      $event = new Event( EventType::ACTION, "unknown content: $request", $request );
     }
   }
 }
-EventBus::getInstance()->publish( $event );
 
 /**
  * process incoming new content

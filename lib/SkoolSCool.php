@@ -11,16 +11,10 @@ setlocale(LC_ALL, 'nl_NL');
 
 include_once dirname(__FILE__) . '/Config.php';
 
-include_once dirname(__FILE__) . '/Console.php';
-
 include_once dirname(__FILE__) . '/Objects.php';
 
 include_once dirname(__FILE__) . '/SessionStore.php';
 include_once dirname(__FILE__) . '/MySQLStore.php';
-
-include_once dirname(__FILE__) . '/Events.php';
-include_once dirname(__FILE__) . '/Logging.php';
-include_once dirname(__FILE__) . '/ChangeLog.php';
 
 include_once dirname(__FILE__) . '/User.php'; 
 
@@ -29,9 +23,6 @@ include_once dirname(__FILE__) . '/PageContent.php';
 include_once dirname(__FILE__) . '/HtmlContent.php';
 
 include_once dirname(__FILE__) . '/CommentContent.php';
-
-include_once dirname(__FILE__) . '/AlbumContent.php';
-include_once dirname(__FILE__) . '/PictureContent.php';
 
 include_once dirname(__FILE__) . '/Skin.php';
 
