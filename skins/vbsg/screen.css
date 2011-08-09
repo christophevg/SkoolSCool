@@ -273,6 +273,7 @@ DIV.embedded.agenda {
 DIV.placeholder.laatste-foto,
 DIV.placeholder.agenda {
   border: 1px solid #15ACC7; /* needed on Safari to avoid bad rendering */
+  min-height: 200px;
 }
 
 DIV.embedded.page {

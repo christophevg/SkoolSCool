@@ -114,6 +114,34 @@ We willen jullie bedanken voor alles wat julle voor onze kinderen, de juffen en 
 -- HTML
 INSERT INTO allObjects ( type, id, name, body )
 VALUES
+( 'HtmlContent', 'agenda', 'system',
+  '<h1>Agenda</h1>
+  
+  <ul id="agenda">
+  </ul>
+  
+  <script>
+    var myGoogle = Cal.providers.google
+      .connect( "gvbs.schriek-grootlo%40scarlet.be" );
+
+    new Cal.calendar()
+       .useDataProvider( myGoogle )
+       .processWith    ( display  )
+       .findEvents     ();
+
+    console.log("waiting");
+    function display( events ) {
+      console.log(events);
+      var html = "";
+      for( var day in events ) {
+        for( var e=0; e<events[day].length; e++ ) {
+          html += "<li>" + day + " " + events[day][e].subject + "</li>";
+        }
+      }
+      document.getElementById( "agenda" ).innerHTML = html;
+    }
+  </script>' ),
+
 ( 'HtmlContent', 'kalender', 'system',
   '<a href="javascript:" onclick="myCalendar.gotoPreviousMonth()">vorige</a> - 
   <a href="javascript:" onclick="myCalendar.gotoToday()">vandaag</a> - 

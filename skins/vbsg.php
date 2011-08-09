@@ -326,6 +326,17 @@ EOT;
 EOT;
   }
 
+  protected function HtmlContentAsEmbedded() {
+    // check if requested content is actual embedded content
+    $requested = Context::$request->object;
+    $requested = $requested == $this->content->id ? "" : $requested;
+    return <<<EOT
+<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
+  {$this->content}
+</div>
+EOT;
+  }
+
   protected function NewsListAsEmbedded() {
     // check if requested content is actual embedded content
     $requested = Context::$request->object;
