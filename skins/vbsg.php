@@ -312,9 +312,13 @@ EOT;
     // check if requested content is actual embedded content
     $requested = Context::$request->object;
     $requested = $requested == $this->content->id ? "" : $requested;
+    $excerpt =   $this->contentAsHtml();
+    if( strlen($excerpt) > 500 ) { 
+      $excerpt = substr( $excerpt, 0, 500 ) ."...";
+    }
     return <<<EOT
 <div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
-  {$this->contentAsHtml}
+  {$excerpt}
   <div class="embedded socialbar">
     {$commentCount}
   </div>

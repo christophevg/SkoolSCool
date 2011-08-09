@@ -1,12 +1,16 @@
 minimal before 1/9:
-- create js front-end for picasaweb
-- add album/photo upload via zipfile
-- add OpenID support using LightOpenID
+- fix date of NewsContent
+- create js front-end for cal.js in list format (upcoming)
+- create js front-end for picasaweb (external project)
+- add album/photo upload via zipfile (from link on overview page)
 
 optionally later:
 - create registration page + procedure
+- add OpenID support using LightOpenID
 - add moderation
 - add Facebook connect
+
+in general:
 - clean up notices, logging
 - add full documentation
 
