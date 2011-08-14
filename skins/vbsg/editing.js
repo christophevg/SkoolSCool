@@ -26,10 +26,14 @@ function getEditor(id) {
   // update editor settings
   // lock container height to avoid reflowing when switching view <-> editor
   editors[id].container.style.height = editors[id].container.offsetHeight - 2 + "px";
-  // make editor as big as the view
-  editors[id].editor.style.height = editors[id].view.offsetHeight - 10 + "px";
-  // prepare the raw editor (reserve 20px for the editorcontrols
-  editors[id].raw.style.height = editors[id].view.offsetHeight - 30 + "px";
+
+  // IE cannot calculate offsetHeight when the element isn't rendered
+  if( editors[id].view.offsetHeight ) {
+    // make editor as big as the view
+    editors[id].editor.style.height = editors[id].view.offsetHeight - 10 + "px";
+    // prepare the raw editor (reserve 20px for the editorcontrols
+    editors[id].raw.style.height = editors[id].view.offsetHeight - 30 + "px";
+  }
 
   return editors[id];
 }

@@ -236,6 +236,7 @@ VALUES
 </div>
   
   <script>
+    window.onload = function() {
     // setup a connection to Google, using one of the default providers
     var myGoogle = Cal.providers.google
       .connect( "gvbs.schriek-grootlo%40scarlet.be" );
@@ -283,11 +284,12 @@ VALUES
 
     // when an event has been selected ...
     function showEvent(event, elem) {
-      with( document.getElementById("details") ) {
+      if( console && typeof console.log == "function" ) {
         console.log( "TODO", event.subject, event.type, event.calendar, 
                      event.start, event.end );
       }
     }
+  }
   </script>' );
 
 -- SPECIALS
