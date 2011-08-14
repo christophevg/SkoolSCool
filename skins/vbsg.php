@@ -37,11 +37,11 @@ class VbsgSkin extends Skin {
   }
   
   private function mainTemplate($content) {
-    $pathPrefix = str_repeat( '../', count(Context::$request->path) );
+    $base = 'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']);
     return <<<EOT
 <html>
 <head>
-  <base href="./${pathPrefix}">
+  <base href="${base}/">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
