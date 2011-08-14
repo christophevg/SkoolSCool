@@ -1,8 +1,14 @@
 minimal before 1/9:
+- IE7+ support
+- improve calendar viewer + add details
 - fix date of NewsContent
-- create js front-end for cal.js in list format (upcoming)
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
+- feeback/bug reporting
+- document content = Page + file upload + DocumentList
+- Generic List<Content> type ?
+- add HTML type of content -> only admin
+  - validate authorization on request acceptance
 
 optionally later:
 - create registration page + procedure

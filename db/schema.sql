@@ -129,9 +129,7 @@ VALUES
        .processWith    ( display  )
        .findEvents     ();
 
-    console.log("waiting");
     function display( events ) {
-      console.log(events);
       var html = "";
       for( var day in events ) {
         for( var e=0; e<events[day].length; e++ ) {
@@ -143,7 +141,57 @@ VALUES
   </script>' ),
 
 ( 'HtmlContent', 'kalender', 'system',
-  '<a href="javascript:" onclick="myCalendar.gotoPreviousMonth()">vorige</a> - 
+  '<div id="navigator">
+    <div class="header">
+      <span id="navigator-now"></span>
+      <div class="controls">  
+        <a href="javascript:" onclick="myNavigator.gotoPreviousMonth()">&lt;</a>
+        <a href="javascript:" onclick="myNavigator.gotoNextMonth()">&gt;</a>
+      </div>
+    </div>
+
+  <table id="c2" class="navigator">
+    <tr>
+      <td id="c21"></td>      <td id="c22"></td>      <td id="c23"></td>
+      <td id="c24"></td>      <td id="c25"></td>
+      <td id="c26" class="weekend"></td>      
+      <td id="c27" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c28"></td>      <td id="c29"></td>      <td id="c210"></td>
+      <td id="c211"></td>     <td id="c212"></td>
+      <td id="c213" class="weekend"></td>      
+      <td id="c214" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c215"></td>     <td id="c216"></td>     <td id="c217"></td>
+      <td id="c218"></td>     <td id="c219"></td>
+      <td id="c220" class="weekend"></td>      
+      <td id="c221" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c222"></td>     <td id="c223"></td>     <td id="c224"></td>
+      <td id="c225"></td>     <td id="c226"></td>
+      <td id="c227" class="weekend"></td>      
+      <td id="c228" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c229"></td>     <td id="c230"></td>     <td id="c231"></td>
+      <td id="c232"></td>     <td id="c233"></td>
+      <td id="c234" class="weekend"></td>      
+      <td id="c235" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c236"></td>     <td id="c237"></td>     <td id="c238"></td>
+      <td id="c239"></td>     <td id="c240"></td>
+      <td id="c241" class="weekend"></td>      
+      <td id="c242" class="weekend"></td>
+    </tr>
+  </table>
+</div>
+
+  <div id="calendar">
+  <a href="javascript:" onclick="myCalendar.gotoPreviousMonth()">vorige</a> - 
   <a href="javascript:" onclick="myCalendar.gotoToday()">vandaag</a> - 
   <a href="javascript:" onclick="myCalendar.gotoNextMonth()">volgende</a>
   <span id="now"></span>
@@ -185,6 +233,7 @@ VALUES
       <td id="c142" class="weekend"></td>
     </tr>
   </table>
+</div>
   
   <script>
     // setup a connection to Google, using one of the default providers
@@ -198,20 +247,37 @@ VALUES
                         .notifyOfEventSelection  ( showEvent )
                         .gotoToday();
 
+    var noDataProvider = {
+      getData : function getData(start, end, cb, ctx) { 
+        cb.apply( ctx, [ {} ] );
+      }
+    }
+    
+    function gotoDay(day) {
+      updateLabel(day, document.getElementById("navigator-now"));
+      this.gotoDate(day) // on the navigator
+      myCalendar.gotoDate(day) // and on the calendar itself
+    }
+
+    var myNavigator = Cal.activate            ( "c2"           )
+                         .useDataProvider     ( noDataProvider )
+                         .notifyOfDaySelection( gotoDay        )
+                         .gotoToday();
+                         
     // when a new date/day has been selected...
     // this handler is executed within the scope of the calendar, so "this"
     // _is_ the actual calendar, so we can call any method on this.
     function processDaySelection(day) {
-      updateLabel(day);   // update the label to match the new date
+      updateLabel(day, document.getElementById("now")); // update the label
       this.gotoDate(day); // we only got the event, now we want to set it
     }
 
     // add a textual representation of the month of the given date
-    function updateLabel(date) {
+    function updateLabel(date, label) {
       var monthLabel = [ "januari", "februari", "maart", "april", "mei",
                          "juni", "juli", "augustus", "september", "oktober",
                          "november", "december" ];
-      document.getElementById("now").innerHTML = 
+      label.innerHTML = 
         monthLabel[date.getMonth()] + " " + date.getFullYear();
     }
 

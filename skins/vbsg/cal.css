@@ -39,17 +39,13 @@ TABLE.calendar TD DIV.timed.event {
 }
 
 TABLE.calendar TD DIV.event {
-  overflow:hidden;
-  white-space: nowrap; 
-  font: 9pt Arial;
+  font: 8pt Arial;
   margin-top: 2px;
   cursor: pointer;
 }
 
 TABLE.calendar TD DIV.allday.event {
-  overflow:hidden;
-  white-space: nowrap; 
-  font: 9pt Arial;
+  font: 8pt Arial;
   margin-top: 2px;
   border-width: 1px;
   border-style: solid;
@@ -88,5 +84,103 @@ TABLE.calendar TD.unused {
 }
 
 SPAN#now {
+  margin-left: 15px;
+}
+
+/* NAVIGATOR */
+
+DIV#navigator{
+  margin-right: 15px;
+  float:left;
+}
+
+DIV#navigator DIV.header {
+  height: 30px;
+}
+
+DIV#navigator DIV.header DIV.controls {
+  float: right;
+}
+
+TABLE.navigator {
+  border: 1px solid #85D4E1;
+  border-collapse: collapse;
+}
+
+TABLE.navigator TH,
+TABLE.navigator TD {
+  border: 1px solid #85D4E1;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+TABLE.navigator TH {
+  height: 8px;
+}
+
+TABLE.navigator DIV.container {
+  overflow: auto;
+  width: 20px;
+  height: 20px;
+}
+
+TABLE.navigator TD DIV.number {
+  color: #85D4E1;
+  padding-top: 1px;
+  padding-left: 1px;
+  font: 8pt Arial;
+  text-align: center;
+}
+
+TABLE.navigator TD DIV.event {
+  font: 6pt Arial;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+TABLE.navigator TD DIV.allday.event {
+  font: 6pt Arial;
+  margin-top: 1px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+TABLE.navigator TD DIV.timed.event {
+  background-color: transparent;
+}
+
+TABLE.navigator TD.leading {
+  background-color: #2B91A6;
+  cursor: none;
+}
+
+
+TABLE.navigator TD.trailing {
+  background-color: #2B91A6;
+  cursor: none;
+}
+
+TABLE.navigator TD.weekend {
+  background-color: #2B91A6;
+}
+
+TABLE.navigator TD.today {
+  background-color: #26BDD8;
+}
+
+TABLE.navigator TD.selected {
+  background-color: #EEEEEE;
+}
+
+TABLE.navigator TD.selected DIV.number{
+  color: #2B91A6;
+}
+
+TABLE.navigator TD.unused {
+  display: none;
+}
+
+SPAN#navigatornow {
   margin-left: 15px;
 }
