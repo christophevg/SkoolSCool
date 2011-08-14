@@ -42,6 +42,7 @@ class VbsgSkin extends Skin {
 <html>
 <head>
   <base href="${base}/">
+  <meta http-equiv="X-UA-Compatible" content="IE=8" >
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
