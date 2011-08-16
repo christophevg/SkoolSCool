@@ -14,7 +14,7 @@ function getEditor(id) {
         edit    : document.getElementById(id + "EditCommand"),
         save    : document.getElementById(id + "SaveCommand"),
         cancel  : document.getElementById(id + "CancelCommand"),
-        saving  : document.getElementById(id + "SavingState"),
+        saving  : document.getElementById(id + "SavingState")
       },
       view      : document.getElementById(id + "View"),      
       editor    : document.getElementById(id + "Editor"),

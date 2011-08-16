@@ -1,5 +1,6 @@
 minimal before 1/9:
-- IE7+ support
+- add OpenID support using LightOpenID
+- added long session support
 - improve calendar viewer + add details
 - fix date of NewsContent
 - create js front-end for picasaweb (external project)
@@ -12,7 +13,6 @@ minimal before 1/9:
 
 optionally later:
 - create registration page + procedure
-- add OpenID support using LightOpenID
 - add moderation
 - add Facebook connect
 

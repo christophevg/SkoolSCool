@@ -1,0 +1,39 @@
+DIV.userbar {
+  width: 570px;
+}
+
+DIV._navigation {
+  width: 830px;
+}
+
+._navigation>UL>LI {
+  padding: 5px;
+  padding-top: 20px;
+  margin-right: 5px;
+}
+
+DIV.embedded {
+  display: inline;
+}
+
+.site.withSubNavigation .content {
+  display: inline;
+}
+
+._subnavigation {
+  display: inline;
+}
+
+.popup .label {
+  display: inline;
+}
+
+.icon {
+	display: inline;
+}
+
+/* calendar */
+ 
+DIV#navigator{
+  width: 160px;
+}
