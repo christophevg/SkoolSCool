@@ -4,3 +4,6 @@
 [submodule "skins/vbsg/cal.js"]
 	path = skins/vbsg/cal.js
 	url = http://github.com/christophevg/cal.js.git
+[submodule "lib/LightOpenIDClient"]
+	path = lib/LightOpenIDClient
+	url = http://github.com/christophevg/LightOpenIDClient.git

@@ -405,13 +405,33 @@ EOT;
     <h1>Aanmelden</h1>
 
 	  <div class="openid">
+      <script>
+      var openid = {
+        config : { 
+          google   : 'https://www.google.com/accounts/o8/id',
+          myopenid : 'http://myopenid.com',
+          yahoo    : 'http://me.yahoo.com'
+        },
+        signin : function(provider) {
+          document.getElementById('openid').value = this.config[provider];
+          document.getElementById('openidForm').submit();
+          return false;
+        }
+      };
+      </script>
+
+      <form id="openidForm" action="./" method="post">
+        <input id="openid" type="hidden" name="openid_identifier" /> 
+      </form>
+
 	    <p>Meld je aan met een van je bestaande profielen:</p>
 	    <div class="providers">
-      <a href="javascript:" class="openid google"></a>
-      <a href="javascript:" class="openid facebook"></a>
-      <a href="javascript:" class="openid yahoo"></a>
-      <a href="javascript:" class="openid myopenid"></a>
+        <a href="javascript:openid.signin('google');" class="openid google"></a>
+        <!--<a href="javascript:" class="openid facebook"></a>-->
+        <a href="javascript:openid.signin('yahoo');" class="openid yahoo"></a>
+        <a href="javascript:openid.signin('myopenid');" class="openid myopenid"></a>
       </div>
+
 	  </div>
 	  
 	  <div class="credentials">

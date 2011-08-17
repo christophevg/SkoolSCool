@@ -24,10 +24,16 @@ abstract class Object {
   var $updated;
   
   function __construct( $d ) {
-    $this->id      = isset($d['id'])      ? $d['id']                 : null;
+    $this->id      = isset($d['id'])      ? $d['id'] : $this->generateID();
     $this->created = isset($d['created']) ? strtotime($d['created']) : null;
     $this->updated = isset($d['updated']) ? strtotime($d['updated']) : null;
   }
+  
+  private function generateID() {
+    $type = get_class($this);
+    $num = rand();
+    return "{$type}{$count}";
+  } 
   
   function toHash() {
     return array( id => $this->id );

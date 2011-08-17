@@ -32,14 +32,14 @@ class User extends Object {
   }
   
   /**
-   * Private constructor.
+   * Constructor.
    * @param $data hash containing user information
    */
   function __construct( $data = array() ) {
     parent::__construct( $data );
     
-    $this->name   = isset( $data['name']   ) ? $data['name'] : null;
-    $this->pass   = isset( $data['pass']   ) ? $data['pass'] : null;
+    $this->name   = isset( $data['name']   ) ? $data['name']  : $this->id;
+    $this->pass   = isset( $data['pass']   ) ? $data['pass']  : null;
     $this->email  = isset( $data['email']  ) ? $data['email'] : null;
     $this->rights = isset( $data['rights'] ) ?
                     split( ',', $data['rights'] ) : array();

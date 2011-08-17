@@ -5,6 +5,9 @@
  */
  
 class Config {
+  // site configuration
+  static $server = 'localhost';
+
   // database connection
   static $dbname = 'vbsg';
   static $user   = 'vbsg';

@@ -9,6 +9,9 @@
 // include all functionality
 include_once 'lib/SkoolSCool.php';
 
+// bootstrap: setup caches, process login requests
+include_once 'bootstrap.php';
+
 // a few short-hands from the request
 $user    = Context::$currentUser;
 $request = Context::$request->object;

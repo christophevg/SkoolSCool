@@ -32,6 +32,14 @@ class SessionManager {
       $this->currentUser = $user;
     }
   }
+  
+  function login_federated( $id ) {
+    if( $identity = Identity::get( $id ) ) {
+      if( $user = User::get( $identity->user ) ) {
+        $this->currentUser = $user;
+      }
+    }
+  }
 
   function logout() {
     // destroy session

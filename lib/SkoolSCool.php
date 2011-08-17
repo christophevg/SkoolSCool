@@ -9,6 +9,8 @@
 date_default_timezone_set('Europe/Brussels');
 setlocale(LC_ALL, 'nl_NL');
 
+include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
+
 include_once dirname(__FILE__) . '/Config.php';
 
 include_once dirname(__FILE__) . '/Objects.php';
@@ -17,6 +19,7 @@ include_once dirname(__FILE__) . '/SessionStore.php';
 include_once dirname(__FILE__) . '/MySQLStore.php';
 
 include_once dirname(__FILE__) . '/User.php'; 
+include_once dirname(__FILE__) . '/Identity.php'; 
 
 include_once dirname(__FILE__) . '/Content.php';
 include_once dirname(__FILE__) . '/PageContent.php';
@@ -33,21 +36,8 @@ include_once dirname(__FILE__) . '/AuthorizationManager.php';
 
 include_once dirname(__FILE__) . '/SessionManager.php';
 
-// create initial structure for the transient object cache store
-if( ! is_array( SessionManager::getInstance()->ObjectCache ) ) {
-  SessionManager::getInstance()->ObjectCache = array();
-}
-
 include_once dirname(__FILE__) . '/Navigator.php';
 
-// process login post
-if( isset($_POST['login']) && isset($_POST['pass']) ) {
-  SessionManager::getInstance()->login( $_POST['login'], $_POST['pass'] );
-}
-
-// process logout get
-if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
-  SessionManager::getInstance()->logout();
-}
+include_once dirname(__FILE__) . '/Request.php';
 
 include_once dirname(__FILE__) . '/Context.php';

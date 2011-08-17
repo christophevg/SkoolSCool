@@ -11,6 +11,9 @@ CREATE TABLE allObjects (
   pass     VARCHAR(128),
   email    VARCHAR(128),
   rights   VARCHAR(128),
+  
+  -- IDENTITY
+  user     VARCHAR(128), -- references a User's object
 
   -- CONTENT
   author   VARCHAR(128), -- references another Object's id

@@ -1,10 +1,9 @@
 minimal before 1/9:
-- add OpenID support using LightOpenID
 - added long session support
-- improve calendar viewer + add details
-- fix date of NewsContent
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
+- improve calendar viewer + add details
+- fix date of NewsContent
 - feeback/bug reporting
 - document content = Page + file upload + DocumentList
 - Generic List<Content> type ?
