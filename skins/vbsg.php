@@ -110,6 +110,8 @@ class VbsgSkin extends Skin {
   </div>
 
 {$this->insertPopups}
+
+{$this->insertMessages}
 </body>
 <!-- this page was generated in {$this->duration} seconds  -->
 </html>
@@ -543,6 +545,14 @@ function addContent() {
   </div>
 </div>
 EOT;
+  }
+  
+  /**
+   * Inserts the HTML representing messages that were collected during the
+   * processing of the request.
+   */
+  protected function insertMessages() {
+    return Messages::getInstance()->asHtml();
   }
   
   /**

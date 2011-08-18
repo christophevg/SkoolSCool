@@ -30,15 +30,20 @@ class SessionManager {
     $user = User::get( $login );
     if( $user && $pass && $user->authenticate( $pass ) ) {
       $this->currentUser = $user;
+    } else {
+      Messages::getInstance()->addWarning( I18N::$FAILED_LOGON );
     }
   }
   
   function login_federated( $id ) {
     if( $identity = Identity::get( $id ) ) {
       if( $user = User::get( $identity->user ) ) {
-        $this->currentUser = $user;
+        return $this->currentUser = $user;
       }
     }
+    // if for some reason the login failed, reset the session to clear
+    // everything
+    $this->logout();
   }
 
   function logout() {

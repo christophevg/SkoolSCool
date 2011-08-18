@@ -28,7 +28,9 @@ if( SessionManager::getInstance()->currentUser->isAnonymous()
   SessionManager::getInstance()->login_federated( $openid_user->identity );
   // if we have no current user now, the OpenID-based user is a new one,
   // point him to the registration popup
-  // TODO: later
+  if( SessionManager::getInstance()->currentUser->isAnonymous() ) {
+    Messages::getInstance()->addWarning( I18N::$UNKNOWN_FEDERATED_LOGIN );
+  }
 }
 
 // init Context
