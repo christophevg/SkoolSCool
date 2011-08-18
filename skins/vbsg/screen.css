@@ -103,7 +103,7 @@ LI {
 .popup .label {
   display: inline-block;
   vertical-align: top;
-  width: 100px;
+  width: 80px;
 }
 
 .withRoundedCorners {
@@ -536,6 +536,7 @@ FORM INPUT, FORM SELECT, FORM TEXTAREA {
   padding: 10px;
   border: none;
   background-color: #C9EDF4;
+  width: 150px;
 }
 
 FORM INPUT.button, FORM SELECT {

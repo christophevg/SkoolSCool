@@ -12,7 +12,7 @@ CREATE TABLE allObjects (
   email    VARCHAR(128),
   rights   VARCHAR(128),
   
-  -- IDENTITY
+  -- IDENTITY / SESSION
   user     VARCHAR(128), -- references a User's object
 
   -- CONTENT

@@ -1,5 +1,4 @@
 minimal before 1/9:
-- add long session support
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
 - improve calendar viewer + add details

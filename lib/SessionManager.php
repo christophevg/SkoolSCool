@@ -29,7 +29,7 @@ class SessionManager {
     if( ! $this->currentUser->isAnonymous() ) { $this->logout(); }
     $user = User::get( $login );
     if( $user && $pass && $user->authenticate( $pass ) ) {
-      $this->currentUser = $user;
+      return $this->setUser($user);
     } else {
       Messages::getInstance()->addWarning( I18N::$FAILED_LOGON );
     }
@@ -38,14 +38,23 @@ class SessionManager {
   function login_federated( $id ) {
     if( $identity = Identity::get( $id ) ) {
       if( $user = User::get( $identity->user ) ) {
-        return $this->currentUser = $user;
+        return $this->setUser($user);
       }
     }
     // if for some reason the login failed, reset the session to clear
     // everything
     $this->logout();
   }
-
+  
+  // When we successfully set a new user, post-login, we also create a new
+  // session for one month/30 days
+  private function setUser($user) {
+    $this->currentUser = $user;
+    if( $session = Session::create( $user ) ) {
+      setCookie( "session", $session->id, time() + 3600 * 24 * 30 ,'/' );
+    }
+  }
+  
   function logout() {
     // destroy session
     $_SESSION = array();

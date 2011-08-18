@@ -34,7 +34,7 @@ class Messages {
     $this->messages[] = array( type => $type, body => $message );
   }
   
-  function addIfo( $message ) {
+  function addInfo( $message ) {
     $this->add( $message );
   }
 

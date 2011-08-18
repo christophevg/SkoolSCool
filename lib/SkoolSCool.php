@@ -20,6 +20,8 @@ include_once dirname(__FILE__) . '/Config.php';
 
 include_once dirname(__FILE__) . '/Objects.php';
 
+include_once dirname(__FILE__) . '/Session.php';
+
 include_once dirname(__FILE__) . '/SessionStore.php';
 include_once dirname(__FILE__) . '/MySQLStore.php';
 
