@@ -1,4 +1,4 @@
-FILES=.htaccess ajax.php index.php lib
+FILES=.htaccess ajax.php index.php bootstrap.php lib
 SKIN=vbsg
 
 all: dist
