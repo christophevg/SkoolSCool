@@ -43,6 +43,16 @@ H2 {
   letter-spacing: 2px;
 }
 
+H3 {
+  color: white;
+  margin: 0px;
+  margin-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font: 10pt Verdana;
+  text-decoration: underline;
+}
+
 P {
   color: white;
   font: 10pt Verdana;
