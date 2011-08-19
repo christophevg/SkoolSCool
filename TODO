@@ -1,18 +1,25 @@
 minimal before 1/9:
+- remove social icons
+
+- content clean up scripts + upgrade functionality
+- site is offline modus
+
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
+
 - improve calendar viewer + add details
 - fix date of NewsContent
-- feeback/bug reporting
+
+- feedback/bug reporting
+
 - document content = Page + file upload + DocumentList
 - Generic List<Content> type ?
-- add HTML type of content -> only admin
-  - validate authorization on request acceptance
 
 optionally later:
 - create registration page + procedure
 - add moderation
 - add Facebook connect
+- add Hotmail/OAuth 2.0 support
 
 in general:
 - clean up notices, logging
@@ -25,11 +32,11 @@ bugs
 
 ---
 
-after launch:
-- sept: LibraryContent
-
----
-
 to decide/review:
 - later: add search
 - filter + session/cookie storage
+
+---
+more future features
+- move default content to database
+	- new contenttype: template

@@ -121,6 +121,7 @@ VALUES
   '<h1>Agenda</h1>
   
   <ul id="agenda">
+    <div class="loading"></div>
   </ul>
   
   <script>

@@ -270,6 +270,22 @@ DIV.embedded.agenda {
   width: 295px;
 }
 
+DIV.embedded.agenda UL, DIV.embedded.agenda LI {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;    
+}
+
+DIV.embedded.agenda DIV.loading {
+  padding: 0px;
+  margin: 0px;
+	background-image: url( "images/icons/spinner.gif" );
+	background-position: center center;
+	background-repeat: no-repeat;
+  width: 290px;
+  height: 200px;
+}
+
 DIV.placeholder.laatste-foto,
 DIV.placeholder.agenda {
   border: 1px solid #15ACC7; /* needed on Safari to avoid bad rendering */
@@ -543,6 +559,10 @@ FORM INPUT.button, FORM SELECT {
   color: white;
   background-color: #2890BD;
   border: 1px solid #1F78A2;
+}
+
+FORM SELECT {
+  width: auto;
 }
 
 FORM INPUT.button {
