@@ -396,6 +396,13 @@ EOT;
   }
 
   protected function insertPopups() {
+    return $this->insertLogonPopup()
+         . $this->insertRegisterPopup()
+         . $this->insertAddContentPopup()
+         . $this->insertContactPopup();
+  }
+  
+  protected function insertLogonPopup() {
     return <<<EOT
 <div class="overlay" id="logon-overlay">
   <div id="logon-popup" class="popup withRoundedCorners">
@@ -447,7 +454,11 @@ EOT;
     </div>
   </div>
 </div>
+EOT;
+  }
 
+  protected function insertRegisterPopup() {
+    return <<<EOT
 <div class="overlay" id="register-overlay">
 	<div id="register-popup" class="popup withRoundedCorners">
 		<h1>Ready to register ?</h1>
@@ -497,7 +508,24 @@ now.
 
   </div>
 </div>
+EOT;
+  }
 
+  protected function insertAddContentPopup() {
+    $options = array( PageContent => "Een algemene tekstpagina",
+                      NewsContent => "Een nieuwsbericht",
+                      HtmlContent => "Een HTML pagina" );
+    $html = "";
+    foreach( $options as $type => $label ) {
+      if( AuthorizationManager::getInstance()
+            ->can( Context::$currentUser )
+            ->update( $type ) )
+      {
+        $html .= "<option value=\"$type\">$label</option>\n";
+      }
+    }
+
+    return <<<EOT
 <div class="overlay" id="addcontent-overlay">
 	<div id="addcontent-popup" class="popup withRoundedCorners">
 		<div class="actions">
@@ -517,16 +545,20 @@ function addContent() {
     <form id="addcontent-form" action="?create&mode=edit&type=" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
-      <span class="label">Soort</span><select name="type">
-              <option value="PageContent">Een nieuwe tekstpagina</option>
-              <option value="NewsContent">Een nieuws bericht</option>
-            </select><br><br>
+      <span class="label">Soort</span>
+      <select name="type">
+{$html}
+      </select><br><br>
       <span class="label">Naam</span><input type="text" id="addcontent-name"><br>
       <center><input type="submit" class="button" value="voeg toe..." onclick="addContent();"></center>
     </form>
   </div>
 </div>
+EOT;
+  }
 
+  protected function insertContactPopup() {
+    return <<<EOT
 <div class="overlay" id="contact-overlay">
 	<div id="contact-popup" class="popup withRoundedCorners">
 		<div class="actions">

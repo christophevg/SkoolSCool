@@ -15,9 +15,9 @@ class HtmlContent extends PageContent {
   }
 
   public function createDefaultBody($name) {
-    return "";
+    return str_replace( '%%name%%', $name, Config::$defaultHtmlBody );
   }
-  
+
   public function render() {
     return $this->body;
   }

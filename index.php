@@ -9,60 +9,51 @@
 // include all functionality
 include_once 'lib/SkoolSCool.php';
 
-// bootstrap: setup caches, process login requests
+// bootstrap: setup caches, process login/out requests
 include_once 'bootstrap.php';
 
-// a few short-hands from the request
+// a few short-hands from the context
 $user    = Context::$currentUser;
-$request = Context::$request->object;
-$style   = Context::$request->style;
+$request = Context::$request;
 
 // get the (default) skin (=look & feel)
 $skin = Skin::get( 'vbsg' );
 
-/**
- * retrieve the relevant content
- */
-$content = Content::get( $request );
+// retrieve the relevant content
+$content = Content::get( $request->object );
 
 if( $content == null ) {
-  // unknown user finding unknown content == missing content
-  if( $user->isAnonymous() ) {
-    $content = Content::get('404');
-  } else {
-    // if the current user has write access, he might be requesting to create
-    // new content
-    // check if we're requested to create this page (get param create exists)
-    // and try to retrieve the wanted content type
-    $newContent = isset( $_GET['create'] );
-    $type = isset( $_GET['type'] ) 
-            && in_array( $_GET['type'], 
-              array( 'PageContent', 'NewsContent' ) ) ?
-              $_GET['type'] : null;
-    // if we're requested to create new content and a known type (get param 
-    // type=[page|news]) is provided, create a new content object
-    if( $newContent && $type ) {
-      $content = Content::create($type, $request);
-    } elseif( $newContent ) {
+  // if the current user has write access, he might be requesting to create
+  // new content.
+  if( AuthorizationManager::getInstance()->can( $user )->update() ) {
+    // if we're requested to create new content and a contenttype is provided,
+    // create a new content object
+    if( $request->creation && $request->contentType ) {
+      $content = Content::create( $request->contentType, $request->object );
+    } elseif( $request->creation ) {
       // else if don't know the type, show the newContent "wizard" page
-      $content = Content::get('newContent');
-      $content->replace( '{{id}}', $request );
+      $content = Content::get( 'newContent', $request->full );
     } else {
       // if we're not even requested to create new content ... it's unknown
-      $content = Content::get('unknownContent');
-      $content->replace( '{{id}}', $request );
+      $content = Content::get( 'unknownContent', $request->full );
     }
+  } else {
+    // user without update rights, finding unknown content == missing content
+    $content = Content::get( '404', $request->full );
   }
 }
 
 /**
  * process incoming new content
  */
+ 
+// feedback/content form
 if( isset($_POST['message']) ) {
   mail( Config::$feedbackMail, "Nieuw Bericht op de website",
         "Van : {$_POST['name']}:\n\n{$_POST['message']}\n" );
 }
 
+// comments
 if( isset($_POST['comment']) ) {
   // create new CommentContent object
   $data = $_POST['comment'];
@@ -75,9 +66,8 @@ if( isset($_POST['comment']) ) {
   $content->addChild( $comment );
 }
 
-
 /**
  * show the content to the user using the skin
  * the method reflects the render style
  */
-print $skin->$style( $content )->to( $user );
+print $skin->{Context::$request->style}( $content )->to( $user );

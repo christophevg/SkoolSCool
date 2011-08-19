@@ -38,7 +38,7 @@ class AuthorizationManager {
    * @param $resource representing the accessed resource
    * @return Boolean indicating if the accessor can update the resource
    */
-  final public function update( $resource ) {
+  final public function update( $resource = null ) {
     return $this->check( $this->accessor, $resource, 'update' );
   }
 
@@ -53,11 +53,27 @@ class AuthorizationManager {
    */
   final private function check( $accessor, $resource, $access ) {
     if( is_null( $accessor ) ) { return false; }
-    $validator = get_class($accessor) . get_class($resource);
+    $accessorClass = is_object($accessor) ? get_class($accessor) : $accessor;
+    $resourceClass = is_object($resource) ? get_class($resource) : $resource;
+    $validator = $accessorClass . $resourceClass;
     if( method_exists( $this, $validator ) ) {
       return $this->$validator($accessor, $resource, $access );
     }
     return false;
+  }
+  
+  /**
+   * Validator for Users' generic access
+   * @param $user accessing a page
+   * @param $anything is always null
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access anything
+   *         according to the given access style.
+   */
+  final private function User( $user, $anything, $access = 'read' ) {
+    // policy: read access for all / write access for known users only
+    return $access == 'read' ? true : ! $user->isAnonymous();
   }
 
   /**
@@ -73,7 +89,7 @@ class AuthorizationManager {
     // policy: read access for all / write access for known users only
     // system-owned pages can only be edited by admins
     return $access == "read" ? true :
-      ( $page->hasAuthor(User::get('system')) ?
+      ( is_object($page) && $page->hasAuthor(User::get('system')) ?
         $user->isAdmin() : ! $user->isAnonymous() );
   }
 

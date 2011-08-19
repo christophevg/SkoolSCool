@@ -6,14 +6,20 @@ Objects::addStore( 'transient', new SessionStore( 'ObjectCache' ) );
 abstract class Content extends Object {
   var $author;
   var $children;
+  
+  // this is bad, I know, but I prefer it to be in one place
+  static $types = array( 'PageContent', 'NewsContent', 'HtmlContent' );
 
   // factory method to retrieve a content object.
   // first we look in the persisted objects, in the ObjectStore
   // then we look in the transient/session objects in the ObjectCache
-  static function get( $name = 'home' ) {
+  static function get( $name = 'home', $alias = null ) {
     $object = Objects::getStore('persistent')->fetch( $name );
     if( $object == null ) {
       $object = Objects::getStore('transient')->fetch( $name );
+    }
+    if( $object != null ) {
+      $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
     }
     return $object;
   }
@@ -77,6 +83,8 @@ abstract class Content extends Object {
     $this->children[] = $childContent;
     $this->persist();
   }
+  
+  public function replace($find, $replace) {}
   
   public function isHtml() { return false; }
   

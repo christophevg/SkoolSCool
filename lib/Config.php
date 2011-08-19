@@ -18,6 +18,7 @@ class Config {
   
   // default content
   static $defaultPageBody = "# %%name%%\n\nYour content goes here ...";
+  static $defaultHtmlBody = "<h1>%%name%%</h1>\n\n<p>Your content goes here ...</p>";
 }
 
 // include the local configuration (if available in directory of index.php)
