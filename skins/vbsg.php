@@ -59,6 +59,7 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/ajax.js"></script>
   <script src="./skins/vbsg/popup.js"></script>
   <script src="./skins/vbsg/editing.js"></script>
+  <script src="./skins/vbsg/json2.js"></script>
   <!--[if lt IE 7]>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
   <![endif]-->
@@ -67,7 +68,7 @@ class VbsgSkin extends Skin {
   <![endif]-->
 </head>
 <body>
-  <div class="page-{$this->content->id}">
+  <div class="page-{$this->content->url}">
     
     <div class="wrapper">
     
@@ -154,12 +155,12 @@ EOT;
     $contentClass = get_class( $this->content );
     return <<<EOT
 <script>
-var bodyContent = "{$this->content->id}";
+var bodyContent = "{$this->content->url}";
 var contentClass = "$contentClass";
 </script>
-<div id="{$this->content->id}Container" class="container">
+<div id="{$this->content->url}Container" class="container">
   {$this->editControls}
-  <div id="{$this->content->id}View" class="body">
+  <div id="{$this->content->url}View" class="body">
     {$this->contentAsHtml}
   </div>
   {$this->bodyEditor}
@@ -184,7 +185,7 @@ EOT;
     // TODO: do this in a "nicer" way ;-)
     $self = join( '/', Context::$request->url );
     $html = str_replace( "<li><a href=\"$self\">", 
-                         "<li class=\"selected\"><a href=\"{$this->content->id}\">", 
+                         "<li class=\"selected\"><a href=\"{$this->content->url}\">", 
                          $html );
     return <<<EOT
     <div id="_subnavigation" class="_subnavigation">
@@ -199,9 +200,9 @@ EOT;
       $lc_command = strtolower($command);
       $state = $isActive ? " active" : " inactive";
       $html .= <<<EOT
-      <div id="{$this->content->id}{$command}Command" 
+      <div id="{$this->content->url}{$command}Command" 
            class="icon {$lc_command} command{$state}"
-           onclick="{$lc_command}Content('{$this->content->id}');"></div>
+           onclick="{$lc_command}Content('{$this->content->url}');"></div>
 EOT;
     }
     return $html;
@@ -216,11 +217,11 @@ EOT;
     foreach( array( "Saving" => false ) as $state => $isActive ) {
       $activation = $isActive ? " active" : "";
       $states .= <<<EOT
-      <div id="{$this->content->id}{$state}State" class="icon wait state{$activation}"></div>
+      <div id="{$this->content->url}{$state}State" class="icon wait state{$activation}"></div>
 EOT;
     }
     return <<<EOT
-<div id="{$this->content->id}Controls" class="controls">
+<div id="{$this->content->url}Controls" class="controls">
 {$commands}{$states}</div>
 EOT;
   }
@@ -228,7 +229,7 @@ EOT;
   protected function bodyEditor() {
     if( ! $this->contentIsEditable() ) { return ""; }
     return <<<EOT
-<div id="{$this->content->id}Editor" class="editor">
+<div id="{$this->content->url}Editor" class="editor">
   {$this->content->editor}
   {$this->editorControls}
 </div>
@@ -239,7 +240,7 @@ EOT;
     $commands = $this->generateCommands( array( "preview" => true,
                                                 "cancel"  => true ) );
     return <<<EOT
-<div id="{$this->content->id}EditorControls" class="editorcontrols">
+<div id="{$this->content->url}EditorControls" class="editorcontrols">
   {$commands}
 </div>
 EOT;
@@ -314,23 +315,25 @@ EOT;
 EOT;
   }
 
+  protected function actualRequest() {
+    return Context::$request->id == $this->content->id ? 
+            '' : ' ' . Context::$request->object;
+  }
+
   protected function PageContentAsEmbedded() {
-    // check if requested content is actual embedded content
-    $requested = Context::$request->object;
-    $requested = $requested == $this->content->id ? "" : $requested;
-    $excerpt =   $this->contentAsHtml();
-    $original = Context::$request->full;
-    $more = "";
+    $excerpt   = $this->contentAsHtml();
+    $original  = Context::$request->string;
+    $more      = '';
     if( strlen($excerpt) > 500 ) { 
-      $excerpt = substr( $excerpt, 0, 500 ) ."...";
+      $excerpt = substr( $excerpt, 0, 500 ) . '...';
       $more = <<<EOT
 <p class="more"><a href="{$original}">lees verder...</a></p>
 EOT;
     }
     return <<<EOT
-<div class="embedded page {$this->content->id} $requested">
+<div class="embedded page {$this->content->url}{$this->actualRequest}">
   {$excerpt}
-  {$this->insertSocialBar}
+  {$this->socialBar}
   {$more}
 </div>
 EOT;
@@ -340,7 +343,7 @@ EOT;
     return $this->PageContentAsEmbedded();
   }
   
-  protected function insertSocialBar() {
+  protected function socialBar() {
     // only show socialBar when the user is logged on
     if( $this->user->isAnonymous() ) { return ""; }
     // and only if we're showing the actually requested content
@@ -348,29 +351,23 @@ EOT;
 
     $commentCount = count($this->content->children);
     return <<<EOT
-  <div class="embedded socialbar" onclick="javascript:window.location='{$this->content->id}';">
+  <div class="embedded socialbar" onclick="javascript:window.location='{$this->content->url}';">
     {$commentCount}
   </div>
 EOT;
   }
   
   protected function HtmlContentAsEmbedded() {
-    // check if requested content is actual embedded content
-    $requested = Context::$request->object;
-    $requested = $requested == $this->content->id ? "" : $requested;
     return <<<EOT
-<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
+<div class="embedded page {$this->content->url}{$this->actualRequest}">
   {$this->content}
 </div>
 EOT;
   }
 
   protected function NewsListAsEmbedded() {
-    // check if requested content is actual embedded content
-    $requested = Context::$request->object;
-    $requested = $requested == $this->content->id ? "" : $requested;
     return <<<EOT
-<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
+<div class="embedded page {$this->content->url}{$this->actualRequest}">
   {$this->contentAsHtml}
 </div>
 EOT;
@@ -559,7 +556,7 @@ function addContent() {
   var form = document.getElementById('addcontent-form');
   var name = document.getElementById('addcontent-name');
 
-  form.action = name.value;
+  form.action = name.value.replace( / /g, "-" );
   form.submit();
 }
     </script>

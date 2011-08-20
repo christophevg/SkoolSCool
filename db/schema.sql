@@ -23,7 +23,7 @@ CREATE TABLE allObjects (
   body     TEXT,
   
   -- NEWSCONTENT
-  date     TIMESTAMP,
+  date     INTEGER,
 
   PRIMARY KEY (id, ts)
 );
@@ -135,11 +135,16 @@ VALUES
        .processWith    ( display  )
        .findEvents     ();
 
+    var months = [ "Jan", "Feb", "Maa", "Apr", "Mei", "Jun", 
+                   "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" ];
+
     function display( events ) {
       var html = "";
-      for( var day in events ) {
-        for( var e=0; e<events[day].length; e++ ) {
-          html += "<li>" + day + " " + events[day][e].subject + "</li>";
+      for( var date in events ) {
+        var d = new Date(date.replace(/-/g,"\"));
+        var day = d.getDate() + " " + months[d.getMonth()+1] + " " + d.getFullYear();
+        for( var e=0; e<events[date].length; e++ ) {
+          html += "<li>" + day + " - " + events[date][e].subject + "</li>";
         }
       }
       document.getElementById( "agenda" ).innerHTML = html;

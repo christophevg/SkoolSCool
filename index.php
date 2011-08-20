@@ -20,7 +20,7 @@ $request = Context::$request;
 $skin = Skin::get( 'vbsg' );
 
 // retrieve the relevant content
-$content = Content::get( $request->object );
+$content = Content::get( $request->id );
 
 if( $content == null ) {
   // if the current user has write access, he might be requesting to create
@@ -28,18 +28,18 @@ if( $content == null ) {
   if( AuthorizationManager::getInstance()->can( $user )->update() ) {
     // if we're requested to create new content and a contenttype is provided,
     // create a new content object
-    if( $request->creation && $request->contentType ) {
-      $content = Content::create( $request->contentType, $request->object );
-    } elseif( $request->creation ) {
+    if( $request->requiresCreation && $request->contentType ) {
+      $content = Content::create( $request->contentType, $request->id );
+    } elseif( $request->requiresCreation ) {
       // else if don't know the type, show the newContent "wizard" page
-      $content = Content::get( 'newContent', $request->full );
+      $content = Content::get( 'newContent', $request->string );
     } else {
       // if we're not even requested to create new content ... it's unknown
-      $content = Content::get( 'unknownContent', $request->full );
+      $content = Content::get( 'unknownContent', $request->string );
     }
   } else {
     // user without update rights, finding unknown content == missing content
-    $content = Content::get( '404', $request->full );
+    $content = Content::get( '404', $request->string );
   }
 }
 

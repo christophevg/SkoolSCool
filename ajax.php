@@ -12,8 +12,8 @@ include_once 'lib/SkoolSCool.php';
  * ajax requests pass the object through the 'id' (content id) post parameter
  * and the data to update using the 'data' post parameter
  */
-$request = $_POST['id'];
-$data    = stripslashes($_POST['data']);
+$request = str_replace( '-', ' ', $_POST['id'] );
+$data    = json_decode( stripslashes($_POST['data']) );
 
 /**
  * get the current user
@@ -33,7 +33,10 @@ if( $content == null ) {
  * check if the user can update the requested content, if so, do it, else fail
  */
 if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
-  $content->body = $data;
+  foreach( $data as $key => $value ) {
+    if( $key == 'date' ) { $value = strtotime( $value ); }
+    $content->$key = $value;
+  }
   Objects::getStore('persistent')->put($content);
   print "ok";
 } else {

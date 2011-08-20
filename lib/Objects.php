@@ -20,11 +20,13 @@ class Objects {
 
 abstract class Object {
   var $id;
+  var $url;
   var $created;
   var $updated;
   
   function __construct( $d ) {
     $this->id      = isset($d['id'])      ? $d['id'] : $this->generateID();
+    $this->url     = str_replace( ' ', '-', $this->id );
     $this->created = isset($d['created']) ? strtotime($d['created']) : null;
     $this->updated = isset($d['updated']) ? strtotime($d['updated']) : null;
   }

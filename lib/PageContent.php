@@ -43,7 +43,7 @@ class PageContent extends Content {
   
   public function editor() {
     return <<<EOT
-<textarea id="{$this->id}Raw" class="raw">
+<textarea id="{$this->url}Raw" class="raw">
 $this->body
 </textarea><br>
 EOT;

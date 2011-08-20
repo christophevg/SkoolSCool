@@ -13,9 +13,10 @@ class NewsList extends Content {
 
     $html = "<h1>Nieuws</h1>";
     foreach( $items as $item ) {
-      $date  = date("d/M/Y", $item->date );
-      $title = str_replace( "-", " ", $item->id );
-      $html .= "$date - <a href=\"nieuws/{$item->id}\">$title</a><br>";
+      $date  = date("j M Y", $item->date );
+      $lines = split( "\n", $item->body );
+      $title = str_replace( "# ", "", $lines[0] );
+      $html .= "<p>$date - <a href=\"nieuws/{$item->id}\">$title</a></p>";
     }
     return $html;
   }

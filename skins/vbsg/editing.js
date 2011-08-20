@@ -104,13 +104,20 @@ function previewContent(id) {
   }
 }
 
+var additionalEditorComponents = [];
+
 function saveContent(id) {
   with( getEditor(id) ) {
     controls.edit.className   = "icon edit command inactive";
     controls.save.className   = "icon save command inactive";
     controls.cancel.className = "icon cancel command inactive";
     controls.saving.className = "icon wait state active";
-    __remote__.store( id, raw.value, function(id) {
+    var data = { body: raw.value };
+    for( var i=0; i<additionalEditorComponents.length; i++ ) {
+      data[additionalEditorComponents[i]] = 
+        document.getElementById(id + additionalEditorComponents[i]).value;
+    }
+    __remote__.store( id, JSON.stringify(data), function(id) {
       return function confirmSave( response ) {
         with( getEditor(id) ) {
           if( response != "ok" ) { 

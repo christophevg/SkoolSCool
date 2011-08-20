@@ -60,6 +60,7 @@ P {
 }
 
 P.more {
+  padding-right: 15px;
   text-align: right;
 }
 
@@ -284,6 +285,10 @@ DIV.embedded.agenda {
   width: 295px;
 }
 
+DIV.embedded.nieuws P {
+  margin: 0px;
+}
+
 DIV.embedded.agenda UL, DIV.embedded.agenda LI {
   margin: 0px;
   padding: 0px;
@@ -313,7 +318,6 @@ DIV.embedded.page {
   background-repeat: repeat-x;
   background-position: 0px 32px;
   min-height: 200px;
-  cursor: pointer;
 }
 
 DIV.embedded.page.bedankt2011 {
@@ -322,6 +326,7 @@ DIV.embedded.page.bedankt2011 {
 
 DIV.embedded.socialbar {
   float: left;
+  cursor: pointer;
   padding: 0px;
   margin: 0px;
   margin-top: 10px;

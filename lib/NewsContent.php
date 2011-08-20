@@ -6,7 +6,8 @@ class NewsContent extends PageContent {
   public function __construct( $data = array() ) {
     parent::__construct( $data );
 
-    $this->date = isset($data['date']) ? $data['date'] : time();
+    $this->date = isset($data['date']) & $data['date'] > 1 ? 
+      $data['date'] : time();
   }
     
   public function toHash() {
@@ -16,8 +17,14 @@ class NewsContent extends PageContent {
   }
   
   public function editor() {
-    $data = date( "d/M/Y", $this->date );
-    return "<input type=\"date\" value=\"{$date}\"><br><br>\n" 
-         . parent::editor();
+    $date = date( "j/m/Y", $this->date );
+    return <<<EOT
+<script>
+  additionalEditorComponents.push( "date" );
+</script>
+<input id="{$this->url}date" type="text" value="{$date}"> (d-m-jjjj)<br>
+<br>
+EOT
+    . parent::editor();
   }
 }
