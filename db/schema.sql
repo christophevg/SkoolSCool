@@ -98,15 +98,17 @@ in de lijst van het nieuws, zoals ook bvb op de home pagina.
 
 ( 'PageContent', 'home', 'system',
   '[include:nieuws?embed]
-[include:bedankt2011?embed]
+[include:nieuws/bedankt2011?embed]
 
 [style:postit belangrijk|inschrijven? waar. hoe, wanneer?]
 [style:postit|Het nieuwe schooljaar start op donderdag 1 september 2011!]
 
 [include:laatste-foto?embed]
-[include:agenda?embed]' ),
+[include:agenda?embed]' );
 
-( 'PageContent', 'bedankt2011', 'system',
+-- NEWS
+INSERT INTO allObjects ( type, id, author, date, body ) VALUES
+( 'NewsContent', 'bedankt2011', 'system', UNIX_TIMESTAMP('2011-06-01'),
   '# vrijwilligers: bedankt!
 
 Vrijwilliger, wat ben ik onder de indruk van je werk. Telkens weer sta je er voor onze kinderen. Je warmte, inzet, hulp, begrip,... er zijn geen woorden voor. Zo fantastisch dat je dat allemaal doet. Vrijwilliger, je verdient minstens 1000 pluimen op je hoed! Bedankt!
@@ -115,7 +117,7 @@ We willen jullie bedanken voor alles wat julle voor onze kinderen, de juffen en 
 ');
 
 -- HTML
-INSERT INTO allObjects ( type, id, name, body )
+INSERT INTO allObjects ( type, id, author, body )
 VALUES
 ( 'HtmlContent', 'agenda', 'system',
   '<h1>Agenda</h1>
@@ -297,6 +299,6 @@ VALUES
   </script>' );
 
 -- SPECIALS
-INSERT INTO allObjects ( type, id, name )
+INSERT INTO allObjects ( type, id, author )
 VALUES
 ( 'NewsList', 'nieuws', 'system' );

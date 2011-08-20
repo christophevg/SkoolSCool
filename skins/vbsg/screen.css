@@ -59,6 +59,10 @@ P {
   margin-bottom: 10px;
 }
 
+P.more {
+  text-align: right;
+}
+
 LI {
   color: white;
   font: 10pt Verdana;
@@ -317,15 +321,17 @@ DIV.embedded.page.bedankt2011 {
 }
 
 DIV.embedded.socialbar {
+  float: left;
   padding: 0px;
   margin: 0px;
   margin-top: 10px;
   width: 30px;
   height: 25px;
   background-image: url( "images/socialbar-embed.png" );
+  background-repeat: no-repeat;
   font: 12pt Verdana;
   padding-top: 7px;
-  padding-left: 90px;
+  padding-left: 55px;
 }
 
 DIV.embedded.album H1 {

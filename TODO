@@ -1,5 +1,5 @@
 minimal before 1/9:
-- remove social icons
+- fix date of NewsContent
 
 - content clean up scripts + upgrade functionality
 - site is offline modus
@@ -8,7 +8,6 @@ minimal before 1/9:
 - add album/photo upload via zipfile (from link on overview page)
 
 - improve calendar viewer + add details
-- fix date of NewsContent
 
 - feedback/bug reporting
 

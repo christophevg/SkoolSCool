@@ -315,24 +315,45 @@ EOT;
   }
 
   protected function PageContentAsEmbedded() {
-    $commentCount = count($this->content->children);
     // check if requested content is actual embedded content
     $requested = Context::$request->object;
     $requested = $requested == $this->content->id ? "" : $requested;
     $excerpt =   $this->contentAsHtml();
+    $original = Context::$request->full;
+    $more = "";
     if( strlen($excerpt) > 500 ) { 
       $excerpt = substr( $excerpt, 0, 500 ) ."...";
+      $more = <<<EOT
+<p class="more"><a href="{$original}">lees verder...</a></p>
+EOT;
     }
     return <<<EOT
-<div class="embedded page {$this->content->id} $requested" onclick="javascript:window.location='{$this->content->id}';">
+<div class="embedded page {$this->content->id} $requested">
   {$excerpt}
-  <div class="embedded socialbar">
-    {$commentCount}
-  </div>
+  {$this->insertSocialBar}
+  {$more}
 </div>
 EOT;
   }
 
+  protected function NewsContentAsEmbedded() {
+    return $this->PageContentAsEmbedded();
+  }
+  
+  protected function insertSocialBar() {
+    // only show socialBar when the user is logged on
+    if( $this->user->isAnonymous() ) { return ""; }
+    // and only if we're showing the actually requested content
+    if( Context::$request->object != $this->content->id ) { return; }
+
+    $commentCount = count($this->content->children);
+    return <<<EOT
+  <div class="embedded socialbar" onclick="javascript:window.location='{$this->content->id}';">
+    {$commentCount}
+  </div>
+EOT;
+  }
+  
   protected function HtmlContentAsEmbedded() {
     // check if requested content is actual embedded content
     $requested = Context::$request->object;
