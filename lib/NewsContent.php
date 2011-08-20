@@ -17,7 +17,7 @@ class NewsContent extends PageContent {
   }
   
   public function editor() {
-    $date = date( "j/m/Y", $this->date );
+    $date = date( "j-m-Y", $this->date );
     return <<<EOT
 <script>
   additionalEditorComponents.push( "date" );
