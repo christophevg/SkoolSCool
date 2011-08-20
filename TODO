@@ -1,6 +1,8 @@
 minimal before 1/9:
 - make banners clickable with link from breakdown
 
+- translation of special characters to HTML entities
+
 - content clean up scripts + upgrade functionality
 - site is offline modus
 

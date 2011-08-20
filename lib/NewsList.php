@@ -16,7 +16,7 @@ class NewsList extends Content {
       $date  = date("j M Y", $item->date );
       $lines = split( "\n", $item->body );
       $title = str_replace( "# ", "", $lines[0] );
-      $html .= "<p>$date - <a href=\"nieuws/{$item->id}\">$title</a></p>";
+      $html .= "<p>$date - <a href=\"nieuws/{$item->url}\">$title</a></p>";
     }
     return $html;
   }

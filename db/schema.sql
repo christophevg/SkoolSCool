@@ -106,16 +106,6 @@ in de lijst van het nieuws, zoals ook bvb op de home pagina.
 [include:laatste-foto?embed]
 [include:agenda?embed]' );
 
--- NEWS
-INSERT INTO allObjects ( type, id, author, date, body ) VALUES
-( 'NewsContent', 'bedankt2011', 'system', UNIX_TIMESTAMP('2011-06-01'),
-  '# vrijwilligers: bedankt!
-
-Vrijwilliger, wat ben ik onder de indruk van je werk. Telkens weer sta je er voor onze kinderen. Je warmte, inzet, hulp, begrip,... er zijn geen woorden voor. Zo fantastisch dat je dat allemaal doet. Vrijwilliger, je verdient minstens 1000 pluimen op je hoed! Bedankt!
-
-We willen jullie bedanken voor alles wat julle voor onze kinderen, de juffen en meesters en voro de school hebben gedaan. Allemaal welkom op dinsdag 27 juni van 20:30u tot 23u inde Magneet in Grootlo.
-');
-
 -- HTML
 INSERT INTO allObjects ( type, id, author, body )
 VALUES
