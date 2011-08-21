@@ -1,6 +1,6 @@
 MYSQL=/usr/local/mysql/bin/mysql
 
-all: create schema passwords
+all: create schema system passwords content
 
 create:
 	${MYSQL} -uroot mysql < create.sql
@@ -8,8 +8,11 @@ create:
 schema:
 	${MYSQL} -uvbsg -pvbsg vbsg < schema.sql
 
+system:
+	${MYSQL} -uvbsg -pvbsg vbsg < content.sql	
+
 passwords:
 	${MYSQL} -uvbsg -pvbsg vbsg < passwords.sql	
 
-dump:
-	${MYSQL} -uvbsg -pvbsg vbsg < test.sql
+content:
+	${MYSQL} -uvbsg -pvbsg vbsg < content.sql	
