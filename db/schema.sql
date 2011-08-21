@@ -123,20 +123,33 @@ VALUES
     new Cal.calendar()
        .useDataProvider( myGoogle )
        .processWith    ( display  )
-       .findEvents     ();
+       .findEvents     (); // by default from now to now+1 month
 
     var months = [ "Jan", "Feb", "Maa", "Apr", "Mei", "Jun", 
                    "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" ];
 
     function display( events ) {
       var html = "";
+
+      var dates = [];
       for( var date in events ) {
-        var d = new Date(date.replace(/-/g,"\"));
-        var day = d.getDate() + " " + months[d.getMonth()+1] + " " + d.getFullYear();
-        for( var e=0; e<events[date].length; e++ ) {
-          html += "<li>" + day + " - " + events[date][e].subject + "</li>";
+          dates.push(date);
+      }
+      var sorted = dates.sort();
+
+      for( var i=0; i<sorted.length; i++ ) {
+        var d = new Date(sorted[i].replace(/-/g," "));
+        var day = d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+        for( var e=0; e<events[sorted[i]].length; e++ ) {
+          html += "<div class=\\"agenda\\">" 
+               +  "<span class=\\"date\\">" + day + " - </span>" 
+               +  "<span class=\\"item\\">" + events[sorted[i]][e].subject + "</span>"
+               +  "</div>";
         }
       }
+      html += "<p class=\\"more\\">"
+           +  "<a href=\\"kalender\\">toon de volledige kalender...</a>"
+           +  "</p>";
       document.getElementById( "agenda" ).innerHTML = html;
     }
   </script>' ),
@@ -243,7 +256,7 @@ VALUES
       .connect( "gvbs.schriek-grootlo%40scarlet.be" );
     
     // create your calender object, pointing it to our HTML
-    var myCalendar = Cal.activate                ( "c1"                  )
+    window.myCalendar = Cal.activate                ( "c1"                  )
                         .useDataProvider         ( myGoogle              )
                         .notifyOfDaySelection    ( processDaySelection   )
                         .notifyOfEventSelection  ( showEvent )
@@ -261,7 +274,7 @@ VALUES
       myCalendar.gotoDate(day) // and on the calendar itself
     }
 
-    var myNavigator = Cal.activate            ( "c2"           )
+    window.myNavigator = Cal.activate            ( "c2"           )
                          .useDataProvider     ( noDataProvider )
                          .notifyOfDaySelection( gotoDay        )
                          .gotoToday();

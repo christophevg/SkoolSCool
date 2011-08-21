@@ -3,8 +3,7 @@ minimal before 1/9:
 
 - translation of special characters to HTML entities
 
-- content clean up scripts + upgrade functionality
-- site is offline modus
+- export content created/updated after certain moment
 
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
@@ -14,9 +13,9 @@ minimal before 1/9:
 - feedback/bug reporting
 
 - document content = Page + file upload + DocumentList
-- Generic List<Content> type ?
 
-optionally later:
+after 1/9:
+- site is offline modus
 - create registration page + procedure
 - add moderation
 - add Facebook connect
@@ -41,3 +40,4 @@ to decide/review:
 more future features
 - move default content to database
 	- new contenttype: template
+- Generic List<Content> type ?

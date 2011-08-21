@@ -59,8 +59,12 @@ P {
   margin-bottom: 10px;
 }
 
+DIV.content {
+  font: 10pt Verdana;
+  color: white;
+}
+
 P.more {
-  padding-right: 15px;
   text-align: right;
 }
 
@@ -289,6 +293,22 @@ DIV.embedded.nieuws P {
   margin: 0px;
 }
 
+DIV.agenda SPAN.date,
+DIV.news SPAN.date {
+  display: inline-block;
+  width: 90px;
+  text-align: right;
+  vertical-align: text-top;
+}
+
+DIV.agenda SPAN.item,
+DIV.news SPAN.item {
+  width: 180px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: text-top;
+}
+
 DIV.embedded.agenda UL, DIV.embedded.agenda LI {
   margin: 0px;
   padding: 0px;
@@ -344,6 +364,26 @@ DIV.embedded.album H1 {
   background-repeat: no-repeat;
   background-position: 0px 1px;
   padding-left: 27px;
+}
+
+DIV.embedded.agenda H1 {
+  background-image: url( "images/icons/agenda.png" );
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+  padding-left: 27px;
+}
+
+DIV.embedded.agenda DIV.agenda {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed white;
+}
+
+DIV.embedded.nieuws H1 {
+  background-image: url( "images/icons/news.png" );
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+  padding-left: 30px;
 }
 
 .page-fotoboek DIV.embedded.album H1 {
