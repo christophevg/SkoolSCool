@@ -1,14 +1,11 @@
 minimal before 1/9:
-- make banners clickable with link from breakdown
-
-- translation of special characters to HTML entities
-
-- export content created/updated after certain moment
-
 - create js front-end for picasaweb (external project)
 - add album/photo upload via zipfile (from link on overview page)
 
 - improve calendar viewer + add details
+
+- translation of special characters to HTML entities
+- export content created/updated after certain moment
 
 - feedback/bug reporting
 

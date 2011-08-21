@@ -456,13 +456,18 @@ DIV.postit {
   width: 290px;
   height: 100px;
   background-image: url( "images/postit.png" );
-  font: 16pt Comic Sans MS;
   padding: 15px;
   text-align: center;
+}
+
+DIV.postit, DIV.postit A {
+  text-decoration: none;
+  font: 16pt Comic Sans MS;
   color: green;
 }
 
-DIV.postit.belangrijk {
+DIV.postit.belangrijk, DIV.postit.belangrijk A {
+  text-decoration: none;
   color: red;
   text-transform: uppercase;
 }
