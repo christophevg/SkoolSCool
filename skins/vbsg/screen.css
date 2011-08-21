@@ -696,3 +696,62 @@ DIV.message.warning {
 DIV.message.critical {
   background-color: red;
 }
+
+/* COMMENTS */
+
+.comment {
+  width: 610px;
+  margin-bottom: 20px;
+}
+
+.comment .commenter {
+  display: inline-block;
+  width: 290px;
+  font: 10pt Verdana;
+  color: white;
+  padding-left: 10px;
+}
+
+.comment .time {
+  display: inline-block;
+  width: 290px;
+  padding-right: 10px;
+  text-align: right;
+  font: 10pt Verdana;
+  color: white;
+}
+
+.comment .balloon {
+  padding-top: 10px;
+  background-image: url( "images/comment-indicator.gif" );
+  background-repeat: no-repeat;
+    
+}
+
+.comment .container {
+  background-color: #C3ECF2;
+  background-image: url( "images/comment-background.gif" );
+  background-position: 0px 100%;
+  background-repeat: repeat-x;
+}
+
+.comment .container .controls {
+}
+
+.comment .container .body,
+.comment .container .add {
+  width: 570px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  min-height: 70px;
+}
+
+.comment .container .body P {
+  color: #10616E;
+}
+
+.comment .add .newComment {
+  width: 530px;
+  height: 65px;
+}

@@ -43,23 +43,30 @@ class VbsgSkin extends Skin {
 <html>
 <head>
   <base href="${base}/">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=8" >
+
+  <title>Vrije Basisschool Schriek &amp; Grootlo</title>
+
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/todo.css">
 
-  <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
-
-  <script src="http://www.google.com/jsapi"></script>
-  <script src="./skins/vbsg/cal.js/src/cal.js"></script>
-  <script src="./skins/vbsg/cal.js/src/providers/google.js"></script>
-  <link rel="stylesheet" type="text/css"href="./skins/vbsg/cal.css">
-
+  <!-- site automation -->
   <script src="./skins/vbsg/notify.js"></script>
   <script src="./skins/vbsg/ajax.js"></script>
   <script src="./skins/vbsg/popup.js"></script>
   <script src="./skins/vbsg/editing.js"></script>
   <script src="./skins/vbsg/json2.js"></script>
+
+  <!-- breakdown support -->
+  <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
+
+  <!-- calendar support -->
+  <script src="http://www.google.com/jsapi"></script>
+  <script src="./skins/vbsg/cal.js/src/cal.js"></script>
+  <script src="./skins/vbsg/cal.js/src/providers/google.js"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/cal.css">
+
   <!--[if lt IE 7]>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
   <![endif]-->
@@ -74,7 +81,8 @@ class VbsgSkin extends Skin {
     
       <div class="toolbar-wrapper">
         <div id="user-toolbar" class="toolbar">
-          <img class="logo" src="./skins/vbsg/images/vbsg-logo.png">
+          <img class="logo" src="./skins/vbsg/images/vbsg-logo.png" 
+               alt="Vrij Basisschool Schriek & Grootlo">
           <p>Vrije Basisschool Schriek &amp; Grootlo</p>
           <div class="userbar">
 {$this->insertUserBar}
