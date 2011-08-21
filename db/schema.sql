@@ -5,6 +5,7 @@ CREATE TABLE allObjects (
   id       VARCHAR(128)  NOT NULL,
   ts       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   type     VARCHAR(128)  NOT NULL,
+  tags     VARCHAR(256),
 
   -- USER
   name     VARCHAR(128),

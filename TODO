@@ -1,26 +1,34 @@
 minimal before 1/9:
 - create js front-end for picasaweb (external project)
-- add album/photo upload via zipfile (from link on overview page)
+- add album/photo upload via zipfile
+- add breakdown code to include album-preview (link to album)
+
+- add tags field to object
 
 - improve calendar viewer + add details
 
-- translation of special characters to HTML entities
-- export content created/updated after certain moment
+- check: translation of special characters to HTML entities ?
 
 - feedback/bug reporting
 
 - document content = Page + file upload + DocumentList
 
+- create accounts for teachers
+- create basic user guide
+	- edit content
+	- upload images
+
+- clean up and consolidate css/
+- validate HTML and correct problems
+
 after 1/9:
 - site is offline modus
 - create registration page + procedure
+	- initially users can read, contributors can edit, admin can edit system
 - add moderation
+- add history
 - add Facebook connect
 - add Hotmail/OAuth 2.0 support
-
-in general:
-- clean up notices, logging
-- add full documentation
 
 ---
 
@@ -34,6 +42,7 @@ to decide/review:
 - filter + session/cookie storage
 
 ---
+
 more future features
 - move default content to database
 	- new contenttype: template
