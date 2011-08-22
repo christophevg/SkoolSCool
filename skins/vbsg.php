@@ -67,6 +67,11 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/cal.js/src/providers/google.js"></script>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/cal.css">
 
+  <!-- photo support -->
+  <script src="./skins/vbsg/photo.js/src/photo.js"></script>
+  <script src="./skins/vbsg/photo.js/src/providers/google.js"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/photo.css">
+
   <!--[if lt IE 7]>
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
   <![endif]-->

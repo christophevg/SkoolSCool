@@ -7,3 +7,6 @@
 [submodule "lib/LightOpenIDClient"]
 	path = lib/LightOpenIDClient
 	url = http://github.com/christophevg/LightOpenIDClient.git
+[submodule "skins/vbsg/photo.js"]
+	path = skins/vbsg/photo.js
+	url = http://github.com/christophevg/photo.js
