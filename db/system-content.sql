@@ -334,7 +334,8 @@ VALUES
       // show/hide tools
       document.getElementById( "tools" ).style.display = "inline";
       
-      resetAndfit();
+      try { resetAndfit(); }
+      catch(err) { /* IE has issue, but it works ? */ }
     }
     
     var scale = 1;
