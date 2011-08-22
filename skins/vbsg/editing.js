@@ -63,8 +63,6 @@ function cancelContent(id) {
   }
 }
 
-var converter = null;
-
 function renderContent(id) {
   if( window.contentClass == "HtmlContent" ) {
     with( getEditor(id) ) {
@@ -72,8 +70,8 @@ function renderContent(id) {
     }
     return;
   }
-  
-  if( !converter ) { converter = new Breakdown.converter(); }
+
+  var converter = new Breakdown.converter();
   with( getEditor(id) ) {
     view.innerHTML = converter.makeHtml( raw.value );
     converter.activateHtml( function() {
