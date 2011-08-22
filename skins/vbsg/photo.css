@@ -10,7 +10,7 @@ SPAN.action {
 
 /* layout generics */
 
-DIV.container {
+DIV#fotoboekView DIV.container {
   display: -moz-inline-stack;
   display: inline-block;
   vertical-align: top;
