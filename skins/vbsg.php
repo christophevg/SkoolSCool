@@ -640,7 +640,7 @@ function changeContent() {
       </select><br><br>
       <span class="label">Naam</span><input name="name" type="text" id="addcontent-name">
       <div id="addcontent-file" style="display:none;">
-        <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
+        <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
         <span class="label">Bestand</span><input name="file" type="file" class="file">
       </div>
       <p align="center">
