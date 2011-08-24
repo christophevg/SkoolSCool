@@ -121,7 +121,7 @@ class MySQLStore implements ObjectStore {
                                  $orderBy .
                                  $limit );
 
-    if( $stmt->execute( $props ) === false ) {
+    if( $stmt->execute() === false ) {
       print_r( $stmt->errorInfo() );
     }
 

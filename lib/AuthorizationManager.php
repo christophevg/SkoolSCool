@@ -149,4 +149,19 @@ class AuthorizationManager {
     return $access == "read" ? ! $user->isAnonymous()
       : $comment->hasAuthor($user) || $user->isAdmin();
   }
+
+  /**
+   * Validator for Users accessing/uploading Albums
+   * @param $user accessing Album
+   * @param $album accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the album
+   *         according to the given access style.
+   */
+  private function UserAlbumContent( $user, $album, $access = 'read' ) {
+    // policy: update access for admins only ... for now
+    return $user->isAdmin();
+  }
+  
 } 

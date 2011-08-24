@@ -1,10 +1,4 @@
 minimal before 1/9:
-- create js front-end for picasaweb (external project)
-- add album/photo upload via zipfile
-- add breakdown code to include album-preview (link to album)
-
-- add tags field to object
-
 - improve calendar viewer + add details
 
 - check: translation of special characters to HTML entities ?
@@ -26,7 +20,8 @@ after 1/9:
 - create registration page + procedure
 	- initially users can read, contributors can edit, admin can edit system
 - add moderation
-- add history
+- add breakdown code to include album-preview (link to album)
+- add history + page content controls
 - add Facebook connect
 - add Hotmail/OAuth 2.0 support
 
@@ -44,6 +39,6 @@ to decide/review:
 ---
 
 more future features
-- move default content to database
+- move default content from skin to database
 	- new contenttype: template
 - Generic List<Content> type ?

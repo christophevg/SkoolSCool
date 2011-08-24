@@ -265,14 +265,12 @@ VALUES
   </script>' ),
 ( 'HtmlContent', 'fotoboek', 'system',
   '
-  <div class="viewer-navigation">
-    <span id="back2albums" class="action"><a href="javascript:back2albums();">&lt;&lt; albums</a></span>
-    <span id="back2table"class="action"> | <a class="action"  href="javascript:back2table();">&lt; overview</a></span>
-    <span id="tools">
-      <span id="fit"class="action"> | <a href="javascript:fit();">&gt; fit &lt;</a></span>
-      <span id="full"class="action"> | <a href="javascript:full();">&lt; full &gt;</a></span>
-    </span>
-  </div>
+    <span id="back2albums" class="action"><a href="javascript:gotoAlbums();">&lt;&lt; albums</a></span>
+  <span id="back2table"class="action"> | <a class="action"  href="javascript:gotoTable();">&lt; overview</a></span>
+  <span id="tools">
+    <span id="fit" class="action"> | <a href="javascript:fit();">&gt; fit &lt;</a></span>
+    <span id="full"class="action"> | <a href="javascript:full();">&lt; full &gt;</a></span>
+  </span>
   
   <div id="myViewer-albums" class="albums"></div>
   <div id="myViewer-table"  class="table"></div>
@@ -281,75 +279,82 @@ VALUES
   
   <script>
   
-    function back2albums() {
+    function gotoAlbums() {
+      myViewer.gotoAlbums();
+    }
+    
+    function gotoTable() {
+      myViewer.gotoTable();
+    }
+  
+    function showAlbums() {
       // show albums
       document.getElementById("myViewer-albums").style.display = "block";
       // hide table and detailed view
-      document.getElementById("myViewer-table").style.display = "none";
+      document.getElementById("myViewer-table").style.display  = "none";
       document.getElementById("myViewer-thumbs").style.display = "none";
       document.getElementById("myViewer-photo").style.display  = "none";
       // hide navigation
-      document.getElementById( "back2table" ).style.display = "none";
-      document.getElementById( "back2albums" ).style.display = "none";
+      document.getElementById( "back2table" ).style.display    = "none";
+      document.getElementById( "back2albums" ).style.display   = "none";
       // hide tools
-      document.getElementById( "tools" ).style.display = "none";
+      document.getElementById( "tools" ).style.display         = "none";
     }
 
-    function back2table() {
+    function showTable() {
+      // hide albums
+      document.getElementById("myViewer-albums").style.display = "none";
       // show table
-      document.getElementById("myViewer-table").style.display = "block";
+      document.getElementById("myViewer-table").style.display  = "block";
       // hide detailed view
       document.getElementById("myViewer-thumbs").style.display = "none";
       document.getElementById("myViewer-photo").style.display  = "none";
-      // hide navigation
-      document.getElementById( "back2table" ).style.display = "none";
-      // hide tools
-      document.getElementById( "tools" ).style.display = "none";
-    }
-
-    function showAlbumTable() {
-      // hide albums and detailed
-      this.albums.style.display = "none";
-      this.thumbs.style.display = "none";
-      this.photo.style.display  = "none";
-      // show table
-      this.table.style.display = "block";
       // show/hide navigation
-      document.getElementById( "back2albums" ).style.display = "inline";
-      document.getElementById( "back2table" ).style.display = "none";
+      document.getElementById( "back2albums" ).style.display   = "inline";
+      document.getElementById( "back2table" ).style.display    = "none";
       // hide tools
-      document.getElementById( "tools" ).style.display = "none";
+      document.getElementById( "tools" ).style.display         = "none";
+    }
+    
+    function showPhoto() {
+      // hide albums
+      document.getElementById("myViewer-albums").style.display = "none";
+      // show table
+      document.getElementById("myViewer-table").style.display  = "none";
+      // hide detailed view
+      document.getElementById("myViewer-thumbs").style.display = "block";
+      document.getElementById("myViewer-photo").style.display  = "block";
+      // show/hide navigation
+      document.getElementById( "back2albums" ).style.display   = "inline";
+      document.getElementById( "back2table" ).style.display    = "inline";
+      // show tools
+      document.getElementById( "tools" ).style.display         = "inline";
+      // reset tools
+      scale = 1;
+      document.getElementById( "fit" ).style.display  = "inline";
+      document.getElementById( "full" ).style.display = "none";
     }
 
-    function showAlbumDetails() {
-      // hide albums and table
-      this.albums.style.display = "none";
-      this.table.style.display = "none";
-      // show detailed
-      this.thumbs.style.display = "block";
-      this.photo.style.display  = "block";
-      // show navigation
-      document.getElementById( "back2albums" ).style.display = "inline";
-      document.getElementById( "back2table" ).style.display = "inline";
-      // show/hide tools
-      document.getElementById( "tools" ).style.display = "inline";
-      
-      try { resetAndfit(); }
-      catch(err) { /* IE has issue, but it works ? */ }
-    }
+    var myGoogle = Photo.providers.google.connect( "106409351044330241707" );
     
     var scale = 1;
     var isIE  = navigator.userAgent.match( /MSIE/ ) == "MSIE";
     
     function fit() {
-      var photo = document.getElementById( "myViewer-photo" ),
-          img   = photo.firstChild.firstChild,
+      scale = 1;
+      var photo = document.getElementById( "myViewer-photo" );
+      if( ! photo || ! photo.firstChild ) { 
+        return;
+      }
+      var img   = photo.firstChild.firstChild,
           scaleWidth = img.width / (photo.offsetWidth - 10),
           scaleHeight = img.height / (photo.offsetHeight - 10);
+      // sometimes the photo isnt displayed correctly and the width = 0
+      // and it seems I cant put this in the photo.js code itself ?!
+      if( img.width < 5 ) { myViewer.refreshPhoto() }
       scale = scaleWidth > scaleHeight ? scaleWidth : scaleHeight;
       img.width  /= scale;
       if( isIE ) { img.height /= scale; }
-      photo.style.textAlign = "center";
       document.getElementById( "fit" ).style.display  = "none";
       document.getElementById( "full" ).style.display = "inline";
     }
@@ -363,26 +368,13 @@ VALUES
       document.getElementById( "full" ).style.display = "none";
     }
     
-    function resetTools() {
-      scale = 1;
-      document.getElementById( "fit" ).style.display  = "inline";
-      document.getElementById( "full" ).style.display = "none";
-    }
-    
-    function resetAndFit() {
-      resetTools();
-      // temp fix
-      setTimeout( fit, 2000 );
-    }
-
-    var myGoogle = Photo.providers.google.connect( "106074746666509232363" );
-
-    Photo.activate          ( "myViewer-"      )
-         .useDataProvider   ( myGoogle         )
-         .onAlbumSelection  ( showAlbumTable   )
-         .onPreviewSelection( showAlbumDetails )
-         .onPhotoSelection  ( resetAndFit      );
-
+    var myViewer = Photo.activate          ( "myViewer-" )
+                        .useDataProvider   ( myGoogle    )
+                        .onShowAlbums      ( showAlbums  )
+                        .onAlbumSelection  ( showTable   )
+                        .onPreviewSelection( showPhoto   )
+                        .onPhotoSelection  ( showPhoto   )
+                        .onPhotoLoad       ( fit         );
   </script>');
 
 -- SPECIALS

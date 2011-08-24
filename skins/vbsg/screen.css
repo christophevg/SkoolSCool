@@ -618,6 +618,10 @@ FORM INPUT, FORM SELECT, FORM TEXTAREA {
   padding: 10px;
   border: none;
   background-color: #C9EDF4;
+  width: 240px;
+}
+
+DIV#logon-popup INPUT {
   width: 150px;
 }
 
@@ -627,13 +631,33 @@ FORM INPUT.button, FORM SELECT {
   border: 1px solid #1F78A2;
 }
 
-FORM SELECT {
-  width: auto;
-}
-
 FORM INPUT.button {
   margin-top: 20px;
   text-transform: uppercase;
+  cursor: pointer;
+}
+
+FORM INPUT.file {
+  margin-top: 5px;
+}
+
+DIV#progress {
+  position: absolute;
+  top: 475px;
+  width: 600px;
+  height: 30px;
+}
+
+DIV#progress-msg {
+  height: 20px;
+  color: white;
+  font: 10pt Helvetica;
+}
+
+DIV#progress-bar {
+  height: 10px;
+  background-color: white;
+  width: 0%;
 }
 
 A.openid {

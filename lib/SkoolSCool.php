@@ -11,6 +11,8 @@ setlocale(LC_ALL, 'nl_NL');
 
 include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
 
+include_once dirname(__FILE__) . '/gPhoto.php';
+
 include_once dirname(__FILE__) . '/I18N.php';
 include_once dirname(__FILE__) . '/I18N.nl.php';
 

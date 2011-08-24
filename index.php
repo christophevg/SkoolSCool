@@ -12,6 +12,9 @@ include_once 'lib/SkoolSCool.php';
 // bootstrap: setup caches, process login/out requests
 include_once 'bootstrap.php';
 
+// maybe we're receiving a file ... process that and do nothing else ;-)
+include_once 'handle_file_upload.php';
+
 // a few short-hands from the context
 $user    = Context::$currentUser;
 $request = Context::$request;

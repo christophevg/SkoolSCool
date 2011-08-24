@@ -543,9 +543,10 @@ EOT;
   }
 
   protected function insertAddContentPopup() {
-    $options = array( PageContent => "Een algemene tekstpagina",
-                      NewsContent => "Een nieuwsbericht",
-                      HtmlContent => "Een HTML pagina" );
+    $options = array( 'PageContent'  => "Een algemene tekstpagina",
+                      'NewsContent'  => "Een nieuwsbericht",
+                      'HtmlContent'  => "Een HTML pagina",
+                      'AlbumContent' => "Een foto album" );
     $html = "";
     foreach( $options as $type => $label ) {
       if( AuthorizationManager::getInstance()
@@ -565,24 +566,93 @@ EOT;
 		</div>
 		<h1>Voeg nieuwe inhoud toe...</h1>
     <script>
+    
 function addContent() {
   var form = document.getElementById('addcontent-form');
-  var name = document.getElementById('addcontent-name');
+  var name = document.getElementById('addcontent-name').value;
 
-  form.action = name.value.replace( / /g, "-" );
-  form.submit();
+  if( name.match( /[a-z]+/ ) ) {
+    if(document.getElementById("selectContentType").value != "AlbumContent") {
+      form.action = name.replace( / /g, "-" );
+    } else {
+      var button = document.getElementById( 'addcontent-submit' );
+      button.value = "Bezig...";
+      button.disabled = true;
+      upload_feedback( "Uw bestand wordt overgebracht naar de server...", 5 );
+    }
+    form.submit();
+  } else {
+    alert( "Gelieve een naam te kiezen." );
+    document.getElementById("addcontent-name").focus();
+  }
+  return false;
+}
+
+function clear_upload_feedback() {
+  document.getElementById( 'progress-msg' ).innerHTML = "";
+  document.getElementById( 'progress-bar' ).style.width = "0%";
+}
+
+function upload_feedback( msg, pct ) {
+  document.getElementById( 'progress-msg' ).innerHTML = msg;
+  document.getElementById( 'progress-bar' ).style.width = pct + "%";
+}
+
+function upload_done( url ) {
+  document.getElementById( 'addcontent-form' ).reset();
+  var button = document.getElementById( 'addcontent-submit' );
+  button.value = "voeg toe...";
+  button.disabled = false;
+  upload_feedback( "Klaar ...", 100 );
+  alert( "Uw album is overgebracht naar de server. De foto's zijn weldra " + 
+         "beschikbaar in het fotoboek. Dit kan tot 15 minuten duren." );
+  clear_upload_feedback();
+}
+
+function changeContent() {
+  var type = document.getElementById("selectContentType").value;
+  switch( type ) {
+    case "PageContent":
+    case "NewsContent":
+    case "HtmlContent":
+      document.getElementById( "addcontent-file" ).style.display = "none";
+      document.getElementById( "addcontent-form" ).method="GET";
+      document.getElementById( "addcontent-form" ).enctype="";
+      document.getElementById( "addcontent-form" ).target="";
+      break;
+    case "AlbumContent":
+      document.getElementById( "addcontent-file" ).style.display = "block";
+      document.getElementById( "addcontent-form" ).method="POST";
+      document.getElementById( "addcontent-form" ).enctype="multipart/form-data";
+      document.getElementById( "addcontent-form" ).encoding="multipart/form-data";
+      document.getElementById( "addcontent-form" ).target="iframe";
+      break;
+  }
+  document.getElementById("addcontent-name").focus();
 }
     </script>
-    <form id="addcontent-form" action="?create&mode=edit&type=" method="GET">
+    <form id="addcontent-form" action="" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
       <span class="label">Soort</span>
-      <select name="type">
+      <select id="selectContentType" name="type" onchange="changeContent();">
 {$html}
       </select><br><br>
-      <span class="label">Naam</span><input type="text" id="addcontent-name"><br>
-      <center><input type="submit" class="button" value="voeg toe..." onclick="addContent();"></center>
+      <span class="label">Naam</span><input name="name" type="text" id="addcontent-name">
+      <div id="addcontent-file" style="display:none;">
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
+        <span class="label">Bestand</span><input name="file" type="file" class="file">
+      </div>
+      <p align="center">
+        <input id="addcontent-submit" type="submit" class="button" 
+               value="voeg toe..." onclick="return addContent();">
+      </p>
     </form>
+    <iframe id="iframe" name="iframe" style="display:none;" src=""></iframe>
+    <div id="progress">
+      <div id="progress-msg"></div>
+      <div id="progress-bar"></div>
+    </div>
   </div>
 </div>
 EOT;
