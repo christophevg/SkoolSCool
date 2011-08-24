@@ -58,7 +58,7 @@ in de lijst van het nieuws, zoals ook bvb op de home pagina.
   '[include:nieuws?embed]
 [include:nieuws/bedankt2011?embed]
 
-[vragen/inschrijven|[style:postit belangrijk|inschrijven? waar. hoe, wanneer? Lees er alles over...]]
+[vragen/vragen-over-inschrijven|[style:postit belangrijk|inschrijven? waar. hoe, wanneer? Lees er alles over...]]
 [style:postit|Het nieuwe schooljaar start op donderdag 1 september 2011!]
 
 [include:laatste-foto?embed]
