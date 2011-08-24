@@ -43,7 +43,7 @@ function accept_file( $uploaddir = '/tmp' ) {
 function unzip_file( $file ) {
   $dir = dirname($file);
 
-  `cd $dir; unzip -j -d . $file`;
+  `cd $dir; unzip -j -d . "$file" 2>&1`;
 
   // unzip in directory
   $files = array();
