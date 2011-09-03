@@ -1,0 +1,97 @@
+#dropzone {
+  height: 130px;
+  width: 130px;
+  overflow: hidden;
+  position: absolute;
+}
+
+#dropicon {
+  height: 130px;
+  width: 130px;
+  background-color: transparent;
+  background-image: url( 'images/fileuploader/zip.png' );
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+#addcontent-form.ok #dropicon {
+  background-image: url( 'images/fileuploader/zip-ok.png' );
+}
+
+#addcontent-form.nok #dropicon {
+  background-image: url( 'images/fileuploader/zip-nok.png' );
+}
+
+#addcontent-form.ok #dropname,
+#addcontent-form.nok #droperror {
+  display: block;
+}
+
+.dropmsg {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  display: none;
+  font: 8pt Helvetica;
+  color: black;
+  margin-bottom: 5px;
+}
+
+#file {
+  border: 300px solid red;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  opacity: 0;
+  filter: alpha(opacity=0); /* IE */
+}
+
+#instructions {
+  background-image: url( 'images/fileuploader/drop.png' );
+  background-repeat: no-repeat;
+  margin-left: 130px;
+  width: 96px;
+  height: 69px;
+}
+
+#addcontent-form.ok #instructions {
+  background-image: url( 'images/fileuploader/name.png' );
+}
+
+#addcontent-form.ok #addcontent-name {
+  margin-left: 130px;
+}
+
+#addcontent-name, 
+#addcontent-name-label, 
+#addcontent-submit {
+  display: none;
+}
+
+#addcontent-form.ok #addcontent-name,
+#addcontent-form.ok #addcontent-submit {
+  display: inline;
+}
+
+#addcontent-form.PageContent #addcontent-submit,
+#addcontent-form.NewsContent #addcontent-submit,
+#addcontent-form.HtmlContent #addcontent-submit,
+#addcontent-form.PageContent #addcontent-name-label,
+#addcontent-form.HtmlContent #addcontent-name-label,
+#addcontent-form.NewsContent #addcontent-name-label,
+#addcontent-form.PageContent #addcontent-name,
+#addcontent-form.HtmlContent #addcontent-name,
+#addcontent-form.NewsContent #addcontent-name {
+  display: inline;
+}
+
+#addcontent-file {
+  display: none;
+}
+
+#addcontent-form.AlbumContent #addcontent-file,
+#addcontent-form.nok #addcontent-file,
+#addcontent-form.ok #addcontent-file {
+  display: block;
+}

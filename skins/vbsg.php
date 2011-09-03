@@ -50,6 +50,7 @@ class VbsgSkin extends Skin {
 
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css">
 
   <!-- site automation -->
   <script src="./skins/vbsg/notify.js"></script>
@@ -611,42 +612,66 @@ function upload_done( url ) {
 
 function changeContent() {
   var type = document.getElementById("selectContentType").value;
+  document.getElementById( "addcontent-form" ).className = type;
   switch( type ) {
     case "PageContent":
     case "NewsContent":
     case "HtmlContent":
-      document.getElementById( "addcontent-file" ).style.display = "none";
       document.getElementById( "addcontent-form" ).method="GET";
       document.getElementById( "addcontent-form" ).enctype="";
       document.getElementById( "addcontent-form" ).target="";
       break;
     case "AlbumContent":
-      document.getElementById( "addcontent-file" ).style.display = "block";
       document.getElementById( "addcontent-form" ).method="POST";
       document.getElementById( "addcontent-form" ).enctype="multipart/form-data";
       document.getElementById( "addcontent-form" ).encoding="multipart/form-data";
       document.getElementById( "addcontent-form" ).target="iframe";
       break;
   }
-  document.getElementById("addcontent-name").focus();
 }
+
+function drop(file) {
+  if( file.value.match(/\.(zip|ZIP)$/) ) {
+    result = "ok";
+  } else {
+    result = "nok";
+    file.value = "";
+  }
+  document.getElementById("addcontent-form").className = result;
+  document.getElementById("addcontent-name").value = 
+    file.value.replace( /\..*$/, "").replace( /^([^\\\/]*[\\\/])*/g, "" );
+}
+</script>
+
     </script>
     <form id="addcontent-form" action="" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
       <span class="label">Soort</span>
       <select id="selectContentType" name="type" onchange="changeContent();">
+        <option value="choose">Kies een soort ...</option>
 {$html}
       </select><br><br>
-      <span class="label">Naam</span><input name="name" type="text" id="addcontent-name">
-      <div id="addcontent-file" style="display:none;">
+      <div id="addcontent-file">
         <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
-        <span class="label">Bestand</span><input name="file" type="file" class="file">
+
+        <div id="dropzone">
+          <div id="dropicon"></div>
+          <input id="file" type="file" name="file" onchange="drop(this)" multiple>
+          <div id="dropname"  class="dropmsg"></div>
+          <div id="droperror" class="dropmsg">Not a ZIP file, try again.</div>
+        </div>
+        <div id="instructions"></div>
       </div>
+
+      <span id="addcontent-name-label" class="label">Naam</span>
+      <input id="addcontent-name" type="text" name="name">
+
       <p align="center">
         <input id="addcontent-submit" type="submit" class="button" 
                value="voeg toe..." onclick="return addContent();">
       </p>
+
     </form>
     <iframe id="iframe" name="iframe" style="display:none;" src=""></iframe>
     <div id="progress">
