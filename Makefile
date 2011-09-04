@@ -1,4 +1,4 @@
-FILES=.htaccess ajax.php index.php bootstrap.php lib
+FILES=.htaccess ajax.php index.php bootstrap.php lib handle_file_upload.php
 SKIN=vbsg
 
 all: dist
