@@ -12,3 +12,10 @@ dist: dist-clean
 
 dist-clean:
 		@rm -rf webroot
+
+init:
+		@git submodule init && git submodule update
+		@cd lib/LightOpenIDClient; git submodule init && git submodule update
+		@echo "TODO"
+		@echo "- Edit config.php to setup your site..."
+		@echo "- Create the database: cd db; make"

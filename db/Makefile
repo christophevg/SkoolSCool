@@ -9,10 +9,10 @@ schema:
 	${MYSQL} -uvbsg -pvbsg vbsg < schema.sql
 
 system:
-	${MYSQL} -uvbsg -pvbsg vbsg < content.sql	
+	${MYSQL} -uvbsg -pvbsg vbsg < system.sql
 
 passwords:
-	${MYSQL} -uvbsg -pvbsg vbsg < passwords.sql	
+	${MYSQL} -uvbsg -pvbsg vbsg < passwords.sql
 
 content:
-	${MYSQL} -uvbsg -pvbsg vbsg < content.sql	
+	${MYSQL} -uvbsg -pvbsg vbsg < content.sql
