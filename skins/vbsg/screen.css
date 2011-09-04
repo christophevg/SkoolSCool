@@ -448,6 +448,13 @@ DIV.embedded.album P.label {
   margin-bottom: 5px;
 }
 
+.dummy.controls {
+  padding: 0px;
+  margin: 0px;
+  display: inline-block;
+  float:none;
+}
+
 /* POST-ITS */
 
 DIV.postit {

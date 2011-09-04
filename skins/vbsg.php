@@ -614,6 +614,8 @@ function upload_done( url ) {
 function changeContent() {
   var type = document.getElementById("selectContentType").value;
   document.getElementById( "addcontent-form" ).className = type;
+  document.getElementById( "addcontent-name" ).value = "";
+  document.getElementById( "addcontent-name-error" ).innerHTML = "";
   switch( type ) {
     case "PageContent":
     case "NewsContent":
@@ -631,17 +633,47 @@ function changeContent() {
   }
 }
 
+function checkName() {
+  var input = document.getElementById("addcontent-name");
+  var value = input.value.replace(/^\s+/, "").replace(/\s+$/, ""); // trim
+  var spinner = document.getElementById("addcontent-name-spinner");
+  var error   = document.getElementById("addcontent-name-error");
+  error.innerHTML = "";
+  if( value != '' ) {
+    spinner.className = "icon wait state active";
+    __remote__.fetch( value, function(response) {
+      spinner.className = "icon wait state inactive";
+      if( response == value ) {
+        error.innerHTML = "Deze naam is reeds in gebruik";
+        input.focus();
+        input.select();
+      }
+    } );
+  }
+}
+
+var waiting_before_checking_name_change = null;
+
+function watchChangeName() {
+  if( waiting_before_checking_name_change != null ) { 
+    clearTimeout( waiting_before_checking_name_change );
+  }
+  waiting_before_checking_name_change = setTimeout( checkName, 1000 );
+}
+
 function drop(file) {
   if( file.value.match(/\.(zip|ZIP)$/) ) {
-    result = "ok";
+    var result = "ok";
   } else {
-    result = "nok";
+    var result = "nok";
     file.value = "";
   }
   document.getElementById("addcontent-form").className = result;
   document.getElementById("addcontent-name").value = 
     file.value.replace( /\..*$/, "").replace( /^([^\\\/]*[\\\/])*/g, "" );
+  checkName();
 }
+
 </script>
 
     </script>
@@ -666,7 +698,11 @@ function drop(file) {
       </div>
 
       <span id="addcontent-name-label" class="label">Naam</span>
-      <input id="addcontent-name" type="text" name="name">
+      <input id="addcontent-name" type="text" name="name" onkeyup="watchChangeName();">
+      <div class="dummy controls">
+        <div id="addcontent-name-spinner" class="icon wait state inactive"></div>
+        <span id="addcontent-name-error" class="error-msg"></span>
+      </div>
 
       <p align="center">
         <input id="addcontent-submit" type="submit" class="button" 
