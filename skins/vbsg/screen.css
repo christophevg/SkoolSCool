@@ -262,11 +262,9 @@ LI {
  width: 990px;
  margin-left: auto;
  margin-right: auto;
- padding-bottom: 150px;
 }
 
 .page-home .site {
-  padding-bottom: 40px;
 }
 
 /* EMBEDDED CONTENT */
@@ -284,7 +282,7 @@ DIV.embedded H1 {
 }
 
 DIV.embedded.nieuws,
-DIV.embedded.laatste-foto,
+DIV.embedded.content.page.laatste-foto,
 DIV.embedded.agenda {
   width: 295px;
 }
@@ -338,7 +336,7 @@ DIV.placeholder.agenda {
   min-height: 200px;
 }
 
-DIV.embedded.page {
+DIV.embedded.content {
   color: white;
   font: 9pt Verdana;
   background-image: url( "images/gradient.png" );
@@ -347,7 +345,7 @@ DIV.embedded.page {
   min-height: 200px;
 }
 
-DIV.embedded.page.bedankt2011 {
+DIV.embedded.content.page {
   width: 640px;
 }
 
@@ -366,7 +364,7 @@ DIV.embedded.socialbar {
   padding-left: 55px;
 }
 
-DIV.embedded.album H1 {
+DIV.embedded.laatste-foto H1 {
   background-image: url( "images/icons/album.png" );
   background-repeat: no-repeat;
   background-position: 0px 1px;
