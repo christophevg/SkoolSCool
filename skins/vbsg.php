@@ -81,9 +81,9 @@ class VbsgSkin extends Skin {
   <![endif]-->
 </head>
 <body>
-  <div class="page-{$this->content->url}">
-    
-    <div class="wrapper">
+  <div class="wrapper">
+
+    <div class="page-{$this->content->url}">
     
       <div class="toolbar-wrapper">
         <div id="user-toolbar" class="toolbar">
@@ -116,12 +116,14 @@ class VbsgSkin extends Skin {
         </div>
       </div>
 
+      <div class="push"></div>
+
     </div>
 
-    <div class="_footer">
+  </div>
+
+  <div class="_footer">
 {$this->includeFooter}
-    </div>
-
   </div>
 
 {$this->insertPopups}
