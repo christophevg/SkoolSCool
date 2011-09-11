@@ -446,7 +446,7 @@ EOT;
 <div class="overlay" id="logon-overlay">
   <div id="logon-popup" class="popup withRoundedCorners">
 	  <div class="actions">
-		  <a id="closer" href="#" class="icon close"
+		  <a id="closer" href="javascript:" class="icon close"
 			   onclick="hidePopup('logon');"><span>close</span></a>
 	  </div>
 
@@ -502,7 +502,7 @@ EOT;
 	<div id="register-popup" class="popup withRoundedCorners">
 		<h1>Ready to register ?</h1>
 		<div class="actions">
-			<a id="closer" href="#" class="icon close"
+			<a id="closer" href="javascript:" class="icon close"
 				 onclick="hidePopup('register');"><span>close</span></a>
 		</div>
 
@@ -569,7 +569,7 @@ EOT;
 <div class="overlay" id="addcontent-overlay">
 	<div id="addcontent-popup" class="popup withRoundedCorners">
 		<div class="actions">
-			<a id="closer" href="#" class="icon close"
+			<a id="closer" href="javascript:" class="icon close"
 				 onclick="hidePopup('addcontent');"><span>close</span></a>
 		</div>
 		<h1>Voeg nieuwe inhoud toe...</h1>
@@ -731,7 +731,7 @@ EOT;
 <div class="overlay" id="contact-overlay">
 	<div id="contact-popup" class="popup withRoundedCorners">
 		<div class="actions">
-			<a id="closer" href="#" class="icon close"
+			<a id="closer" href="javascript:" class="icon close"
 				 onclick="hidePopup('contact');"><span>close</span></a>
 		</div>
 		<h1>Contacteer ons...</h1>
