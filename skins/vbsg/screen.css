@@ -50,7 +50,7 @@ H3 {
   padding-top: 10px;
   padding-bottom: 5px;
   font: 10pt Verdana;
-  text-decoration: underline;
+  font-weight: bold;
 }
 
 P {
