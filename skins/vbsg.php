@@ -351,7 +351,7 @@ EOT;
 EOT;
     }
     return <<<EOT
-<div class="embedded page {$this->content->url}{$this->actualRequest}">
+<div class="embedded content page {$this->content->url}{$this->actualRequest}">
   {$excerpt}
   {$this->socialBar}
   {$more}
@@ -379,7 +379,7 @@ EOT;
   
   protected function HtmlContentAsEmbedded() {
     return <<<EOT
-<div class="embedded page {$this->content->url}{$this->actualRequest}">
+<div class="embedded content html {$this->content->url}{$this->actualRequest}">
   {$this->content}
 </div>
 EOT;
@@ -387,7 +387,7 @@ EOT;
 
   protected function NewsListAsEmbedded() {
     return <<<EOT
-<div class="embedded page {$this->content->url}{$this->actualRequest}">
+<div class="embedded content news {$this->content->url}{$this->actualRequest}">
   {$this->contentAsHtml}
 </div>
 EOT;
