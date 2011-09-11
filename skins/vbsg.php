@@ -202,7 +202,7 @@ EOT;
     // TODO: do this in a "nicer" way ;-)
     $self = join( '/', Context::$request->url );
     $html = str_replace( "<li><a href=\"$self\">", 
-                         "<li class=\"selected\"><a href=\"{$this->content->url}\">", 
+                         "<li class=\"selected\"><a href=\"$self\">", 
                          $html );
     return <<<EOT
     <div id="_subnavigation" class="_subnavigation">
