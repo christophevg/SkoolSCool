@@ -301,6 +301,10 @@ DIV.news SPAN.date {
   vertical-align: text-top;
 }
 
+DIV#nieuwsView DIV.news SPAN.date {
+  width: 110px;
+}
+
 DIV.agenda SPAN.item,
 DIV.news SPAN.item {
   width: 180px;
@@ -309,19 +313,22 @@ DIV.news SPAN.item {
   vertical-align: text-top;
 }
 
+DIV#nieuwsView DIV.news SPAN.item {
+  width: 800px;
+}
+
 DIV.embedded.agenda UL, DIV.embedded.agenda LI {
   margin: 0px;
   padding: 0px;
   list-style-type: none;    
 }
 
-DIV.embedded.agenda DIV.loading {
+DIV.loading {
   padding: 0px;
   margin: 0px;
 	background-image: url( "images/icons/spinner.gif" );
 	background-position: center center;
 	background-repeat: no-repeat;
-  width: 290px;
   height: 200px;
 }
 

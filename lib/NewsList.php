@@ -16,11 +16,21 @@ class NewsList extends Content {
     foreach( $items as $item ) {
       $date  = date("j M Y", $item->date );
       $lines = split( "\n", $item->body );
-      $title = str_replace( "# ", "", $lines[0] );
+      $title = str_replace( "# ", "", array_shift($lines));
+      
+      $preview = "";
+      if( ! $isEmbedded ) {
+        $preview = join( "\n", $lines );
+        if( strlen($preview) > 100 ) { 
+          $preview = substr( $preview, 0, 500 ) . '...';
+        }
+        $preview = "<br>\n" . $preview;
+      }
+      
       $html .= <<<EOT
 <div class="news">
   <span class="date">$date -</span>
-  <span class="item"><a href="nieuws/{$item->url}">$title</a></span>
+  <span class="item"><a href="nieuws/{$item->url}">$title</a>{$preview}</span>
 </div>
 EOT;
     }
