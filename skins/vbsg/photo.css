@@ -95,3 +95,21 @@ DIV.photo IMG.full {
   padding: 0px;
   margin: 0px;
 }
+
+/* front page laatste foto */
+
+DIV.embedded.content.html.laatste-foto {
+  width: 295px;
+  height: 263px;  
+  background-image: url('images/album.png');
+  background-position: 40px 32px;
+  background-repeat: no-repeat;
+  padding: 0px;
+}
+
+DIV.embedded.content.html.laatste-foto IMG {
+  padding: 0px;
+  margin-top: 30px;
+  margin-left: 51px;
+  background-color: white;
+}
