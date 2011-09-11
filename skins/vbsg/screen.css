@@ -580,9 +580,7 @@ DIV.postit.belangrijk, DIV.postit.belangrijk A {
 
 /* SUBCONTENT */
 
-.subcontent {
-  margin-top: 40px;
-}
+.subcontent {}
 
 /* FOOTER */
 
@@ -591,6 +589,10 @@ DIV.postit.belangrijk, DIV.postit.belangrijk A {
 	height: auto !important;
 	height: 100%;
 	margin: 0 auto -108px;
+}
+
+.push {
+  height: 108px;
 }
 
 ._footer {
