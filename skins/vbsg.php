@@ -190,7 +190,8 @@ EOT;
   
   protected function hasSubNavigation() {
     return ( ( $this->content->id != "home" ) and 
-             ( get_class($this->content) == "PageContent" ) and
+             ( get_class($this->content) == "PageContent" or
+               get_class($this->content) == "HtmlContent" ) and
              ( Navigator::getInstance()->currentSectionHasNavigation() ) );
   }
   
