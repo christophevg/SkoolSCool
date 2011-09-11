@@ -359,6 +359,13 @@ EOT;
 EOT;
   }
 
+  protected function NewsContentAsBody() {
+    return $this->mainTemplate( 
+        $this->bodyContent . 
+        "<br>\n<br>\n<a href=\"nieuws\">&lt;&lt; terug naar het nieuws</a>"
+    );
+  }
+
   protected function NewsContentAsEmbedded() {
     return $this->PageContentAsEmbedded();
   }
