@@ -307,6 +307,9 @@ EOT;
 
   // TODO : move this to AuthorizationManager
   private function contentAllowsComments() {
+    // Temporary: no comments
+    return false;
+
     return  ( ! $this->user->isAnonymous() )
          && $this->content->id     != "home" 
          && $this->content->id     != "fotoboek"
