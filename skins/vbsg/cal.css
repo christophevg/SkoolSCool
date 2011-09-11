@@ -1,4 +1,5 @@
 TABLE.calendar {
+  width: 100%;
   border: 2px solid #85D4E1;
   border-collapse: collapse;
 }
@@ -15,9 +16,10 @@ TABLE.calendar TH {
 }
 
 TABLE.calendar DIV.container {
-  overflow: auto;
-  width: 100px;
-  height: 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 130px;
+  height: 100px;
 }
 
 TABLE.calendar TD DIV.number {
