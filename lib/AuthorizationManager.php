@@ -161,7 +161,7 @@ class AuthorizationManager {
    */
   private function UserAlbumContent( $user, $album, $access = 'read' ) {
     // policy: update access for admins only ... for now
-    return $user->isAdmin();
+    return $user->isAdmin() || $user->isContributor();
   }
   
 } 
