@@ -86,7 +86,7 @@ class User extends Object {
     switch($property) {
       case 'role':
         return $this->isAdmin() ? "admin" :
-          ( $this->isContributor() ? "constributor" : "" );
+          ( $this->isContributor() ? "contributor" : "" );
         break;
       case 'id':
       case 'login':      
