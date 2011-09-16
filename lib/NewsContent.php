@@ -19,10 +19,8 @@ class NewsContent extends PageContent {
   public function editor() {
     $date = date( "j-m-Y", $this->date );
     return <<<EOT
-<script>
-  additionalEditorComponents.push( "date" );
-</script>
 <input id="{$this->url}date" type="text" value="{$date}"> (d-m-jjjj)<br>
+<script> Editor.get( "{$this->url}" ).add( "date" ); </script>
 <br>
 EOT
     . parent::editor();

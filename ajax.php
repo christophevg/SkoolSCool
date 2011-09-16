@@ -1,10 +1,10 @@
 <?php
 
 /**
- * SkoolSCool - Ajax interface
- * A small and very specific CMS for an elementary school's website
- * @author Christophe VG <contact+skoolscool@christophe.vg>
- */
+* SkoolSCool - Ajax interface
+* A small and very specific CMS for an elementary school's website
+* @author Christophe VG <contact+skoolscool@christophe.vg>
+*/
 
 include_once 'lib/SkoolSCool.php';
 
@@ -29,26 +29,28 @@ function handle_post() {
   // get the current user
   $user = SessionManager::getInstance()->currentUser;
 
- // retrieve the relevant content
- $content = Content::get( $request );
- if( $content == null ) {
-   print "unknown content: $request";
-   exit();
- }
+  // retrieve the relevant content
+  $content = Content::get( $request );
+  if( $content == null ) {
+    print "unknown content: $request";
+    exit();
+  }
 
- // check if the user can update the requested content, if so, do it, else fail
- if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
-   foreach( $data as $key => $value ) {
-     if( $key == 'date' ) { $value = strtotime( $value ); }
-     $content->$key = $value;
-   }
-   // mark the change as performed by this user
-   $content->author = SessionManager::getInstance()->currentUser;
-   Objects::getStore('persistent')->put($content);
-   print "ok";
- } else {
-   print "not allowed";
- }
+  // check if the user can update the requested content, if so, do it, else fail
+  if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
+    foreach( $data as $key => $value ) {
+      // TODO: more this logic to setters on the content objects
+      if( $key == 'date' ) { $value = strtotime( $value );  }
+      if( $key == 'tags' ) { $value = split( ' ', $value ); }
+      $content->$key = $value;
+    }
+    // mark the change as performed by this user
+    $content->author = SessionManager::getInstance()->currentUser;
+    Objects::getStore('persistent')->put($content);
+    print "ok";
+  } else {
+    print "not allowed";
+  }
 }
 
 switch( $_SERVER['REQUEST_METHOD'] ) {

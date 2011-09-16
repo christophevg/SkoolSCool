@@ -164,7 +164,7 @@ EOT;
   
   protected function includeNavigation() {
     $navigation = Content::get('navigation');
-    $html = Breakdown::getConverter()->makeHtml("* [home]\n".(string)$navigation);
+    $html = Breakdown::getConverter()->makeHtml((string)$navigation);
     $html = ereg_replace( '</?p>','', $html );
     // add class to show current (TODO: do this in a clean way ;-) )
     $root = Context::$request->url[0];
@@ -193,7 +193,7 @@ EOT;
     return '<div class="info">' . $html . '</div>';
   }
 
-  protected function bodyContent() {
+  protected function bodyContent($more = "") {
     if( ! $this->contentIsReadable() ) { return ""; }
     $contentClass = get_class( $this->content );
     return <<<EOT
@@ -205,6 +205,7 @@ var contentClass = "$contentClass";
   {$this->editControls}
   <div id="{$this->content->url}View" class="body">
     {$this->contentAsHtml}
+    {$more}
   </div>
   {$this->bodyEditor}
 </div>
@@ -246,7 +247,7 @@ EOT;
       $html .= <<<EOT
       <div id="{$this->content->url}{$command}Command" 
            class="icon {$lc_command} command{$state}"
-           onclick="{$lc_command}Content('{$this->content->url}');"></div>
+           onclick="Editor.get('{$this->content->url}').{$lc_command}();"></div>
 EOT;
     }
     return $html;
@@ -388,8 +389,8 @@ EOT;
 
   protected function NewsContentAsBody() {
     return $this->mainTemplate( 
-        $this->bodyContent . 
-        "<br>\n<br>\n<a href=\"nieuws\">&lt;&lt; terug naar het nieuws</a>"
+        $this->bodyContent
+        ("<br>\n<br>\n<a href=\"nieuws\">&lt;&lt; terug naar het nieuws</a>")
     );
   }
 

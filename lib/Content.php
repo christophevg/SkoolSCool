@@ -6,6 +6,7 @@ Objects::addStore( 'transient', new SessionStore( 'ObjectCache' ) );
 abstract class Content extends Object {
   var $author;
   var $children;
+  var $tags;
   
   // this is bad, I know, but I prefer it to be in one place
   static $types = array( 'PageContent', 'NewsContent', 'HtmlContent' );
@@ -47,16 +48,19 @@ abstract class Content extends Object {
                       SessionManager::getInstance()->currentUser;
     $this->children = isset( $data['children'] ) && is_array( $data['children'] ) ?
                       Objects::getStore('persistent')->fetch(split(',', $data['children'])) : array();
+    $this->tags     = isset($data['tags']) ? 
+                        split( ' ', $data['tags']) : array();
   }
   
   public function toHash() {
     $hash = parent::toHash();
-    $hash['author'] = $this->author->id;
     $children = array();
     foreach( $this->children as $child ) { 
       array_push( $children, $child->id );
     }
-    $hash['children'] = join( ',', $children );
+    $hash['children'] = join( ',', $children   );
+    $hash['tags']     = join( ' ', $this->tags );
+    $hash['author']   = $this->author->id;
     return $hash;
   }
   
@@ -88,6 +92,17 @@ abstract class Content extends Object {
   
   public function isHtml() { return false; }
   
-  abstract public function editor();
+  public function editor() {
+    // all ContentTypes have tags, but only accessible to admins
+    if( SessionManager::getInstance()->currentUser->isAdmin() ) {
+      $tags = join( ' ', $this->tags );
+      return <<<EOT
+tags <input id="{$this->url}tags" class="tags" type="text" value="{$tags}"><br>
+     <script> Editor.get( "{$this->url}" ).add( "tags" ); </script>
+<br>
+EOT;
+    }
+  }
+  
   abstract public function render();
 } 

@@ -14,9 +14,10 @@ class CommentContent extends Content {
   
   public function editor() {
     return <<<EOT
-<textarea id="{$this->url}Raw" class="raw">
+<textarea id="{$this->url}body" class="raw">
 $this->body
 </textarea><br>
+<script> Editor.get( "{$this->url}" ).addBody( "body" ); </script>
 EOT;
   }
 
