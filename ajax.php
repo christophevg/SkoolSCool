@@ -42,6 +42,8 @@ function handle_post() {
      if( $key == 'date' ) { $value = strtotime( $value ); }
      $content->$key = $value;
    }
+   // mark the change as performed by this user
+   $content->author = SessionManager::getInstance()->currentUser;
    Objects::getStore('persistent')->put($content);
    print "ok";
  } else {
