@@ -1,9 +1,26 @@
 SkoolSCool
-A small and very specific CMS for an elementary school's website
+A small and very specific SCMS for an elementary school's website
 
 ---
 
-SkoolSCool is a very simple CMS (Content Management System) for schools, their
-teachers and parents. It allows basic content creation and offers a simple
-user management. It also aims to be totally independent, which makes it easy
-to implement, use and adapt.
+SkoolSCool is a very simple SCMS (Social Content Management System) for
+schools, their teachers and parents. It allows basic content creation, offers
+a simple user management and includes some basic social elements that allow
+for interaction and collaboration. It also aims to be totally independent,
+which makes it easy to implement, use and adapt.
+
+Minimal survival steps:
+
+$ git clone https://github.com/christophevg/SkoolSCool.git
+$ cd SkooSCool/
+$ make init
+
+DISCLAIMER
+
+This project is currently mainly used to create and rollout a new website for
+my kids' school. The only skin that is provided is that of their school. The
+project is useable for others, but you'll need some PHP knowledge and be ready
+to proceed in undocumented areas.
+
+As soon as the site of my kids' school is close to finalized, I'll be adding a
+blank skin and documentation, thus making the project a lot more accessible.
