@@ -13,6 +13,7 @@ upload: dist
 dist: dist-clean
 	@mkdir -p webroot/skins
 	@cp -r ${FILES} webroot/
+	@rm webroot/config.php
 	@cp -r skins/${SKIN} webroot/skins/
 	@cp -r skins/${SKIN}.php webroot/skins/
 	@find webroot -type d -name .git | xargs rm -rf
