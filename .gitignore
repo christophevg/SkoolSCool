@@ -1,2 +1,4 @@
 *.log
 webroot
+config.php
+.htaccess
