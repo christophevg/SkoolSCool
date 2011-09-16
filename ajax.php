@@ -49,8 +49,6 @@ function handle_post() {
  }
 }
 
-sleep(1);
-
 switch( $_SERVER['REQUEST_METHOD'] ) {
   case 'GET' :  handle_get();  break;
   case 'POST':  handle_post(); break;  
