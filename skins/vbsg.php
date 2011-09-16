@@ -37,12 +37,13 @@ class VbsgSkin extends Skin {
   }
   
   private function mainTemplate($content) {
-    $base = 'http://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']);
+    $base = 'http://' . str_replace( '//', '/', 
+          $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']) . '/' );
     return <<<EOT
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="${base}/">
+  <base href="${base}">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=8" >
 
