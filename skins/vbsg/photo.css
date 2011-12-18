@@ -78,7 +78,7 @@ DIV.thumbs {
   overflow-x: auto;
   -ms-overflow-x: auto;
   overflow-y: hidden;
-  -ms-overflow-x: hidden;
+  -ms-overflow-y: hidden;
 }
 
 /* photo */
