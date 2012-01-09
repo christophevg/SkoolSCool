@@ -761,9 +761,17 @@ EOT;
       <span class="label">Naam</span>
       <input name="name" type="text" id="contact-name"><br>
       <br>
+      <span class="label">Email</span>
+      <input name="email" type="text" id="contact-email"><br>
+      <br>
       <span class="label">Boodschap</span>
-      <textarea name="message" id="contact-boodschap" rows="4" cols="30"></textarea>
-      <center><input type="submit" class="button" value="verzend..." onclick=""></center>
+      <textarea name="message" id="contact-boodschap" rows="4" cols="30"></textarea><br>
+      <br>
+      <center>
+        Controleer zeker je email adres goed!<br>
+        Anders kunnen we je misschien niet bereiken.<br>
+        <input type="submit" class="button" value="verzend..." onclick="">
+      </center>
     </form>
   </div>
 </div>

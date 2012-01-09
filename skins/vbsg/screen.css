@@ -639,6 +639,14 @@ DIV#logon-popup INPUT {
   width: 150px;
 }
 
+DIV#contact-popup {
+  height: 400px;
+}
+
+DIV#contact-popup TEXTAREA#contact-boodschap {
+  width: 490px;
+}
+
 FORM INPUT.button, FORM SELECT {
   color: white;
   background-color: #2890BD;

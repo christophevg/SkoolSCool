@@ -52,8 +52,10 @@ if( $content == null ) {
  
 // feedback/content form
 if( isset($_POST['message']) ) {
-  mail( Config::$feedbackMail, "Nieuw Bericht op de website",
-        "Van : {$_POST['name']}:\n\n{$_POST['message']}\n" );
+  mail( Config::$feedbackMail, "Nieuw bericht via de website",
+        "Van   : {$_POST['name']}\n" .
+        "Email : {$_POST['email']}\n\n" .
+        "{$_POST['message']}\n" );
 }
 
 // comments
