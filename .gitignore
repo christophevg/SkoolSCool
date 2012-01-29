@@ -2,3 +2,5 @@
 webroot
 config.php
 .htaccess
+doc
+db/backup*
