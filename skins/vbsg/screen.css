@@ -472,6 +472,17 @@ DIV.postit {
   text-align: center;
 }
 
+DIV.poster {
+  clear: both;
+  float: right;
+  width: 310px;
+  height: 220px;
+  background-image: url( "images/postit-large.png" );
+  padding: 5px;
+  padding-top: 20px;
+  text-align: center;
+}
+
 DIV.postit, DIV.postit A {
   text-decoration: none;
   font: 16pt Comic Sans MS;
