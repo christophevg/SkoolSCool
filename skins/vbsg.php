@@ -49,36 +49,36 @@ class VbsgSkin extends Skin {
 
   <title>Vrije Basisschool Schriek &amp; Grootlo</title>
 
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css?{$this->includeVersion}">
 
   <!-- site automation -->
-  <script src="./skins/vbsg/notify.js"></script>
-  <script src="./skins/vbsg/ajax.js"></script>
-  <script src="./skins/vbsg/popup.js"></script>
-  <script src="./skins/vbsg/editing.js"></script>
-  <script src="./skins/vbsg/json2.js"></script>
+  <script src="./skins/vbsg/notify.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/ajax.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/popup.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/editing.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/json2.js?{$this->includeVersion}"></script>
 
   <!-- breakdown support -->
-  <script src="./skins/vbsg/breakdown/js/breakdown.js"></script>
+  <script src="./skins/vbsg/breakdown/js/breakdown.js?{$this->includeVersion}"></script>
 
   <!-- calendar support -->
   <script src="http://www.google.com/jsapi"></script>
-  <script src="./skins/vbsg/cal.js/src/cal.js"></script>
-  <script src="./skins/vbsg/cal.js/src/providers/google.js"></script>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/cal.css">
+  <script src="./skins/vbsg/cal.js/src/cal.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/cal.js/src/providers/google.js?{$this->includeVersion}"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/cal.css?{$this->includeVersion}">
 
   <!-- photo support -->
-  <script src="./skins/vbsg/photo.js/src/photo.js"></script>
-  <script src="./skins/vbsg/photo.js/src/providers/google.js"></script>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/photo.css">
+  <script src="./skins/vbsg/photo.js/src/photo.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/photo.js/src/providers/google.js?{$this->includeVersion}"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/photo.css?{$this->includeVersion}">
 
   <!--[if lt IE 7]>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css?{$this->includeVersion}">
   <![endif]-->
   <!--[if lt IE 8]>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie7.css">
+  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie7.css?{$this->includeVersion}">
   <![endif]-->
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -148,6 +148,10 @@ class VbsgSkin extends Skin {
 <!-- this page was generated in {$this->duration} seconds  -->
 </html>
 EOT;
+  }
+  
+  protected function includeVersion() {
+    return "1.1-3";
   }
   
   protected function includeNavigation() {
