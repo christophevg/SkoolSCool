@@ -9,6 +9,8 @@
 date_default_timezone_set('Europe/Brussels');
 setlocale(LC_ALL, 'nl_NL');
 
+include_once dirname(__FILE__) . '/JSConsole.php';
+
 include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
 
 include_once dirname(__FILE__) . '/gPhoto.php';
