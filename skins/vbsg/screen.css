@@ -466,7 +466,7 @@ DIV.postit {
   clear: both;
   float: right;
   width: 290px;
-  height: 100px;
+  height: 90px;
   background-image: url( "images/postit.png" );
   padding: 15px;
   text-align: center;
@@ -476,7 +476,7 @@ DIV.poster {
   clear: both;
   float: right;
   width: 310px;
-  height: 220px;
+  height: 230px;
   background-image: url( "images/postit-large.png" );
   padding: 5px;
   padding-top: 20px;
