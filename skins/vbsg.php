@@ -151,7 +151,7 @@ EOT;
   }
   
   protected function includeVersion() {
-    return "1.1-3";
+    return "1.1-9";
   }
   
   protected function includeNavigation() {
