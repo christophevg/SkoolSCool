@@ -396,6 +396,8 @@ EOT;
     if( Context::$request->object != $this->content->id ) { return; }
 
     $commentCount = count($this->content->children);
+    // don't show the social-bar if there is no "activity"
+    if( $commentCount < 1 ) { return; }
     return <<<EOT
   <div class="embedded socialbar" onclick="javascript:window.location='{$this->content->url}';">
     {$commentCount}
