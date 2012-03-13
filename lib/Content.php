@@ -45,7 +45,7 @@ abstract class Content extends Object {
     $this->author   = isset( $data['author'] ) ? 
                       User::get( $data['author'] ) : 
                       SessionManager::getInstance()->currentUser;
-    $this->children = isset( $data['children'] ) ?
+    $this->children = isset( $data['children'] ) && is_array( $data['children'] ) ?
                       Objects::getStore('persistent')->fetch(split(',', $data['children'])) : array();
   }
   
