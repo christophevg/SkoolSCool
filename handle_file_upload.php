@@ -1,5 +1,7 @@
 <?php
 
+require_once('../php/Archive/Zip.php');
+
 function flushIt( $count = 256) {
   echo str_repeat( "<br>\n", $count );
   flush(); ob_flush();
@@ -40,22 +42,26 @@ function accept_file( $uploaddir = '/tmp' ) {
   return false;
 }
 
-function unzip_file( $file ) {
-  $dir = dirname($file);
+function unzip_file( $archive ) {
+  $dir  = dirname($archive);
+  
+  $obj  = new Archive_Zip( $archive );
 
-  `cd $dir; unzip -j -d . "$file" 2>&1`;
+  // extract all files
+  $obj->extract( array( 'remove_all_path' => true, 'add_path' => $dir ) );
 
-  // unzip in directory
+  // determine files to handle
+  $list = $obj->listContent();
   $files = array();
-  if( $handle = opendir( $dir ) ) {
-    while( false !== ( $file = readdir($handle) ) ) {
-      if( preg_match( "/^[^\.].*\.[jpegJPEGjpgJPG]+$/", $file ) ) {
-        $files[] = $dir . '/' . $file;
+  foreach($list as $file) {
+    if( ! $file['folder'] ) {
+      $filename = basename($file['filename']);
+      if( preg_match( "/^[^\.].*\.[jpegJPEGjpgJPG]+$/", $filename ) ) {
+        $files[] = $dir . '/' . $filename;
       }
     }
-    closedir($handle);
   }
-  
+
   return $files;
 }
 
