@@ -34,7 +34,7 @@ abstract class Object {
   private function generateID() {
     $type = get_class($this);
     $num = rand();
-    return "{$type}{$count}";
+    return "{$type}{$num}";
   } 
   
   function toHash() {
