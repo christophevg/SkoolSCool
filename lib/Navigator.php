@@ -43,8 +43,8 @@ class Navigator {
   
   function getCurrentSectionNavigation() {
     $currentSectionID = str_replace( "-", " ", Context::$request->url[0] );
-    $section = $this->sections[$currentSectionID];
-    return $section ? join( "\n", $section ) : "";
+    return array_key_exists($currentSectionID, $this->sections) ? 
+      join( "\n", $this->sections[$currentSectionID] ) : "";
   }
 
   function getSectionOf( $page ) {
