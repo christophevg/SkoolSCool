@@ -14,3 +14,6 @@ I18N::$RESIZE_PHOTO = "De foto wordt op de juiste grootte gebracht ...";
 I18N::$UPLOAD_PHOTO = "De foto wordt geupload ...";
 
 I18N::$FILE_TRANSFER_FAILED = "Uw bestand werd niet goed ontvangen.";
+
+I18N::$RECAPTCHA_FAILURE = "Je identificatie als persoon faalde. Probeer nogmaals.";
+I18N::$CONTACT_SUCCESS   = "Je bericht werd goed verstuurd. We behandelen dit zo snel mogelijk.";

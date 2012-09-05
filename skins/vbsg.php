@@ -53,6 +53,14 @@ class VbsgSkin extends Skin {
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css?{$this->includeVersion}">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css?{$this->includeVersion}">
 
+  <!-- recaptcha styling -->
+  <script type="text/javascript">
+    var RecaptchaOptions = {
+      lang : 'nl',
+      theme : 'clean'
+    };
+  </script>
+
   <!-- site automation -->
   <script src="./skins/vbsg/notify.js?{$this->includeVersion}"></script>
   <script src="./skins/vbsg/ajax.js?{$this->includeVersion}"></script>
@@ -755,6 +763,7 @@ EOT;
   }
 
   protected function insertContactPopup() {
+    $recaptcha = recaptcha_get_html("6Le6G9YSAAAAAPTOBHPwD9DwR7ZQBWFb4oDsGIEW");
     return <<<EOT
 <div class="overlay" id="contact-overlay">
 	<div id="contact-popup" class="popup withRoundedCorners">
@@ -776,6 +785,11 @@ EOT;
       <center>
         Controleer zeker je email adres goed!<br>
         Anders kunnen we je misschien niet bereiken.<br>
+        <br>
+        Type ook de hieronderstaande tekst over in het tekstvlak. Hiermee toon
+        je dat je een echte bezoeker bent en geen geautomatiseerd programma
+        dat onze mailbox overspoelt met nutteloze berichten.<br><br>
+        {$recaptcha}
         <input type="submit" class="button" value="verzend..." onclick="">
       </center>
     </form>

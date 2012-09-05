@@ -651,7 +651,7 @@ DIV#logon-popup INPUT {
 }
 
 DIV#contact-popup {
-  height: 400px;
+  height: 590px;
 }
 
 DIV#contact-popup TEXTAREA#contact-boodschap {
@@ -743,15 +743,15 @@ DIV.message {
 }
 
 DIV.message.info {
-  background-color: green;
+  background-color: #39E33E;
 }
 
 DIV.message.warning {
-  background-color: yellow;
+  background-color: #F2DF0A;
 }
 
 DIV.message.critical {
-  background-color: red;
+  background-color: #F26678;
 }
 
 /* COMMENTS */

@@ -31,7 +31,7 @@ class Messages {
   const CRITICAL = 'critical'; // fatal problem, operation failed
   
   function add( $message, $type = Messages::INFO ) {
-    $this->messages[] = array( type => $type, body => $message );
+    $this->messages[] = array( 'type' => $type, 'body' => $message );
   }
   
   function addInfo( $message ) {
@@ -53,9 +53,9 @@ class Messages {
       $id++;
       $html .= <<<EOT
 <div id="message-$id" 
-     class="message {$message[type]}"
+     class="message {$message['type']}"
      onclick="javascript:this.style.display='none';">
-{$message[body]}
+{$message['body']}
 </div>
 EOT;
     }

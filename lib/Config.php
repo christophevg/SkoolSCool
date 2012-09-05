@@ -15,6 +15,7 @@ class Config {
   
   // email
   static $feedbackMail = '';
+  static $recaptchaPrivateKey = '';
   
   // default content
   static $defaultPageBody = "# %%name%%\n\nYour content goes here ...";
