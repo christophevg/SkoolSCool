@@ -29,7 +29,7 @@ class AuthorizationManager {
    * @param $resource representing the accessed resource
    * @return Boolean indicating if the accessor can read the resource
    */
-  final public function read( $resource ) {
+  final public function read( $resource = null ) {
     return $this->check( $this->accessor, $resource, 'read' );
   }
 
