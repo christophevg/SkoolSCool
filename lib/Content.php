@@ -20,7 +20,17 @@ abstract class Content extends Object {
       $object = Objects::getStore('transient')->fetch( $name );
     }
     if( $object != null ) {
-      $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
+      // check if the current user is allowed to retrieve this content
+      if( ! AuthorizationManager::getInstance()
+              ->can( SessionManager::getInstance()->currentUser )
+              ->read( $object ) )
+      {
+        // unathorized access ? reset the object
+        $object = null;
+      } else {
+        // authorized access, prepare it for publication
+        $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
+      }
     }
     return $object;
   }
@@ -59,7 +69,12 @@ abstract class Content extends Object {
       array_push( $children, $child->id );
     }
     $hash['children'] = join( ',', $children   );
-    $hash['tags']     = join( ' ', $this->tags );
+    // toHash is used by ObjectStore to store objects
+    // update access to tags is only available to admins
+    // TODO: need better place for this, for now it protects us ;-)
+    if( SessionManager::getInstance()->currentUser->isAdmin() ) {
+      $hash['tags']     = join( ' ', $this->tags );
+    }
     $hash['author']   = $this->author->id;
     return $hash;
   }
@@ -88,6 +103,10 @@ abstract class Content extends Object {
     $this->persist();
   }
   
+  function hasTag( $tag ) {
+    return in_array( $tag, $this->tags );
+  }
+
   public function replace($find, $replace) {}
   
   public function isHtml() { return false; }

@@ -10,6 +10,10 @@ VALUES
   '# Oei...
 
 Je hebt een pagina gevraagd die we niet kennen.' ),
+( 'PageContent', '401', 'system',
+  '# Oei...
+
+We kunnen je geen toegang tot deze pagina verschaffen.' ),
 
 ( 'PageContent', 'unknownContent', 'system',
   '# Deze pagina is nog niet aangemaakt...

@@ -55,6 +55,14 @@ class AuthorizationManager {
     if( is_null( $accessor ) ) { return false; }
     $accessorClass = is_object($accessor) ? get_class($accessor) : $accessor;
     $resourceClass = is_object($resource) ? get_class($resource) : $resource;
+    // check content-generic access
+    $validator = $accessorClass . 'Content';
+    if( method_exists( $this, $validator ) ) {
+      if( ! $this->$validator( $accessor, $resource, $access ) ) {
+        return false;
+      }
+    }
+    // check content-type specific access
     $validator = $accessorClass . $resourceClass;
     if( method_exists( $this, $validator ) ) {
       return $this->$validator($accessor, $resource, $access );
@@ -74,6 +82,32 @@ class AuthorizationManager {
   final private function User( $user, $anything, $access = 'read' ) {
     // policy: read access for all / write access for known users only
     return $access == 'read' ? true : ! $user->isAnonymous();
+  }
+  
+  /**
+   * Validator for Users' global content access
+   * @param $user accessing some content
+   * @param $content any content object 
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access this content
+   *         according to the given access style.
+   */
+  final private function UserContent( $user, $content, $access = 'read' ) {
+    // policy: tags can contain <usertype>-only with usertype being one of
+    //         [ user, contributor, admin ]
+    
+    // is the supplied content isn't Content we don't care and pass on the
+    // responsibility
+    if( ! is_a( $content, 'Content' ) ) { return true; }
+    
+    return $content->hasTag( 'users-only' ) ? 
+           ! $user->isAnonymous() :
+           ( $content->hasTag( 'contributors-only' ) ? 
+             ( $user->isContributor() || $user->isAdmin() ) :
+             ( $content->hasTag( 'admins-only' ) ?
+               $user->isAdmin() :
+               true ) );
   }
 
   /**
