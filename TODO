@@ -1,17 +1,29 @@
-TODO:
+TODO
+
+- clean up code
+	- split HTML and PHP code
+	- centralise javascript
+	- move more functionality to javascript
+	- add more REST interfaces
+
+- generic file upload + file browser like viewer
+- new subcontent
+  - (private) photo albums
+  - (private) calendar
+- finalise support for tag based authorisation rules
+
+- integrate changes
+	- add history management
+		- add delete actions
+		- add restore actions
+
+- fix layout bug in footer
+
 - create basic admin guide
 	- managed image/calendar using Google
 
-- add list of changes with diff and undo facilities (link to page with edit)
-
-- start using tags to allow content-based authorization by auth mgr:
-  - use to create supporting pages
-    (e.g. sandbox for users, todo lists for contributors, ...)
-  - simply keep certain information private
-
 - extract popups
 
-- add messaging backbone: polling user, seen_idx versus last_idx
 - add user mgmt -> integrated in changes
 
 - implement write-through cache on ObjectStore using SessionCache
@@ -50,13 +62,6 @@ bugs
 
 ---
 
-to decide/review:
-- later: add search
-- filter + session/cookie storage
-
----
-
 more future features
 - move default content from skin to database
 	- new contenttype: template
-- Generic List<Content> type ?
