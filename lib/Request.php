@@ -30,6 +30,7 @@ class Request {
   var $path;        // array of parts of path leading up to the $object
   var $object;      // Actually requested object == last part of the path
   var $id;          // name of the object, without dashes
+  var $context;     // name of the context, without dashes
   var $style;       // e.g. Embedded
 
   var $contentType; // the requested contentType
@@ -53,6 +54,9 @@ class Request {
 
     // id = object without dashes
     $this->id = str_replace( '-', ' ', $this->object );
+    
+    // context = (first) path part without dashes = reference to section
+    $this->context = str_replace( "-", " ", $this->url[0] );
     
     // style = embedded or show
     $this->style = isset( $_GET['embed'] ) ? 'embed' : 'show';
