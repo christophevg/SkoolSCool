@@ -10,7 +10,6 @@ TODO
 - new subcontent
   - (private) photo albums
   - (private) calendar
-- finalise support for tag based authorisation rules
 
 - integrate changes
 	- add history management
@@ -25,8 +24,6 @@ TODO
 - extract popups
 
 - add user mgmt -> integrated in changes
-
-- implement write-through cache on ObjectStore using SessionCache
 
 - export database automation using cron
 
@@ -60,6 +57,7 @@ bugs
 - preview with dynamic replaced content e.g. {{id}}
 - javascript in preview of e.g. HtmlContent
 - special characters in object id's (e.g. &)
+- id's of (new) objects should be sanitised : MySQL is case insesitive, ...
 
 ---
 

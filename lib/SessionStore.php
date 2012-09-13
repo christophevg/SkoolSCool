@@ -8,13 +8,28 @@ class SessionStore implements ObjectStore {
   }
   
   public function fetch( $id ) {
+    // applying strtolower because e.g. MySQLStore is case insensitive
+    // FIXME: this should be enforced at Object level by cleaning up the id
+    $id = strtolower($id);
     $set = SessionManager::getInstance()->{$this->name};
     return is_array( $set ) && array_key_exists($id, $set) ? $set[$id] : null;    
   }
 
-  public function put( $object ) {
+  public function has( $id ) {
+    // applying strtolower because e.g. MySQLStore is case insensitive
+    // FIXME: this should be enforced at Object level by cleaning up the id
+    $id = strtolower($id);
     $set = SessionManager::getInstance()->{$this->name};
-    $set[$object->id] = $object;
+    return is_array( $set ) && array_key_exists($id, $set);
+  }
+
+  public function put( $object, $alias = null ) {
+    // applying strtolower because e.g. MySQLStore is case insensitive
+    // FIXME: this should be enforced at Object level by cleaning up the id
+    if( $object == null && $alias == null ) { return; }
+    $id = $alias == null ? strtolower($object->id) : strtolower($alias);
+    $set = SessionManager::getInstance()->{$this->name};
+    $set[$id] = $object;
     SessionManager::getInstance()->{$this->name} = $set;
   }
   

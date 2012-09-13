@@ -59,6 +59,9 @@ class MySQLStore implements ObjectStore {
     } else {
       $this->fetchStmt->execute( array( $id ) );      
       $row = $this->fetchStmt->fetch();
+
+      // syslog(LOG_WARNING, "retrieved object : " . $id );
+
       return $this->constructObject( $row );
     }
   }
@@ -134,6 +137,7 @@ class MySQLStore implements ObjectStore {
       array_push( $objects, $this->constructObject( $row ) );
     }
 
+    // syslog(LOG_WARNING, "fetched objects : " . count($objects) );
     return $objects;
   }
   
@@ -144,6 +148,9 @@ class MySQLStore implements ObjectStore {
   }
 }
 
-Objects::addStore( 'persistent', new MySQLStore( Config::$dbname, 
-                                                 Config::$user, 
-                                                 Config::$pass ) );
+// create a transparant SessionCache, wrapping the actual MySQLStore
+// and register that as the persistent store for Objects
+Objects::addStore( 'persistent',
+                   new SessionCache( new MySQLStore( Config::$dbname,
+                                                     Config::$user,
+                                                     Config::$pass ) ) );

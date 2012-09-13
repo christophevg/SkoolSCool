@@ -29,6 +29,7 @@ include_once dirname(__FILE__) . '/Objects.php';
 include_once dirname(__FILE__) . '/Session.php';
 
 include_once dirname(__FILE__) . '/SessionStore.php';
+include_once dirname(__FILE__) . '/SessionCache.php';
 include_once dirname(__FILE__) . '/MySQLStore.php';
 
 include_once dirname(__FILE__) . '/User.php'; 
