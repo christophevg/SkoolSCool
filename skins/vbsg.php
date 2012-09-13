@@ -163,9 +163,9 @@ EOT;
   }
   
   protected function includeNavigation() {
-    $navigation = Content::get('navigation');
-    $html = Breakdown::getConverter()->makeHtml((string)$navigation);
-    $html = ereg_replace( '</?p>','', $html );
+    $navigator = Navigator::getInstance();
+    $html = ereg_replace( '</?p>','', $navigator->asHtml() );
+
     // add class to show current (TODO: do this in a clean way ;-) )
     $root = Context::$request->url[0];
     $html = str_replace( "<li><a href=\"$root\">", 
@@ -173,7 +173,7 @@ EOT;
                          $html );
     // add link to directly edit the navigation page
     if( AuthorizationManager::getInstance()
-        ->can( $this->user )->update( $navigation ) )
+        ->can( $this->user )->update( $navigator->asContent() ))
     {
       $html .= '<div class="icon command edit" onclick="window.location=\'navigation?mode=edit\'"></div>';
     }
@@ -220,13 +220,15 @@ EOT;
     return ( ( $this->content->id != "home" ) and 
              ( get_class($this->content) == "PageContent" or
                get_class($this->content) == "HtmlContent" ) and
-             ( Navigator::getInstance()->currentSectionHasNavigation() ) );
+             ( Navigator::getInstance()
+                 ->contextHasNavigation(Context::$request->context) ) );
   }
-  
+
   protected function insertSectionNavigation() {
     if( ! $this->hasSubNavigation() ) { return; }
-    $navigation = Navigator::getInstance()->getCurrentSectionNavigation();
-    $html = Breakdown::getConverter()->makeHtml($navigation);
+    $html = Breakdown::getConverter()
+              ->makeHtml(Navigator::getInstance()
+                ->getContextNavigationSource(Context::$request->context));
     // TODO: do this in a "nicer" way ;-)
     $self = join( '/', Context::$request->url );
     $html = str_replace( "<li><a href=\"$self\">", 
