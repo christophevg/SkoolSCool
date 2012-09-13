@@ -24,7 +24,11 @@ function handle_post() {
   // ajax requests pass the object through the 'id' (content id) post parameter
   // and the data to update using the 'data' post parameter
   $request = trim(str_replace( '-', ' ', $_POST['id'] ));
-  $data    = json_decode( stripslashes($_POST['data']) );
+  $data = $_POST['data'];
+  if( get_magic_quotes_gpc() ) {
+    $data = stripslashes($_POST['data']);
+  }
+  $data = json_decode( $data );
 
   // get the current user
   $user = SessionManager::getInstance()->currentUser;
@@ -39,7 +43,7 @@ function handle_post() {
   // check if the user can update the requested content, if so, do it, else fail
   if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
     foreach( $data as $key => $value ) {
-      // TODO: more this logic to setters on the content objects
+      // TODO: move this logic to setters on the content objects
       if( $key == 'date' ) { $value = strtotime( $value );  }
       if( $key == 'tags' ) { $value = split( ' ', $value ); }
       $content->$key = $value;
