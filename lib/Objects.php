@@ -38,7 +38,7 @@ abstract class Object {
   } 
   
   function toHash() {
-    return array( id => $this->id );
+    return array( 'id' => $this->id );
   }
   
   public function timeLabel() {
