@@ -21,8 +21,8 @@ class Session extends Object {
    */
   static function create( $user ) {
     return Objects::getStore('persistent')
-      ->put(new Session( array( id => self::makeId(),
-                                user => $user->id ) ) );
+      ->put(new Session( array( 'id' => self::makeId(),
+                                'user' => $user->id ) ) );
   }
 
   // generates a random string
