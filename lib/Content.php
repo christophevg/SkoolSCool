@@ -12,13 +12,13 @@ abstract class Content extends Object {
   static $types = array( 'PageContent', 'NewsContent', 'HtmlContent' );
 
   // factory method to retrieve a content object.
-  // first we look in the persisted objects, in the ObjectStore
-  // then we look in the transient/session objects in the ObjectCache
+  // depending on the option system prefix delegate it to a different helper
   static function get( $name = 'home', $alias = null ) {
-    $object = Objects::getStore('persistent')->fetch( $name );
-    if( $object == null ) {
-      $object = Objects::getStore('transient')->fetch( $name );
-    }
+    $object = strtolower(substr( $name, 0, 7 )) == 'system:' ? 
+      Content::getSystem( substr( $name, 7 ) )
+      :
+      Content::getContent( $name );
+
     if( $object != null ) {
       // check if the current user is allowed to retrieve this content
       if( ! AuthorizationManager::getInstance()
@@ -31,6 +31,25 @@ abstract class Content extends Object {
         // authorized access, prepare it for publication
         $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
       }
+    }
+
+    return $object;
+  }
+
+  // get a system page by instantiating the class
+  private static function getSystem( $name ) {
+    $class = 'System'.ucfirst(strtolower($name));
+    if( ! class_exists( $class ) ) { return null; }
+    return new $class();
+  }
+
+  // gets actual content
+  // try the persistent store first, if it is missing, maybe we're creating
+  // new content and we have a draft in the transient store
+  private static function getContent( $name = 'home', $alias = null ) {
+    $object = Objects::getStore('persistent')->fetch( $name );
+    if( $object == null ) {
+      $object = Objects::getStore('transient')->fetch( $name );
     }
     return $object;
   }

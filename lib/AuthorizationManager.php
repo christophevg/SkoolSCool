@@ -62,6 +62,12 @@ class AuthorizationManager {
         return false;
       }
     }
+    // FIXME: this should be integrated better
+    if( substr($resourceClass, 0, 6) == 'System' ) {
+      // don't handle specific System Content Objects
+      return true;
+    }
+
     // check content-type specific access
     $validator = $accessorClass . $resourceClass;
     if( method_exists( $this, $validator ) ) {
