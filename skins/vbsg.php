@@ -194,7 +194,6 @@ EOT;
   }
 
   protected function bodyContent($more = "") {
-    if( ! $this->contentIsReadable() ) { return ""; }
     $contentClass = get_class( $this->content );
     return <<<EOT
 <script>
@@ -319,7 +318,6 @@ EOT;
    * the user is logged on. Anonymous users don't see comments.
    */
   protected function CommentContentAsItem() {
-    if( ! $this->contentIsReadable() ) { return ""; }
     return <<<EOT
 <div class="comment">
   <div class="commenter">
@@ -820,20 +818,11 @@ EOT;
 
   /**
    * Wrapper function for the AuthorizationManager to check if the current
-   * user can update the current content.
+   * user can update the current content. Used to display edit controls.
    */
   private function contentIsEditable() {
     return AuthorizationManager::getInstance()
             ->can( $this->user )->update( $this->content );
-  }
-
-  /**
-   * Wrapper function for the AuthorizationManager to check if the current
-   * user can read the current content.
-   */
-  private function contentIsReadable() {
-    return AuthorizationManager::getInstance()
-            ->can( $this->user )->read( $this->content );
   }
 
 }
