@@ -10,3 +10,6 @@
 [submodule "skins/vbsg/photo.js"]
 	path = skins/vbsg/photo.js
 	url = http://github.com/christophevg/photo.js
+[submodule "lib/diff"]
+	path = lib/diff
+	url = https://github.com/christophevg/diff.git

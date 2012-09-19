@@ -45,6 +45,7 @@ include_once dirname(__FILE__) . '/NewsContent.php';
 include_once dirname(__FILE__) . '/CommentContent.php';
 
 include_once dirname(__FILE__) . '/SystemContent.php';
+include_once dirname(__FILE__) . '/diff/diff.php';
 include_once dirname(__FILE__) . '/System.Changes.php';
 
 include_once dirname(__FILE__) . '/Skin.php';

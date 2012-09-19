@@ -1,0 +1,36 @@
+TABLE.changelog {
+  border-collapse: collapse;
+}
+TABLE.changelog,
+TABLE.changelog TH, 
+TABLE.changelog TD {
+  border: 1px solid white;
+}
+
+TABLE.changelog TD {
+  padding: 5px;
+}
+
+DIV.diffviewer {
+  width: 550px;
+  height: 100px;
+  overflow: auto;
+  border: 1px solid #aaa;
+}
+
+
+TABLE.diff    { border-collapse : collapse; width: 100%; }
+TABLE.diff TD { padding         : 1px;
+                white-space: pre;
+                font-family: Menlo, Monaco;
+                font-size: 9pt;
+              }
+TABLE.diff TD.index   { width: 1%; text-align: right; 
+                        background-color: #F7F7F7; color: #BBBBBB;
+                        padding-right: 3px;}
+TABLE.diff TD.label   { width: 1%; padding-left: 3px; }
+TABLE.diff TD.line    {}
+TABLE.diff TR.add     { background-color: #D9FFE0; color: #008828; }
+TABLE.diff TR.del     { background-color: #FFEEEE; color: #C2003D; }
+TABLE.diff TR.skip    { background-color: #F7F7F7; color: #BBBBBB;    }
+TABLE.diff TR.context { background-color: white;   color: black;   }
