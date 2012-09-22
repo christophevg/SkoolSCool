@@ -100,20 +100,24 @@ class AuthorizationManager {
    *         according to the given access style.
    */
   final private function UserContent( $user, $content, $access = 'read' ) {
-    // policy: tags can contain <usertype>-only with usertype being one of
-    //         [ user, contributor, admin ]
-    
     // is the supplied content isn't Content we don't care and pass on the
     // responsibility
     if( ! is_a( $content, 'Content' ) ) { return true; }
+
+    // policy: tags can contain "<group>-only" with group being a usergroup
+
+    // 1. user-only content
+    if( $content->hasTag('user-only') && $user->isAnonymous() ) {
+      return false;
+    }
+
+    // 2. generic <group>-only content
+    $groups = $content->getTagsMatching( '/^([a-z]+)-only$/', 1 );
+    foreach( $groups as $group ) {
+      if( ! $user->hasRight( $group ) ) { return false; }
+    }
     
-    return $content->hasTag( 'users-only' ) ? 
-           ! $user->isAnonymous() :
-           ( $content->hasTag( 'contributors-only' ) ? 
-             ( $user->isContributor() || $user->isAdmin() ) :
-             ( $content->hasTag( 'admins-only' ) ?
-               $user->isAdmin() :
-               true ) );
+    return true;
   }
 
   /**

@@ -12,6 +12,7 @@ TODO
   - (private) calendar
 
 - integrate changes
+  - include tags changes
 	- add history management
 		- add delete actions
 		- add restore actions
@@ -24,6 +25,7 @@ TODO
 - extract popups
 
 - add user mgmt
+  - user registration & authorisation
 
 - export database automation using cron
 
@@ -58,6 +60,7 @@ bugs
 - javascript in preview of e.g. HtmlContent
 - special characters in object id's (e.g. &)
 - id's of (new) objects should be sanitised : MySQL is case insesitive, ...
+- updating content adds a newline on each update
 
 ---
 

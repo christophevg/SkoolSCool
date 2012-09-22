@@ -15,7 +15,7 @@ class SystemChanges extends Content {
     $this->updated  = null;
     $this->author   = User::get( 'system' );
     $this->children = array();
-    $this->tags     = array( 'admins-only' );
+    $this->tags     = array( 'admin-only' );
   }
 
   public function isHtml() {

@@ -126,6 +126,21 @@ abstract class Content extends Object {
     return in_array( $tag, $this->tags );
   }
 
+  /**
+   * returns tags matching a given regexp, returning the matched subpart by 
+   * index
+   * @param $regexp the regular expression
+   * @param $index (optional) the index of the matched part
+   * @return array with matching (parts of) tags
+   */
+  function getTagsMatching( $regexp, $index = 0 ) {
+    $tags = array();
+    foreach( $this->tags as $tag ) {
+      if( preg_match( $regexp, $tag, $matches ) ) { $tags[] = $matches[$index]; }
+    }
+    return $tags;
+  }
+
   public function replace($find, $replace) {}
   
   public function isHtml() { return false; }
