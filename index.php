@@ -36,7 +36,7 @@ if( $content == null ) {
 
   // if the current user has no read access, it is normal we didn't get the
   // content
-  if( $am->can( $user )->read() ) {
+  if( ! $am->can( $user )->read() ) {
     // unauthorized access
     $content = Content::get( '401', $request->string );
 
