@@ -59,9 +59,6 @@ class MySQLStore implements ObjectStore {
     } else {
       $this->fetchStmt->execute( array( $id ) );      
       $row = $this->fetchStmt->fetch();
-
-      // syslog(LOG_WARNING, "retrieved object : " . $id );
-
       return $this->constructObject( $row );
     }
   }
@@ -132,11 +129,8 @@ class MySQLStore implements ObjectStore {
   }
   
   public function remove() {
-    syslog( LOG_WARNING, 'DELETE FROM allObjects ' .
-                                 $this->createWhereClause() );
     $stmt = $this->dbh->prepare( 'DELETE FROM allObjects ' .
                                  $this->createWhereClause() );
-
     $this->executeAndClear($stmt);
     return $this;
   }

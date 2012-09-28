@@ -19,16 +19,10 @@ class SessionCache implements ObjectStore {
   
   public function fetch( $id ) {
     if( $this->cache->has( $id ) ) {
-      // syslog(LOG_WARNING, "cache HIT : " . $id );
       $object = $this->cache->fetch( $id );
     } else {
-      // syslog(LOG_WARNING, "cache MISS : " . $id );
       $object = $this->store->fetch( $id );  // fetch it
       $this->cache->put( $object, ( $object == null ? $id : null ) ); // cache
-      // if( ! $this->cache->has( $id ) ) {
-      //   syslog(LOG_WARNING, "cache FAILURE : " . $id . ' = ' . $object->id);
-      // }
-      // syslog(LOG_WARNING, "cached : " . $id );
     }
     return $object;
   }
