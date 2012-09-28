@@ -1,13 +1,11 @@
 TODO
 
-- add user mgmt
-  - user registration & authorisation
-  - add Facebook connect / https://github.com/facebook/facebook-php-sdk
+- user registration & authorisation
+- add Facebook connect / https://github.com/facebook/facebook-php-sdk
 
 - generic file upload + file browser like viewer
 
-- (private) photo albums
-- (private) calendar
+- reuse photo album on class specific pages
 
 - clean up code
 	- split HTML and PHP code
@@ -20,7 +18,9 @@ TODO
 - create basic admin guide
 	- managed image/calendar using Google
 
-- extract popups
+- extract popups into reusable library of its own
+
+- extract messages into reusable library of its own, same interface in php/js
 
 - export database automation using cron
 
@@ -50,5 +50,4 @@ bugs
 - javascript in preview of e.g. HtmlContent
 - special characters in object id's (e.g. &)
 - id's of (new) objects should be sanitised : MySQL is case insesitive, ...
-- updating content adds a newline on each update
 - layout bug in footer
