@@ -139,7 +139,7 @@
     
     // HtmlContent can be directly shown
     if( window.contentClass == "HtmlContent" ) {
-      this.view.innerHTML = content;
+      this.view.innerHTML = newContent;
       return;
     }
 
