@@ -44,9 +44,7 @@ class PageContent extends Content {
   public function editor() {
     $generic = parent::editor();
     return <<<EOT
-<textarea id="{$this->url}body" class="raw">
-$this->body
-</textarea><br>
+<textarea id="{$this->url}body" class="raw">$this->body</textarea><br>
 <script> Editor.get( "{$this->url}" ).addBody( "body" ); </script>
 $generic
 EOT;
