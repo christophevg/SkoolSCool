@@ -437,7 +437,7 @@ EOT;
    * already produces HTML.
    */ 
   protected function contentAsHtml() {
-    if( is_null( $this->content ) ) { return 'missing content ...'; }
+    if( is_null( $this->content ) ) { return '<!-- missing content ...-->'; }
     return $this->content->isHtml() ? (string)$this->content :
       Breakdown::getConverter()->makeHtml((string)$this->content);    
   }

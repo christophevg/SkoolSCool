@@ -60,7 +60,11 @@ if( $content == null ) {
 
   // user without update rights, finding unknown content == missing content
   } else {
-    $content = Content::get( '404', $request->string );
+    if( $request->style == "embed" ) {
+      $content = null;
+    } else {
+      $content = Content::get( '404', $request->string );
+    }
   }
 }
 
