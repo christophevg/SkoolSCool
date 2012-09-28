@@ -6,6 +6,7 @@
 
 class Session extends Object {
   var $user;
+  var $location;
 
   /**
    * Factory method to retrieve an existing session object.
@@ -20,9 +21,33 @@ class Session extends Object {
    * Factory method to create a new session for a user
    */
   static function create( $user ) {
-    return Objects::getStore('persistent')
-      ->put(new Session( array( 'id' => self::makeId(),
-                                'user' => $user->id ) ) );
+    $os = Objects::getStore('persistent');
+
+    // each browser is a unique location with its own long lived session
+    $location = self::getLocation();
+    
+    // first clear previous session information
+    $os->filter( 'type', 'Session' )
+       ->filter( 'user', $user->id )
+       ->filter( 'body', $location )
+       ->remove();
+
+    // then create and return the new session
+    return $os->put(new Session( array( 'id'       => self::makeId(),
+                                        'location' => $location,
+                                        'user'     => $user->id ) ) );
+  }
+  
+  static function getLocation() {
+    // get or create a new unique location (aka browser identification)
+    // this allows for long lived sessions per browser
+    if( isset( $_COOKIE['location'] ) ) {
+      $location = $_COOKIE['location'];
+    } else {
+      $location = self::makeId();
+      setCookie( 'location', $location, time() + 630720000 , '/' );
+    }
+    return $location;
   }
 
   // generates a random string
@@ -55,22 +80,22 @@ class Session extends Object {
   function __construct( $data = array() ) {
     parent::__construct( $data );
     
-    $this->user   = isset( $data['user']   ) ? $data['user']  : null;
+    $this->user     = isset( $data['user'] )     ? $data['user']     : null;
+    $this->location = isset( $data['location'] ) ? $data['location'] : null;
   }
   
   function toHash() {
     $hash = parent::toHash();
-    $hash['user']   = $this->user;
+    $hash['user'] = $this->user;
+    $hash['body'] = $this->location;
     return $hash;
   }
   
   function __get($property) {
     switch($property) {
-      case 'user':
-        return $this->user;
-        break;
-      case 'id':
-        return $this->id;
+      case 'user':        return $this->user;        break;
+      case 'location' :   return $this->location;    break;
+      case 'id':          return $this->id;
     }
     return "";
   }

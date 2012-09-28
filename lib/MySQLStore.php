@@ -109,26 +109,17 @@ class MySQLStore implements ObjectStore {
     return $this;
   }
   
-  public function retrieve($limit) {
-    $clauses = array();
-    // TODO: preparing stmt can be put in a caching factory
-    foreach( $this->filters as $column => $value ) {
-      $clauses[] = "$column = \"$value\"";
-    }
+  public function retrieve($limit = null) {
     $orderBy = isset($this->orderBy) ? 
       " ORDER BY {$this->orderBy}" . ( $this->order ? " DESC" : "") : "";
     $limit = isset($limit) ? " LIMIT $limit" : "";
 
-    $stmt = $this->dbh->prepare( 'SELECT * FROM objects WHERE ' . 
-                                 join( ' AND ', $clauses ) .
+    $stmt = $this->dbh->prepare( 'SELECT * FROM objects ' .
+                                 $this->createWhereClause() . ' ' .
                                  $orderBy .
                                  $limit );
 
-    if( $stmt->execute() === false ) {
-      print_r( $stmt->errorInfo() );
-    }
-
-    $this->clear();
+    $this->executeAndClear($stmt);
 
     // fetch all rows, and construct objects
     $rows = $stmt->fetchAll();
@@ -137,11 +128,35 @@ class MySQLStore implements ObjectStore {
       array_push( $objects, $this->constructObject( $row ) );
     }
 
-    // syslog(LOG_WARNING, "fetched objects : " . count($objects) );
     return $objects;
   }
   
-  public function clear() {
+  public function remove() {
+    syslog( LOG_WARNING, 'DELETE FROM allObjects ' .
+                                 $this->createWhereClause() );
+    $stmt = $this->dbh->prepare( 'DELETE FROM allObjects ' .
+                                 $this->createWhereClause() );
+
+    $this->executeAndClear($stmt);
+    return $this;
+  }
+
+  private function executeAndClear($stmt) {
+    if( $stmt->execute() === false ) {
+      Messages::getInstance()->addCritical( $stmt->errorInfo() );
+    }
+    $this->clear();
+  }
+  
+  private function createWhereClause() {
+    $clauses = array();
+    foreach( $this->filters as $column => $value ) {
+      $clauses[] = "$column = \"$value\"";
+    }
+    return 'WHERE ' . join( ' AND ', $clauses );
+  }
+  
+  private function clear() {
     $this->filters = array();
     $this->orderBy = null;
     $this->order   = null;

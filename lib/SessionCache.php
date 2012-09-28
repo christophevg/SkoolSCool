@@ -54,4 +54,9 @@ class SessionCache implements ObjectStore {
     // TODO: add caching here also ?
     return $objects;
   }
+  
+  public function remove() {
+    $this->store->remove();
+    return $this;
+  }
 }

@@ -1,57 +1,52 @@
 TODO
 
+- integrate changes
+  - include tags changes
+	- add history management
+		- add delete action
+
+- add user mgmt
+  - user registration & authorisation
+  - add Facebook connect / https://github.com/facebook/facebook-php-sdk
+
+- generic file upload + file browser like viewer
+
+- (private) photo albums
+- (private) calendar
+
 - clean up code
 	- split HTML and PHP code
 	- centralise javascript
 	- move more functionality to javascript
 	- add more REST interfaces
-
-- generic file upload + file browser like viewer
-- new subcontent
-  - (private) photo albums
-  - (private) calendar
-
-- integrate changes
-  - include tags changes
-	- add history management
-		- add delete actions
-		- add restore actions
-
-- fix layout bug in footer
+	- clean up and consolidate css/
+  - validate HTML and correct problems
 
 - create basic admin guide
 	- managed image/calendar using Google
 
 - extract popups
 
-- add user mgmt
-  - user registration & authorisation
-
 - export database automation using cron
 
-- add FileContent to allow addition of files to the local site
-- add ImageContent: implementation of FileContent with local dir images/
-- add FileListContent
-- add ImageListContent
+- check: translation of special characters to HTML entities ?
+
+---
+
+nice-to-haves
 
 - improve calendar viewer + add details + multi-day events
-
-- check: translation of special characters to HTML entities ?
 
 - feedback/bug reporting
 
 - document content = Page + file upload + DocumentList
 
 - site is offline modus
-- create registration page + procedure
-	- initially users can read, contributors can edit, admin can edit system
-- clean up and consolidate css/
-- validate HTML and correct problems
 
-- add moderation
-- add history + page content controls
-- add Facebook connect
 - add Hotmail/OAuth 2.0 support
+
+- move default content from skin to database
+	- new contenttype: template
 
 ---
 
@@ -61,9 +56,4 @@ bugs
 - special characters in object id's (e.g. &)
 - id's of (new) objects should be sanitised : MySQL is case insesitive, ...
 - updating content adds a newline on each update
-
----
-
-more future features
-- move default content from skin to database
-	- new contenttype: template
+- layout bug in footer

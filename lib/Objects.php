@@ -64,4 +64,6 @@ interface ObjectStore {
   public function filter( $property, $value );
   public function orderBy( $by, $desc );
   public function retrieve( $limit );
+  
+  public function remove();
 }

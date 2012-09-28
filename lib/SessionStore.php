@@ -45,4 +45,8 @@ class SessionStore implements ObjectStore {
   public function retrieve( $limit ) {
     return array();
   }
+  
+  public function remove() {
+    return $this;
+  }
 }
