@@ -1,10 +1,5 @@
 TODO
 
-- integrate changes
-  - include tags changes
-	- add history management
-		- add delete action
-
 - add user mgmt
   - user registration & authorisation
   - add Facebook connect / https://github.com/facebook/facebook-php-sdk

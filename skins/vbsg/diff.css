@@ -12,12 +12,26 @@ TABLE.changelog TD {
 }
 
 DIV.diffviewer {
-  width: 550px;
-  height: 100px;
+  width: 790px;
+  max-height: 150px;
   overflow: auto;
   border: 1px solid #aaa;
 }
 
+SPAN.tag {
+  padding:2px;
+}
+
+SPAN.changed_tags SPAN.tag_add {
+  background-color: #D9FFE0;
+  color: #008828;
+}
+
+SPAN.changed_tags SPAN.tag_remove {
+  background-color: #FFEEEE;
+  color: #C2003D;
+  text-decoration: line-through;
+}
 
 TABLE.diff    { border-collapse : collapse; width: 100%; }
 TABLE.diff TD { padding         : 1px;

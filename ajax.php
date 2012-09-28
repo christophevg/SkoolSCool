@@ -24,7 +24,11 @@ function handle_post() {
   // ajax requests pass the object through the 'id' (content id) post parameter
   // and the data to update using the 'data' post parameter
   $request = trim(str_replace( '-', ' ', $_POST['id'] ));
-  $data = $_POST['data'];
+  if(isset($_POST['data'])) {
+    $data = $_POST['data'];
+  } elseif(isset($_POST['ts'])) {
+    return handle_delete();
+  }
   if( get_magic_quotes_gpc() ) {
     $data = stripslashes($_POST['data']);
   }
@@ -51,6 +55,30 @@ function handle_post() {
     // mark the change as performed by this user
     $content->author = SessionManager::getInstance()->currentUser;
     Objects::getStore('persistent')->put($content);
+    print "ok";
+  } else {
+    print "not allowed";
+  }
+}
+
+function handle_delete() {
+  $id = trim(str_replace( '-', ' ', $_POST['id'] ));
+  $ts = $_POST['ts'];
+    // get the current user
+  $user = SessionManager::getInstance()->currentUser;
+
+  // retrieve the relevant content
+  $content = Content::get( $id );
+  if( $content == null ) {
+    print "unknown content: $id";
+    exit();
+  }
+
+  // check if the user can update the requested content, if so, do it, else fail
+  if( AuthorizationManager::getInstance()->can( $user )->update( $content ) ) {
+    Objects::getStore('persistent')->filter( 'id', $id )
+                                   ->filter( 'ts', $ts )
+                                   ->remove();
     print "ok";
   } else {
     print "not allowed";

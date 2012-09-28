@@ -45,9 +45,26 @@ var __remote__ = (function() {
     };
     xmlhttp.send("id=" + id + "&data=" + encodeURIComponent(data));
   }
+  
+  function del(id, ts, callback) {
+    xmlhttp.open( "POST", "./ajax.php", true );
+    xmlhttp.setRequestHeader( 'Content-Type',
+                              'application/x-www-form-urlencoded' );
+    xmlhttp.onreadystatechange = function() {
+      if( xmlhttp.readyState  == 4 ) {
+        if( xmlhttp.status == 200 ) {
+          callback( xmlhttp.responseText );
+        } else {
+          callback();
+        }
+      }
+    };
+    xmlhttp.send("id=" + id + "&ts=" + encodeURIComponent(ts));
+  }
 
   return {
     store: post,
+    remove: del,
     fetch: get
   };
 })();
