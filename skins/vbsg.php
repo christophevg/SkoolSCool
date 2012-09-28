@@ -820,10 +820,12 @@ EOT;
   /**
    * Wrapper function for the AuthorizationManager to check if the current
    * user can update the current content. Used to display edit controls.
+   * + make sure that there is an editor for this content.
    */
   private function contentIsEditable() {
     return AuthorizationManager::getInstance()
-            ->can( $this->user )->update( $this->content );
+            ->can( $this->user )->update( $this->content )
+           && $this->content->editor() !== false;  
   }
 
 }
