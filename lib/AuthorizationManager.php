@@ -114,7 +114,7 @@ class AuthorizationManager {
     // 2. generic <group>-only content
     $groups = $content->getTagsMatching( '/^([a-z]+)-only$/', 1 );
     foreach( $groups as $group ) {
-      if( ! $user->hasRight( $group ) ) { return false; }
+      if( $group != "user" && ! $user->hasRight( $group ) ) { return false; }
     }
     
     return true;
