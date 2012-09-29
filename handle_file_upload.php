@@ -1,6 +1,6 @@
 <?php
 
-require_once('../php/Archive/Zip.php');
+require_once('lib/pear/Archive/Zip.php');
 
 function flushIt( $count = 256) {
   echo str_repeat( "<br>\n", $count );
