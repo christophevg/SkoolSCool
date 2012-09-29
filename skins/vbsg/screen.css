@@ -812,3 +812,7 @@ DIV.message.critical {
   width: 530px;
   height: 65px;
 }
+
+DIV.handtekening {
+  display: none;
+}

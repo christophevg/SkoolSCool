@@ -54,6 +54,8 @@ class VbsgSkin extends Skin {
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css?{$this->includeVersion}">
   <link rel="stylesheet" type="text/css" href="./skins/vbsg/diff.css?{$this->includeVersion}">
 
+  <link rel="stylesheet" type="text/css" media="print" href="./skins/vbsg/print.css?{$this->includeVersion}">
+
   <!-- recaptcha styling -->
   <script type="text/javascript">
     var RecaptchaOptions = {

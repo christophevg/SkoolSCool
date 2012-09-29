@@ -1,6 +1,8 @@
 TODO
 
-- user registration & authorisation
+- user creation/mgmt (System:Users)
+- user activation + linking of federated authentication (System:Me?)
+
 - add Facebook connect / https://github.com/facebook/facebook-php-sdk
 
 - generic file upload + file browser like viewer
@@ -19,6 +21,7 @@ TODO
 	- managed image/calendar using Google
 
 - extract popups into reusable library of its own
+	- popup content should also be in the database and editable
 
 - extract messages into reusable library of its own, same interface in php/js
 
@@ -51,3 +54,4 @@ bugs
 - special characters in object id's (e.g. &)
 - id's of (new) objects should be sanitised : MySQL is case insesitive, ...
 - layout bug in footer
+- grey overlay doesn't expand to down-scrollable portion of screen

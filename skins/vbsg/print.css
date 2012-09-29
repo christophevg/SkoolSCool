@@ -1,0 +1,48 @@
+BODY {
+	margin: 50px;
+}
+
+DIV.userbar,
+DIV#navigation-toolbar,
+DIV._footer
+{
+  display: none;
+}
+
+P {
+  color: black;
+}
+
+h1 {
+  color: black;
+  margin: 0px;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font: 13pt Verdana;
+  letter-spacing: 2px;
+  text-shadow: none;
+  border-bottom: 1px solid black;
+}
+
+h2 {
+  color: black;
+}
+
+form {
+  color: black;
+}
+
+input.button {
+  display: none;
+}
+
+DIV.handtekening {
+  display: block;
+}
+
+DIV.handtekening DIV.lijn {
+  height: 25px;
+  width: 200px;
+  border-bottom: 1px dashed black;
+}
