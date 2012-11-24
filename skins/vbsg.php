@@ -72,6 +72,7 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/json2.js?{$this->includeVersion}"></script>
 
 	<!-- new site common scripts -->
+  <script src="./skins/common/ajax.js?{$this->includeVersion}"></script>
   <script src="./skins/common/messages.js?{$this->includeVersion}"></script>
 
   <link rel="stylesheet" type="text/css" href="./skins/common/messages.css?{$this->includeVersion}">

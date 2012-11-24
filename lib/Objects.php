@@ -40,6 +40,10 @@ abstract class Object {
   function toHash() {
     return array( 'id' => $this->id );
   }
+
+  function toSensitiveHash() {
+    return $this->toHash();
+  }
   
   public function timeLabel() {
     return strftime( "%e %B %Y - %H:%m", $this->updated );

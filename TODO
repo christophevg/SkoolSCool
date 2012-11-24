@@ -1,10 +1,8 @@
 TODO
 
-- create migration script for introduction of revisions
-
-- user creation/mgmt app-page
-
 - user activation + linking of federated authentication
+  - user mgmgt -> send activation email (create identity + send mail)
+  - activation page : federated login, linking or provide password
 
 - add Facebook connect / https://github.com/facebook/facebook-php-sdk
 
@@ -25,8 +23,6 @@ TODO
 
 - extract popups into reusable library of its own
 	- popup content should also be in the database and editable
-
-- extract messages into reusable library of its own, same interface in php/js
 
 - export database automation using cron
 

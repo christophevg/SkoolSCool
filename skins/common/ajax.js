@@ -77,13 +77,18 @@ var __OS__ = (function() {
 
       stringParts = [];
       for( var key in data ) {
-        stringParts.push( key + "=" + encodeURIComponent(data[key]) );
+        if(typeof data[key]["push"] != "undefined") {
+          for( var item in data[key] ) {
+            stringParts.push( key + "[]=" + encodeURIComponent(data[key][item]) );
+          }
+        } else {
+          stringParts.push( key + "=" + encodeURIComponent(data[key]) );
+        }
       }
       data = stringParts.join("&");
 
       // add CSFR info from cookies
       setHeader("CSFR-Request", getCookie("CSFR-Request"));
-
       xmlhttp.send(data);
       return this;
     }
@@ -101,6 +106,10 @@ var __OS__ = (function() {
   }
   
   // ObjectStore exposed functionality
+	function setBase(newBase) {
+		base = newBase;
+	}
+
   function post(contentType, data, callback) {
     createXmlHttp().open( "POST", contentType )
                    .onReady(callback)
@@ -137,6 +146,7 @@ var __OS__ = (function() {
   }
 
   return {
+    "use"		 : setBase,
     // REST operation -> HTTP method
     "create" : post,
     "update" : put,

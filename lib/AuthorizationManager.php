@@ -106,10 +106,8 @@ class AuthorizationManager {
 
     // policy: tags can contain "<group>-only" with group being a usergroup
 
-    // 1. user-only content: no anonymous users OR inactive users
-    if( $content->hasTag('user-only') && 
-        ( $user->isAnonymous() || $user->isNotActive() ) )
-    {
+    // 1. user-only content: no anonymous users
+    if( $content->hasTag('user-only') && $user->isAnonymous() ) {
       return false;
     }
 
@@ -210,4 +208,18 @@ class AuthorizationManager {
     return $user->isAdmin() || $user->isContributor();
   }
   
+  /**
+   * Validator for Users accessing User records
+   * @param $user accessing
+   * @param $userObj accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the record
+   *         according to the given access style.
+   */
+  private function UserUser( $user, $userObj, $access = 'read' ) {
+    // only admin users can access user records
+    return $user->isAdmin();
+  }
+
 } 

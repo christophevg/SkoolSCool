@@ -118,18 +118,19 @@ class API {
   // actual functional handlers
   
   private function create( $contentType, $data ) {
+    $object = Objects::getStore('persistent')->fetch($data['id']);
+    if( $object != null ) {
+      $this->fail( 409, 'Object with that ID exist. Use PUT to update it. ' );
+    }
+
     switch($contentType) {
       case 'PageContent':
-        $object = Objects::getStore('persistent')->fetch($data['id']);
-        if( $object == null ) {
-          $object = new PageContent($data);
-          Objects::getStore('persistent')->put($object);
-        } else {
-          $this->fail( 409, 'Object with that ID already exist. Use PUT to update it. ' . $object->body );
-        }
+      case 'User':
+        $object = new $contentType($data);
+        Objects::getStore('persistent')->put($object);
         break;
       default:
-        $this->fail( 501, "create not implemented for requested contentType" );
+        $this->fail( 501, "create not implemented for requested contentType : " . $contentType );
     }
     $this->respond( 201, "created", $object );
   }
@@ -137,6 +138,12 @@ class API {
   private function update( $contentType, $id, $data ) {
     $object = Objects::getStore('persistent')->fetch($id);
     if( $object == null ) { $this->fail( 404, "unknown resource" ); }
+    if( ! AuthorizationManager::getInstance()
+            ->can( SessionManager::getInstance()->currentUser )
+            ->update( $object ) )
+    {
+      $this->fail( 403, 'insufficent privileges' );
+    }
     foreach( $data as $property => $value ) {
       // TODO: filter out "read-only" properties
       $object->$property = $value;
@@ -150,12 +157,25 @@ class API {
     if( ! $object = Objects::getStore('persistent')->fetch($id) ) {
       $this->fail( 404, "unknown resource" );
     }
+    if( ! AuthorizationManager::getInstance()
+            ->can( SessionManager::getInstance()->currentUser )
+            ->read( $object ) )
+    {
+      $this->fail( 403, 'insufficent privileges' );
+    }
+    
     $this->respond( 200, "ok", $object );
   }
 
   private function delete( $contentType, $id = false, $ts = false ) {
     if( ! $object = Objects::getStore('persistent')->fetch($id) ) {
       $this->fail( 404, "unknown resource" );
+    }
+    if( ! AuthorizationManager::getInstance()
+            ->can( SessionManager::getInstance()->currentUser )
+            ->update( $object ) )
+    {
+      $this->fail( 403, 'insufficent privileges' );
     }
     $store = Objects::getStore('persistent')->filter( 'id', $id );
     if( $ts ) { $store->filter( 'ts', $ts ); }
@@ -167,6 +187,7 @@ class API {
     $limit = isset($constraints['__limit']) ? $constraints['__limit'] : null;
     $start = isset($constraints['__start']) ? $constraints['__start'] : null;
     $store = Objects::getStore('persistent');
+    $store->filter('type', $contentType);
     foreach( $constraints as $property => $value ) {
       if( substr($property, 0, 2) != '__' ) {
         $store->filter( $property, $value );
@@ -189,11 +210,21 @@ class API {
       if( is_array($data) ) {
         $array = array();
         foreach( $data as $obj ) {
-          array_push( $array, $obj->toHash() );
+          if( AuthorizationManager::getInstance()
+                ->can( SessionManager::getInstance()->currentUser )
+                ->update( $obj ) )
+          {
+            array_push( $array, $obj->toSensitiveHash() );
+          }
         }
         $output = json_encode($array);
       } else {
-        $output = json_encode($data->toHash());
+        if( AuthorizationManager::getInstance()
+              ->can( SessionManager::getInstance()->currentUser )
+              ->update( $data ) )
+        {
+          $output = json_encode($data->toHash());
+        }
       }
     }
 

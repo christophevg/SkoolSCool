@@ -54,6 +54,12 @@ class User extends Object {
     return $hash;
   }
   
+  function toSensitiveHash() {
+    $hash = $this->toHash();
+    unset($hash['pass']);
+    return $hash;
+  }
+  
   /**
    * Renders the User as a string
    * @return String representing the user.
@@ -70,10 +76,6 @@ class User extends Object {
     return $this->name == 'anonymous';
   }
 
-  function isNotActive() {
-    return $this->hasRight('inactive');
-  }
-  
   function isContributor() {
     return $this->hasRight('contributor');
   }

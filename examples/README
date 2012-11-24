@@ -1,0 +1,14 @@
+Examples
+
+This directory contains some examples of typical pages you will want to
+implement on top op SkoolSCool. Because by itself SkoolSCool is like an empty
+box (of chocolates), you need to construct your own site and administration on
+top of it.
+
+The examples are kept as simple as possible, to allow even less-experienced
+users to setup the site and customize the pages to their liking.
+
+The minimum set of pages you probably want/need to create is:
+
+- user administration: admin.users.html
+	This page gives you an overview of users and allows you to manage them.

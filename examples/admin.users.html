@@ -1,0 +1,231 @@
+<script src="../skins/common/ajax.js"></script>
+<script src="../skins/common/messages.js"></script>
+<link rel="stylesheet" type="text/css" href="../skins/common/messages.css">
+<script>__OS__.use("../api.php");</script>
+
+<!-- 
+
+admin.users
+@author Christophe VG
+
+TODO
+- a bit of styling
+- validation checks (id: no spaces, ...; no changes to system/admin accounts)
+- 
+
+How to apply this on your site: copy and paste the content below this comment
+and add it to an HTML page.
+
+ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
+           tag on it. If not, no harm done, because the page won't receive any
+           useful data.
+-->
+
+<style>
+  DIV#admin-users DIV.users {
+    border: 1px solid white;
+    padding: 5px;
+    overflow-y: auto;
+    height:150px;
+  }
+  DIV#admin-users DIV.details {
+    padding: 5px;
+    margin-top: 25px;
+    border: 1px solid white;
+    display: none;
+  }
+  DIV#admin-users DIV.actions {
+    margin-top: 25px;
+  }
+  DIV#admin-users SPAN.close {
+    float:right;
+    margin:5px;
+  }
+  DIV#admin-users DIV.details INPUT#action-delete {
+    float:right;
+  }
+</style>
+
+<div id="admin-users">
+<h1>Gebruikersbeheer</h1>
+
+<div class="users" id="all-users-list"></div>
+
+<div class="details" id="user-details">
+  <span class="close"><a href="javascript:" onclick="Users.clear();">x</a></span>
+  gebruikersnaam <input id="details-id" name="id"><br>
+  naam <input id="details-name" name="name"><br>
+  email <input id="details-email" name="email"><br>
+  rechten <br>
+  <input type="checkbox" id="details-rights-admin" name="admin">admin<br>
+  <input type="checkbox" id="details-rights-contributor" name="contributor">contributor<br>
+  <input type="checkbox" id="details-rights-ouderraad" name="ouderraad">ouderraad<br>
+
+  <input id="action-update" type="button" value="bewaar wijzigingen"
+         onclick="Users.save();">
+  <input id="action-delete" type="button" value="verwijder gebruiker"
+        onclick="Users.remove();">
+</div>
+
+<div class="actions">
+  <input id="action-create" type="button" value="maak nieuwe gebruiker aan..."
+         onclick="Users.create();">
+</div>
+</div>
+
+<script>
+(function(globals) {
+  var users,
+      showing, wasShowing;
+
+  function refresh() {
+    if( showing ) { wasShowing = users[showing].id; showing = false; }
+    __OS__.find("Users", {}, null, null, updateAll);
+  }
+
+  /* private */ function updateAll(response, success) {
+    if(! success) { alert( "failed: " + response.msg ); return; }
+    users = response;
+    refreshList();
+  }
+  
+  /* private */ function refreshList() {
+    html = "";
+    users.sort(function(left, right) { return left.name < right.name ? -1:1; });
+    for(i=0;i<users.length;i++) {
+      user = users[i];
+      html += "<a href=\"javascript:\" onclick=\"Users.show('" + i + "');\">" +
+              user.name + " (" + user.id + ")</a><br>";
+      if(user.id == wasShowing) {
+        showing = i;
+      }
+    }
+    $("all-users-list").innerHTML = html;
+    if( showing ) { show(showing); }
+  }
+  
+  function show(index) {
+    user = users[index];
+    if( typeof user != "undefined" ) {
+      $("details-id").value                   = user.id;
+      $("details-id").disabled                = true;
+      $("details-name").value                 = user.name;
+      $("details-email").value                = user.email;
+      $("details-rights-admin").checked       = user.rights.indexOf("admin") != -1;
+      $("details-rights-contributor").checked = user.rights.indexOf("contributor") != -1;
+      $("details-rights-ouderraad").checked   = user.rights.indexOf("ouderraad") != -1;
+
+      showDetails();
+      showing = index;
+    } else {
+      hideDetails();
+    }
+  }
+  
+  function startCreate() {
+    clearDetails();
+    showDetails();
+    $("details-id").focus();
+  }
+  
+  /* private */ function clearDetails() {
+    showing = false;
+    $("details-id").value                   = "";
+    $("details-id").disabled                = false;
+    $("details-name").value                 = "";
+    $("details-email").value                = "";
+    $("details-rights-admin").checked       = false;
+    $("details-rights-contributor").checked = false;
+    $("details-rights-ouderraad").checked   = false;
+  }
+
+  /* private */ function showDetails() {
+    $("user-details").style.display = "block";
+  }
+
+  /* private */ function hideDetails() {
+    $("user-details").style.display = "none";
+  }
+  
+  function save() {
+    user = collectDetails();
+    if( showing ) {
+      __OS__.update( "Users", user.id,
+                     { "name": user.name, "email": user.email, "rights": user.rights },
+                     afterUpdate );
+    } else {
+      __OS__.create( "Users",
+                     { "id": user.id, "name": user.name, "email": user.email, "rights": user.rights },
+                     afterCreate );
+    }
+  }
+  
+  /* private */ function collectDetails() {
+    return {
+      id     : $("details-id").value,
+      name   : $("details-name").value,
+      email  : $("details-email").value,
+      rights : collectRights()
+    }
+  }
+  
+  /* private */ function collectRights() {
+    rights = [];
+    if( $("details-rights-admin").checked )       { rights.push("admin");      }
+    if( $("details-rights-contributor").checked ) { rights.push("contributor");}
+    if( $("details-rights-ouderraad").checked )   { rights.push("ouderraad");  }
+    return rights;
+  }
+
+  /* private */ function afterUpdate(response, success) {
+    // reload the user list, to be 100% in sync with back-end
+    if( success ) { Messages.addInfo( "bijwerken geslaagd" ); refresh(); }
+    else { Messages.addCritical( "bijwerken faalde: " + response.msg)}
+  }
+
+  /* private */ function afterCreate(response, success) {
+    // reload the user list, to be 100% in sync with back-end
+    if( success ) { Messages.addInfo( "creatie geslaagd" ); refresh(); }
+    else { Messages.addCritical( "creatie faalde: " + response.msg)}
+  }
+  
+  function remove() {
+    user = users[showing];
+  	if(confirm("Verwijder " + user.name + " ?")) {
+      __OS__.remove("User", user.id, null, afterRemove);
+    }
+  }
+  
+  /* private */ function afterRemove(response, success) {
+    // reload the user list, to be 100% in sync with back-end
+    if( success ) { 
+      Messages.addInfo( "verwijderen geslaagd" );
+      clear();
+      refresh();
+    }
+    else { Messages.addCritical( "verwijderen faalde: " + response.msg)}
+  }
+
+  /* private */ function $(id) {
+    return document.getElementById(id);
+  }
+  
+  function clear() {
+    clearDetails();
+    hideDetails();
+  }
+  
+  globals.Users = {
+    "refresh": refresh,
+    "show":    show,
+    "create":  startCreate,
+    "save":    save,
+    "remove":  remove,
+    "clear":   clear
+  };
+  
+})(window);
+
+Users.refresh();
+
+</script>
