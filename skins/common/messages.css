@@ -1,0 +1,33 @@
+/* Messages */
+
+DIV.messages {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  text-align: center;
+  z-index: 100000;
+}
+
+DIV.message {
+  display: inline;
+  cursor: pointer;
+  background-color: white;
+  padding: 10px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+  font: 10pt Verdana;
+}
+
+DIV.message.info {
+  background-color: #39E33E;
+}
+
+DIV.message.warning {
+  background-color: #F2DF0A;
+}
+
+DIV.message.critical {
+  background-color: #F26678;
+}

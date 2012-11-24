@@ -71,6 +71,11 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/editing.js?{$this->includeVersion}"></script>
   <script src="./skins/vbsg/json2.js?{$this->includeVersion}"></script>
 
+	<!-- new site common scripts -->
+  <script src="./skins/common/messages.js?{$this->includeVersion}"></script>
+
+  <link rel="stylesheet" type="text/css" href="./skins/common/messages.css?{$this->includeVersion}">
+
   <!-- breakdown support -->
   <script src="./skins/vbsg/breakdown/js/breakdown.js?{$this->includeVersion}"></script>
 

@@ -47,27 +47,12 @@ class Messages {
   }
   
   function asHtml() {
-    $html = "";
-    $id = 0;
+    $script = "";
     foreach( $this->messages as $message ) {
-      $id++;
-      $html .= <<<EOT
-<div id="message-$id" 
-     class="message {$message['type']}"
-     onclick="javascript:this.style.display='none';">
-{$message['body']}
-</div>
-EOT;
+      $type = ucfirst($message['type']);
+      $body = $message['body'];
+      $script .= "Messages.add{$type}('$body');\n";
     }
-    return <<<EOT
-<div id="all-messages" class="messages">
-  $html
-</div>
-<script>
-  window.setTimeout( function() { 
-    document.getElementById('all-messages').style.display = "none";
-  }, 5000 );
-</script>
-EOT;
+    return "<script>\n$script\n</script>\n";
   }
 }
