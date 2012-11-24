@@ -12,8 +12,22 @@ which makes it easy to implement, use and adapt.
 Minimal survival steps:
 
 $ git clone https://github.com/christophevg/SkoolSCool.git
-$ cd SkooSCool/
+$ cd SkooSCool
 $ make init
+
+If you don't have access to the make command, you can perform the initialisation
+manually:
+
+	$ git submodule init 
+	$ git submodule update
+	$ cd lib/LightOpenIDClient
+	$ git submodule init
+	$ git submodule update
+
+Afterwards:
+- edit config.php to setup your site.
+- create the database by executing the different SQL files
+	(better instructions will follow soon)
 
 DISCLAIMER
 
