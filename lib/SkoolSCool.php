@@ -9,6 +9,8 @@
 date_default_timezone_set('Europe/Brussels');
 setlocale(LC_ALL, 'nl_NL');
 
+include_once dirname(__FILE__) . '/put.php';
+
 include_once dirname(__FILE__) . '/JSConsole.php';
 
 include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
@@ -27,6 +29,7 @@ include_once dirname(__FILE__) . '/Config.php';
 include_once dirname(__FILE__) . '/Objects.php';
 
 include_once dirname(__FILE__) . '/Session.php';
+include_once dirname(__FILE__) . '/XSFR.php';
 
 include_once dirname(__FILE__) . '/SessionStore.php';
 include_once dirname(__FILE__) . '/SessionCache.php';

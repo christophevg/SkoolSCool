@@ -1,7 +1,10 @@
 TODO
 
-- user creation/mgmt (System:Users)
-- user activation + linking of federated authentication (System:Me?)
+- create migration script for introduction of revisions
+
+- user creation/mgmt app-page
+
+- user activation + linking of federated authentication
 
 - add Facebook connect / https://github.com/facebook/facebook-php-sdk
 

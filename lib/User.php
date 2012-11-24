@@ -69,6 +69,10 @@ class User extends Object {
   function isAnonymous() {
     return $this->name == 'anonymous';
   }
+
+  function isNotActive() {
+    return $this->hasRight('inactive');
+  }
   
   function isContributor() {
     return $this->hasRight('contributor');

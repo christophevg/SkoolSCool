@@ -6,6 +6,7 @@
  * possibility to revert changes.
  *
  * TODO: remove HTML from class :-(
+ * TODO: remove this all together ;-) -> HtmlContent with JS app to REST API
  */
 
 class SystemChanges extends Content {

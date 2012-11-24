@@ -106,8 +106,10 @@ class AuthorizationManager {
 
     // policy: tags can contain "<group>-only" with group being a usergroup
 
-    // 1. user-only content
-    if( $content->hasTag('user-only') && $user->isAnonymous() ) {
+    // 1. user-only content: no anonymous users OR inactive users
+    if( $content->hasTag('user-only') && 
+        ( $user->isAnonymous() || $user->isNotActive() ) )
+    {
       return false;
     }
 

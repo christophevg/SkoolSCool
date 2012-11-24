@@ -106,11 +106,17 @@ class MySQLStore implements ObjectStore {
     return $this;
   }
   
-  public function retrieve($limit = null) {
+  public function retrieve($limit = null, $start = null) {
     $orderBy = isset($this->orderBy) ? 
       " ORDER BY {$this->orderBy}" . ( $this->order ? " DESC" : "") : "";
-    $limit = isset($limit) ? " LIMIT $limit" : "";
+    $limit = isset($limit) ? 
+      ' LIMIT ' . (isset($start) ? $start . ', ' : '') . $limit : '';
 
+    $sql = 'SELECT * FROM objects ' .
+           $this->createWhereClause() . ' ' .
+           $orderBy .
+           $limit;
+           
     $stmt = $this->dbh->prepare( 'SELECT * FROM objects ' .
                                  $this->createWhereClause() . ' ' .
                                  $orderBy .

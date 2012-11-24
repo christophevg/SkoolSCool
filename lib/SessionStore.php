@@ -2,9 +2,11 @@
 
 class SessionStore implements ObjectStore {
   private $name;
+  private $filters;
 
   public function __construct( $name ) {
     $this->name = $name;
+    $this->clear();
   }
   
   public function fetch( $id ) {
@@ -35,6 +37,7 @@ class SessionStore implements ObjectStore {
   
   // TODO:
   public function filter( $property, $value ) {
+    $this->filters[$property] = $value;
     return $this;
   }
   
@@ -42,11 +45,33 @@ class SessionStore implements ObjectStore {
     return $this;
   }
   
-  public function retrieve( $limit ) {
+  public function retrieve( $limit, $start ) {
     return array();
   }
   
   public function remove() {
+    $set = SessionManager::getInstance()->{$this->name};
+    $hits = array();
+    // determine filter hits
+    foreach( $set as $id => $object ) {
+      if( $object ) {
+        foreach( $this->filters as $property => $value ) {
+          if( $object->$property == $value ) {
+            array_push($hits, $id);
+          }
+        }
+      }
+    }
+    // delete objects that were hit
+    foreach( $hits as $id ) {
+      unset($set[$id]);
+    }
+    SessionManager::getInstance()->{$this->name} = $set;
+    $this->clear();
     return $this;
+  }
+  
+  private function clear() {
+    $this->filters = array();
   }
 }

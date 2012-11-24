@@ -32,6 +32,9 @@ class SessionManager {
       return $this->setUser($user);
     } else {
       Messages::getInstance()->addWarning( I18N::$FAILED_LOGON );
+      // if for some reason the login failed, reset the session to clear
+      // everything
+      $this->logout();
     }
   }
   

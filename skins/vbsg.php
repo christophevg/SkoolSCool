@@ -457,7 +457,8 @@ EOT;
    */
   private function showLogin() {
     return <<<EOT
-<a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
+<a href="registratie">registratie</a>
+| <a href="javascript:" onclick="showPopup('logon');">aanmelden</a>
 | <a href="javascript:" onclick="showPopup('contact');">contacteer ons</a>
 EOT;
   }

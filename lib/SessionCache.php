@@ -34,7 +34,8 @@ class SessionCache implements ObjectStore {
   }
   
   public function filter( $property, $value ) {
-    $this->store->filter( $property, $value ); // just pass it on to the store
+    $this->store->filter( $property, $value );
+    $this->cache->filter( $property, $value );
     return $this;
   }
   
@@ -43,14 +44,15 @@ class SessionCache implements ObjectStore {
     return $this;
   }
   
-  public function retrieve( $limit ) {
-    $objects = $this->store->retrieve( $limit );
+  public function retrieve( $limit, $start = null ) {
+    $objects = $this->store->retrieve( $limit, $start );
     // TODO: add caching here also ?
     return $objects;
   }
   
   public function remove() {
     $this->store->remove();
+    $this->cache->remove();
     return $this;
   }
 }

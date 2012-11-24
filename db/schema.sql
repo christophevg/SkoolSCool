@@ -2,7 +2,8 @@
 DROP TABLE IF EXISTS allObjects;
 CREATE TABLE allObjects (
   -- OBJECT
-  id       VARCHAR(128)  NOT NULL,
+  id       VARCHAR(128) NOT NULL,
+  rev      INTEGER NOT NULL AUTO_INCREMENT,
   ts       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   type     VARCHAR(128)  NOT NULL,
   tags     VARCHAR(256),
@@ -26,14 +27,14 @@ CREATE TABLE allObjects (
   -- NEWSCONTENT
   date     INTEGER,
 
-  PRIMARY KEY (id, ts)
-);
+  PRIMARY KEY (id, rev)
+) ENGINE=MyISAM;
 
 CREATE OR REPLACE VIEW current AS
-  SELECT id AS cid, MIN(ts) AS created, MAX(ts) AS updated 
+  SELECT id AS cid, MAX(rev) AS revision, MIN(ts) AS created, MAX(ts) AS updated 
     FROM allObjects
 GROUP BY id;
 
 CREATE OR REPLACE VIEW objects AS
   SELECT * FROM allObjects 
-  JOIN current ON id = cid AND ts = updated;
+  JOIN current ON id = cid AND rev = revision;
