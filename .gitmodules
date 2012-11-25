@@ -13,3 +13,6 @@
 [submodule "lib/diff"]
 	path = lib/diff
 	url = https://github.com/christophevg/diff.git
+[submodule "lib/facebook"]
+	path = lib/facebook
+	url = https://github.com/facebook/facebook-php-sdk.git

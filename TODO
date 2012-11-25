@@ -28,6 +28,8 @@ TODO
 
 - check: translation of special characters to HTML entities ?
 
+- add logging of reason why content is dropped (AuthorizationManager)
+
 ---
 
 nice-to-haves

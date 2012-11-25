@@ -14,6 +14,7 @@ include_once dirname(__FILE__) . '/put.php';
 include_once dirname(__FILE__) . '/JSConsole.php';
 
 include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
+include_once dirname(__FILE__) . '/facebook/src/facebook.php';
 
 include_once dirname(__FILE__) . '/gPhoto.php';
 

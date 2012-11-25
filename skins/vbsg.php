@@ -489,6 +489,8 @@ EOT;
   }
   
   protected function insertLogonPopup() {
+    global $facebook;
+    $facebookLoginUrl = $facebook->getLoginUrl();
     return <<<EOT
 <div class="overlay" id="logon-overlay">
   <div id="logon-popup" class="popup withRoundedCorners">
@@ -513,6 +515,9 @@ EOT;
           return false;
         }
       };
+      function goto_facebook() {
+        window.location = "$facebookLoginUrl";
+      }
       </script>
 
       <form id="openidForm" action="./" method="post">
@@ -522,7 +527,7 @@ EOT;
 	    <p>Meld je aan met een van je bestaande profielen:</p>
 	    <div class="providers">
         <a href="javascript:openid.signin('google');" class="openid google"></a>
-        <!--<a href="javascript:" class="openid facebook"></a>-->
+        <a href="javascript:goto_facebook();" class="openid facebook"></a>
         <a href="javascript:openid.signin('yahoo');" class="openid yahoo"></a>
         <a href="javascript:openid.signin('myopenid');" class="openid myopenid"></a>
       </div>

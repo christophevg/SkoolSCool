@@ -7,7 +7,7 @@
  *   stored in the persistent store
  * - process login events
  * - process logout events
- * - process OpenID login events
+ * - process federated (openid and facebook) login events
  * - restart a cookie-based long-lived session
  * - start a URL-provided session (used for one-time logins)
  * @author Christophe VG
@@ -26,6 +26,12 @@ $openid = LightOpenIDClient::getInstance( Config::$server )
             ->withRequired( 'contact/email' )
             ->cacheInSession();
 
+// setup facebook connection
+$facebook = new Facebook(array(
+  'appId'  => Config::$facebookAppId,
+  'secret' => Config::$facebookSecret
+));
+
 // process login post
 if( isset($_POST['login']) && isset($_POST['pass']) ) {
   $sm->login( $_POST['login'], $_POST['pass'] );
@@ -40,15 +46,36 @@ if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
   setcookie( 'session', '', time() - 42000, '/');
   // remove XSFR session
   XSFR::clearSession();
+  // redirect to home
+  header("Location: home" );
 }
 
-// if we have no current user but have an openID-based user try to log it on
-if( $sm->currentUser->isAnonymous() && $openid_user = $openid->getUser() ) {
-  $sm->login_federated( $openid_user->identity );
-  // if we have no current user now, the OpenID-based user is a new one,
-  // point him to the registration popup
+function getFederatedUser() {
+  global $openid, $facebook;
+  if($user = $openid->getUser()) {
+    return $user->identity;
+  }
+  if( $user = $facebook->getUser()) {
+    return $user;
+  }
+  return false;
+}
+
+function clearFederatedUser() {
+  global $openid, $facebook;
+  $openid->logoff();
+  $facebook->destroySession();
+}
+
+// if we have no current user but have a federated user try to log it on
+if( $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
+  $sm->login_federated( $federatedUser );
+  // if we have no current user now, the federated user is unknown
   if( $sm->currentUser->isAnonymous() ) {
     Messages::getInstance()->addWarning( I18N::$UNKNOWN_FEDERATED_LOGIN );
+  } else {
+    // clear it: we used it to log in, no longer of any use now.
+    clearFederatedUser();
   }
 }
 
@@ -68,6 +95,37 @@ if( $sm->currentUser->isAnonymous() && isset($_GET['start']) ) {
 // provide the browser/user with a cookie-based anti-XSFR session/uid
 if( ! $sm->currentUser->isAnonymous() ) {
   XSFR::ensureSession();
+}
+
+// if a user is logged in and we have a federated user and they aren't connected
+// through an identity AND we have an explicit request to connect them
+// => create an identity
+if( ! $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
+  // if we already have an identity check it ...
+  if( $identity = Identity::get( $federatedUser ) ) {
+    if( $sm->currentUser == User::get( $identity->user ) ) {
+      Messages::getInstance()->addInfo("Online profiel reeds gekend.");
+    } else {
+      Messages::getInstance()->addCritical("Online profiel kan niet 2x gelinkt worden.");
+    }
+    // clear it: we're already logged in, we can't do anything with this info
+    clearFederatedUser();
+  } else {
+    if( isset($_GET['action']) && $_GET['action'] = 'link-profile'  ) {
+      Objects::getStore( 'persistent' )
+        ->put( new Identity(array('id' => $federatedUser, 'user' => $sm->currentUser->id)));
+      Messages::getInstance()->addInfo("Online profiel succesvol gelinkt." );
+      clearFederatedUser();
+    } elseif( isset($_GET['action']) && $_GET['action'] = 'cancel-link-profile'  ) {
+      Messages::getInstance()->addInfo("Online profiel werd NIET gelinkt." );
+      clearFederatedUser();
+    } else {
+      if( Request::getInstance()->id != 'link profiel' ) {
+        header("Location: link-profiel");
+        exit();
+      }
+    }
+  }
 }
 
 // init Context

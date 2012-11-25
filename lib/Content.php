@@ -64,7 +64,7 @@ abstract class Content extends Object {
     if( $content ) { return $content; }
     
     // else instantiate a fresh object and "store" it in the Transient Store
-    $content = new $type( array( id => $name ) );
+    $content = new $type( array( 'id' => $name ) );
     Objects::getStore( 'transient' )->put( $content );
     return $content;
   }

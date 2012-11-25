@@ -24,6 +24,10 @@ class Config {
   // google account
   static $googleAccount  = '';
   static $googlePass     = '';
+  
+  // facebook
+  static $facebookAppId = '';
+  static $facebookSecret = '';
 }
 
 // include the local configuration (if available in directory of index.php)
