@@ -108,7 +108,10 @@ class API {
     while(count($parts) > 0 && trim($parts[0]) == "") { array_shift($parts); }
     if( count($parts) == 0 ) { fail(400, 'missing object type'); }
     
-    $contentType = substr( $parts[0], 0, -1 );      // strip of trailing s ;-)
+    $contentType = $parts[0];
+    if(substr($contentType, -1)=='s') {
+      $contentType = substr( $contentType, 0, -1 ); // strip of trailing s ;-)
+    }
     $id          = count($parts) > 1 ? $parts[1] : null;
     $ts          = count($parts) > 2 ? $parts[2] : null;
     
