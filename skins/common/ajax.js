@@ -45,7 +45,8 @@ var __OS__ = (function() {
     function onReady( callback ) {
       xmlhttp.onreadystatechange = function() {
         if( xmlhttp.readyState  == 4 ) {
-          callback( JSON.parse(xmlhttp.responseText),
+          callback( (xmlhttp.responseText != "" ? 
+                      JSON.parse(xmlhttp.responseText) : ""),
                     (""+xmlhttp.status).substring(0,1) == 2 ); // 2xx success codes
         }
       };
