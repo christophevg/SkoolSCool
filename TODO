@@ -1,38 +1,37 @@
 TODO
 
-- user activation + linking of federated authentication
-  - user mgmgt -> send activation email (create identity + send mail)
-  - activation page : federated login, linking or provide password
+- fix bug in editor to provide decent editor size
 
-- add Facebook connect / https://github.com/facebook/facebook-php-sdk
+- allow users to choose to provide a password instead of using an online profile
+  -> change password page
+
+- move tags to Object-level (e.g. use it to add tag "OTP")
 
 - generic file upload + file browser like viewer
 
 - reuse photo album on class specific pages
 
-- clean up code
-	- split HTML and PHP code
-	- centralise javascript
-	- move more functionality to javascript
-	- add more REST interfaces
-	- clean up and consolidate css/
-  - validate HTML and correct problems
-
-- create basic admin guide
-	- managed image/calendar using Google
-
-- extract popups into reusable library of its own
-	- popup content should also be in the database and editable
-
 - export database automation using cron
+
+- clean up temporaries using cron (otp:48hours)
 
 - check: translation of special characters to HTML entities ?
 
 - add logging of reason why content is dropped (AuthorizationManager)
 
+- create basic admin guide
+	- managed image/calendar using Google
+  - creation of users
+
 ---
 
 nice-to-haves
+
+- check syntax of tags, show recognized tags as labels with delete button
+
+- extract popups into reusable library of its own
+	- popup content should also be in the database and editable
+    -> use __OS__.get()
 
 - improve calendar viewer + add details + multi-day events
 
@@ -46,6 +45,18 @@ nice-to-haves
 
 - move default content from skin to database
 	- new contenttype: template
+
+- incoming data cleaning using functional patterns
+  $request->get('start', 'guid');
+
+ongoing
+
+- clean up code
+	- split HTML and PHP code
+	- centralise javascript
+	- move more functionality to javascript
+	- clean up and consolidate css/
+  - validate HTML and correct problems
 
 ---
 
