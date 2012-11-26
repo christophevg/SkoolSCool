@@ -130,11 +130,11 @@ class AuthorizationManager {
    *         according to the given access style.
    */
   private function UserPageContent( $user, $page, $access = 'read' ) {
-    // policy: read access for all / write access for known users only
+    // policy: read access for all / write access for contributors only
     // system-owned pages can only be edited by admins
     return $access == "read" ? true :
       ( is_object($page) && $page->hasAuthor(User::get('system')) ?
-        $user->isAdmin() : ! $user->isAnonymous() );
+        $user->isAdmin() : $user->isContributor() );
   }
 
   /**
