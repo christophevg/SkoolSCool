@@ -473,10 +473,15 @@ EOT;
    * If a user is logged in, we display his name and a logout action.
    */
   private function showUser() {
+    $role = $this->user->role != '' ? "({$this->user->role})" : '';
+    $add = $this->user->isContributor() ? 
+      '| <a href="javascript:" onclick="showPopup(\'addcontent\');">toevoegen</a>'
+      : '';
+
     return <<<EOT
-{$this->user} ({$this->user->role}) 
+{$this->user} $role
 | <a href="?action=logout">afmelden</a>
-| <a href="javascript:" onclick="showPopup('addcontent');">toevoegen</a>
+$add
 | <a href="javascript:" onclick="showPopup('contact');">contacteer ons</a>
 EOT;
   }
