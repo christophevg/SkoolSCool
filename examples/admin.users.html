@@ -63,8 +63,10 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
 
   <input id="action-update" type="button" value="bewaar wijzigingen"
          onclick="Users.save();">
+  <input id="action-activate" type="button" value="activeer en verwittig"
+         onclick="Users.activate();">
   <input id="action-delete" type="button" value="verwijder gebruiker"
-        onclick="Users.remove();">
+         onclick="Users.remove();">
 </div>
 
 <div class="actions">
@@ -215,13 +217,67 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     hideDetails();
   }
   
+  function activate() {
+    id   = createGUID();
+    user = users[showing];
+    __OS__.create( "Identity", { "id" : id, "user": user.id }, 
+                   function(response, success) {
+                     if( success ) {
+                       prepareMail(id);
+                     } else {
+                       Messages.addCritical("activatie faalde." + response.msg);
+                     }
+                   } );
+  }
+  
+  /* private */ function prepareMail(id) {
+    user = users[showing];
+    body = mailTemplate.replace("{{id}}", id)
+                       .replace("{{name}}", user.name)
+                       .replace("{{login}}", user.id);
+    window.location = "mailto:" + user.email + 
+                      "?Subject=" + encodeURIComponent("activatie account") +
+                      "&body=" + encodeURIComponent(body);
+  }
+  
+  var mailTemplate;
+  
+  /* private */ function fetchMailTemplate() {
+    __OS__.fetch('PageContents', 'template activatie email', null, 
+                 afterFetchMailTemplate );
+  }
+  
+  /* private */ function afterFetchMailTemplate(response, success) {
+    if( success ) {
+      mailTemplate = response.body;
+    } else {
+      Messages.addCritical("ophalen mail template faalde:" + response.msg);
+      mailTemplate = "http://localhost/activeer?start={{id}}";
+    }
+  }
+
+  // fetch a copy of the activation mail template and cache it
+  fetchMailTemplate();
+  
+  /* private */ function createGUID () {
+    function S4() {
+      return Math.floor( Math.random() * 0x10000 /* 65536 */ ).toString(16);
+    }
+    return S4() + S4() + "-" +
+           S4() + "-" +
+           S4() + "-" +
+           S4() + "-" +
+           S4() + S4() + S4();
+  }
+  
   globals.Users = {
-    "refresh": refresh,
-    "show":    show,
-    "create":  startCreate,
-    "save":    save,
-    "remove":  remove,
-    "clear":   clear
+    "refresh":  refresh,
+    "show":     show,
+    "create":   startCreate,
+    "save":     save,
+    "remove":   remove,
+    "clear":    clear,
+    "activate": activate
   };
   
 })(window);

@@ -129,6 +129,7 @@ class API {
     switch($contentType) {
       case 'PageContent':
       case 'User':
+      case 'Identity':
         $object = new $contentType($data);
         Objects::getStore('persistent')->put($object);
         break;

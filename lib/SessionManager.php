@@ -48,6 +48,26 @@ class SessionManager {
     // everything
     $this->logout();
   }
+
+  function login_otp( $id ) {
+    if( $identity = Identity::get( $id ) ) {
+      // if it exists: delete this OTP, it has been used
+      // TODO: remove this and use a 48 hours window it can be used
+      //       to allow users to use it and test their new credentials before
+      //       this is revoked.
+      // MAKE SURE to clean the input data ;-)
+      Objects::getStore('persistent')
+        ->filter('type', 'Identity')
+        ->filter('id', preg_replace("/[^a-z0-9\-]/", "", $_GET['start']))
+        ->remove();
+      if( $user = User::get( $identity->user ) ) {
+        return $this->setUser($user);
+      }
+    }
+    // if for some reason the login failed, reset the session to clear
+    // everything
+    $this->logout();
+  }
   
   // When we successfully set a new user, post-login, we also create a new
   // session for one month/30 days

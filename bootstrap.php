@@ -86,10 +86,9 @@ if( $sm->currentUser->isAnonymous()
   $sm->login_federated( $_COOKIE['session'] );
 }
 
-// if we still don't have a user, try to use a one time login nonce
+// if we still don't have a user, try to use a one time password
 if( $sm->currentUser->isAnonymous() && isset($_GET['start']) ) {
-  $sm->login_federated( $_GET['start'] );
-  // TODO: delete one-time Identity
+  $sm->login_otp( $_GET['start'] );
 }
 
 // provide the browser/user with a cookie-based anti-XSFR session/uid
