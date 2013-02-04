@@ -488,7 +488,6 @@ EOT;
 
   protected function insertPopups() {
     return $this->insertLogonPopup()
-         . $this->insertRegisterPopup()
          . $this->insertAddContentPopup()
          . $this->insertContactPopup();
   }
@@ -548,60 +547,6 @@ EOT;
         <input class="button" type="submit" value="meld aan...">
       </form>
     </div>
-  </div>
-</div>
-EOT;
-  }
-
-  protected function insertRegisterPopup() {
-    return <<<EOT
-<div class="overlay" id="register-overlay">
-	<div id="register-popup" class="popup withRoundedCorners">
-		<h1>Ready to register ?</h1>
-		<div class="actions">
-			<a id="closer" href="javascript:" class="icon close"
-				 onclick="hidePopup('register');"><span>close</span></a>
-		</div>
-
-    <p>
-Not yet registered ? Fill out the form below, make some choices and press the
-register button. Print the registration form, sign it and have your child
-return it to school. We'll send you a confirmation once you account has been
-activated.
-    </p>
-
-    <hr>
-
-    <p>
-If you already have an account with any of the following providers, you can
-use that to identify yourself. We will not receive nor store your password,
-but simply rely on your provider to prove that you are you. To identify
-yourself, just press the icon of your provider. After successfully having
-identified yourself, you will return to this site to complete your
-registration.
-    </p>
-
-    <p>
-  <a href="javascript:" onclick="">Google/Gmail</a>
-| <a href="javascript:" onclick="">MyOpenID</a>
-| <a href="javascript:" onclick="">Yahoo</a>
-    </p>
-
-    <hr>
-
-    <p>
-If you don't have such an account, no problem, we'll manage it for you. Just
-provide us with the information below and we'll start your registration right
-now.
-    </p>
-
-    <form action="./" method="post">
-      username : <input name="login"><br>
-      password : <input type="password" name="pass"><br>
-      repeat password : <input type="password" name="pass"><br>
-      <input type="submit" value="register">
-    </form>
-
   </div>
 </div>
 EOT;
