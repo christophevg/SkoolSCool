@@ -195,6 +195,20 @@ class AuthorizationManager {
   }
 
   /**
+   * Validator for Users accessing/uploading files
+   * @param $user accessing file
+   * @param $file accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the file
+   *         according to the given access style.
+   */
+  private function UserFileContent( $user, $file, $access = 'read' ) {
+    // policy: update access for admins and contributors only
+    return $user->isAdmin() || $user->isContributor();
+  }
+
+  /**
    * Validator for Users accessing/uploading Albums
    * @param $user accessing Album
    * @param $album accessed by the user
@@ -204,7 +218,7 @@ class AuthorizationManager {
    *         according to the given access style.
    */
   private function UserAlbumContent( $user, $album, $access = 'read' ) {
-    // policy: update access for admins only ... for now
+    // policy: update access for admins and contributors only
     return $user->isAdmin() || $user->isContributor();
   }
   

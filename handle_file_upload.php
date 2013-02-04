@@ -23,20 +23,17 @@ function report_progress( $msg, $pct = 0 ) {
   flushIt();
 }
 
-function report_error( $msg ) {
-  report_progress( "ERROR $msg", 100 );
-}
-
 function terminate( $msg ) {
-  report_error( $msg );
+  print "<script> window.parent.upload_abort( \"$msg\" ); </script>";
+  flushIt();
   exit();
 }
 
-function accept_file( $uploaddir = '/tmp' ) {
-  mkdir( $uploaddir );
-  $uploadfile = $uploaddir . '/' . basename($_FILES['file']['name']);
+function accept_file( $uploaddir = '/tmp', $name = '', $fileName = null ) {
+  $uploadfile = $uploaddir . '/' . 
+    ( is_null($fileName) ? basename($_FILES[$name]['name']) : $fileName );
 
-  if( move_uploaded_file( $_FILES['file']['tmp_name'], $uploadfile ) ) {
+  if( move_uploaded_file( $_FILES[$name]['tmp_name'], $uploadfile ) ) {
     return $uploadfile;
   }
   return false;
@@ -103,15 +100,13 @@ function resize_photo( $file, $max_large, $max_small ) {
 	imagejpeg($tmp, $file, 90);
 }
 
-// PROCESSING ...
-
-if( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
+function process_album() {
   $albumName = trim($_POST['name']);
   if( $albumName == "" ) {
     terminate( I18N::$ALBUMNAME_MISSING );
   }
 
-  if( $_FILES['file']['error'] == 1 ) {
+  if( $_FILES['album']['error'] == 1 ) {
     terminate( I18N::$ARCHIVE_TOO_BIG );
   }
 
@@ -121,8 +116,9 @@ if( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
   // accept the file
   if( ! file_exists( '/tmp/vbsg' ) ) { mkdir( '/tmp/vbsg' ); }
   $workdir = '/tmp/vbsg/' . md5(time() . rand());
-  $file = accept_file( $workdir );
-  if( ! file_exists( $file ) ) { terminate( I18N::$FILE_TRANSFER_FAILED ); }
+  mkdir( $workdir );
+  $file = accept_file( $workdir, 'album' );
+  if( ! file_exists( $file ) ) { terminate( I18N::$FILE_TRANSFER_FAILED . " : " . $file ); }
 
   // unzip the file
   $files = unzip_file( $file );
@@ -154,9 +150,38 @@ if( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
   print '<script>window.parent.upload_done();</script>';
   flushIt();
 
-  print "<pre>";
-  print_r( get_included_files() );
+  // remove upload dir
+  rmdir( $uploaddir );
+
+  exit; 
+}
+
+function process_file() {
+  $fileName = trim($_POST['name']);
+  if( $fileName == "" ) {
+    terminate( I18N::$FILENAME_MISSING );
+  }
+
+  if( $_FILES['file']['error'] == 1 ) {
+    terminate( I18N::$ARCHIVE_TOO_BIG );
+  }
+
+  // confirm start
+  start();
+
+  // accept the file
+  $file = accept_file( './bestanden', 'file', $fileName );
+  if( ! file_exists( $file ) ) { terminate( I18N::$FILE_TRANSFER_FAILED ); }
+
+  print '<script>window.parent.upload_done();</script>';
   flushIt();
 
   exit; 
+}
+
+// PROCESSING ...
+if( isset( $_FILES['album'] ) && $_FILES['album']['name'] ) {
+  process_album();
+} else if( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
+  process_file();
 }

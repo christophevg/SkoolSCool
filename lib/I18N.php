@@ -8,8 +8,13 @@
 class I18N {
   public static $FAILED_LOGON = "Log on failed.";
   public static $UNKNOWN_FEDERATED_LOGIN = "Unknown Federated Login.";
+
+  public static $UNKNOWN_CONTENT_TYPE = "Unknown Content Type.";
   
   public static $ARCHIVE_TOO_BIG   = "Uploaded archive is too big.";
+
+  public static $FILENAME_MISSING = "File name is missing...";
+
   public static $ALBUMNAME_MISSING = "Album name is missing...";
   public static $CREATE_ALBUM = "Creating album...";
   public static $RESIZE_PHOTO = "Resizing photo";

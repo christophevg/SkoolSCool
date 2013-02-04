@@ -70,6 +70,7 @@ class VbsgSkin extends Skin {
   <script src="./skins/vbsg/popup.js?{$this->includeVersion}"></script>
   <script src="./skins/vbsg/editing.js?{$this->includeVersion}"></script>
   <script src="./skins/vbsg/json2.js?{$this->includeVersion}"></script>
+  <script src="./skins/vbsg/add_content.js?{$this->includeVersion}"></script>
 
 	<!-- new site common scripts -->
   <script src="./skins/common/ajax.js?{$this->includeVersion}"></script>
@@ -556,6 +557,7 @@ EOT;
     $options = array( 'PageContent'  => "Een algemene tekstpagina",
                       'NewsContent'  => "Een nieuwsbericht",
                       'HtmlContent'  => "Een HTML pagina",
+                      'FileContent'  => "Een algmeen bestand",
                       'AlbumContent' => "Een foto album" );
     $html = "";
     foreach( $options as $type => $label ) {
@@ -575,134 +577,37 @@ EOT;
 				 onclick="hidePopup('addcontent');"><span>close</span></a>
 		</div>
 		<h1>Voeg nieuwe inhoud toe...</h1>
-    <script>
-    
-function addContent() {
-  var form = document.getElementById('addcontent-form');
-  var name = document.getElementById('addcontent-name').value;
 
-  if( name.match( /[a-z]+/ ) ) {
-    if(document.getElementById("selectContentType").value != "AlbumContent") {
-      form.action = name.replace( / /g, "-" );
-    } else {
-      var button = document.getElementById( 'addcontent-submit' );
-      button.value = "Bezig...";
-      button.disabled = true;
-      upload_feedback( "Uw bestand wordt overgebracht naar de server...", 5 );
-    }
-    form.submit();
-  } else {
-    alert( "Gelieve een naam te kiezen." );
-    document.getElementById("addcontent-name").focus();
-  }
-  return false;
-}
-
-function clear_upload_feedback() {
-  document.getElementById( 'progress-msg' ).innerHTML = "";
-  document.getElementById( 'progress-bar' ).style.width = "0%";
-}
-
-function upload_feedback( msg, pct ) {
-  document.getElementById( 'progress-msg' ).innerHTML = msg;
-  document.getElementById( 'progress-bar' ).style.width = pct + "%";
-}
-
-function upload_done( url ) {
-  document.getElementById( 'addcontent-form' ).reset();
-  var button = document.getElementById( 'addcontent-submit' );
-  button.value = "voeg toe...";
-  button.disabled = false;
-  upload_feedback( "Klaar ...", 100 );
-  alert( "Uw album is overgebracht naar de server. De foto's zijn weldra " + 
-         "beschikbaar in het fotoboek. Dit kan tot 15 minuten duren." );
-  clear_upload_feedback();
-}
-
-function changeContent() {
-  var type = document.getElementById("selectContentType").value;
-  document.getElementById( "addcontent-form" ).className = type;
-  document.getElementById( "addcontent-name" ).value = "";
-  document.getElementById( "addcontent-name-error" ).innerHTML = "";
-  switch( type ) {
-    case "PageContent":
-    case "NewsContent":
-    case "HtmlContent":
-      document.getElementById( "addcontent-form" ).method="GET";
-      document.getElementById( "addcontent-form" ).enctype="";
-      document.getElementById( "addcontent-form" ).target="";
-      break;
-    case "AlbumContent":
-      document.getElementById( "addcontent-form" ).method="POST";
-      document.getElementById( "addcontent-form" ).enctype="multipart/form-data";
-      document.getElementById( "addcontent-form" ).encoding="multipart/form-data";
-      document.getElementById( "addcontent-form" ).target="iframe";
-      break;
-  }
-}
-
-function checkName() {
-  var input = document.getElementById("addcontent-name");
-  var value = input.value.replace(/^\s+/, "").replace(/\s+$/, ""); // trim
-  var spinner = document.getElementById("addcontent-name-spinner");
-  var error   = document.getElementById("addcontent-name-error");
-  error.innerHTML = "";
-  if( value != '' ) {
-    spinner.className = "icon wait state active";
-    __remote__.fetch( value, function(response) {
-      spinner.className = "icon wait state inactive";
-      if( response == value ) {
-        error.innerHTML = "Deze naam is reeds in gebruik";
-        input.focus();
-        input.select();
-      }
-    } );
-  }
-}
-
-var waiting_before_checking_name_change = null;
-
-function watchChangeName() {
-  if( waiting_before_checking_name_change != null ) { 
-    clearTimeout( waiting_before_checking_name_change );
-  }
-  waiting_before_checking_name_change = setTimeout( checkName, 1000 );
-}
-
-function drop(file) {
-  if( file.value.match(/\.(zip|ZIP)$/) ) {
-    var result = "ok";
-  } else {
-    var result = "nok";
-    file.value = "";
-  }
-  document.getElementById("addcontent-form").className = result;
-  document.getElementById("addcontent-name").value = 
-    file.value.replace( /\..*$/, "").replace( /^([^\\\/]*[\\\/])*/g, "" );
-  checkName();
-}
-
-</script>
-
-    </script>
     <form id="addcontent-form" action="" method="GET">
       <input type="hidden" name="create" value="true">
       <input type="hidden" name="mode"   value="edit">
+
       <span class="label">Soort</span>
       <select id="selectContentType" name="type" onchange="changeContent();">
         <option value="choose">Kies een soort ...</option>
 {$html}
       </select><br><br>
-      <div id="addcontent-file">
-        <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
 
-        <div id="dropzone">
-          <div id="dropicon"></div>
-          <input id="file" type="file" name="file" onchange="drop(this)" multiple>
-          <div id="dropname"  class="dropmsg"></div>
-          <div id="droperror" class="dropmsg">Not a ZIP file, try again.</div>
+      <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
+
+      <div id="addcontent-album">
+        <div class="instructions">
+          Kies een ZIP-bestand op je computer en geef het daarna eventueel een
+          andere naam.<br>
         </div>
-        <div id="instructions"></div>
+        <span class="label">Bestand</span>
+        <input id="album-file" type="file" name="album" onchange="validate_album(this)">
+        <br><br>
+      </div>
+
+      <div id="addcontent-file">
+        <div class="instructions">
+          Kies een bestand op je computer en geef het daarna eventueel een
+          andere naam. Toegelaten bestanden zijn: PDF, PNG, JPEG.<br>
+        </div>
+        <span class="label">Bestand</span>
+        <input id="file-file" type="file" name="file" onchange="validate_file(this)">
+        <br><br>
       </div>
 
       <span id="addcontent-name-label" class="label">Naam</span>

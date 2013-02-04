@@ -8,13 +8,16 @@
 
 include_once 'lib/SkoolSCool.php';
 
-// GET REQUESTS
+// GET REQUESTS = check for existance of content
 function handle_get() {
   $request = trim(str_replace( '-', ' ', $_GET['id'] ));
-  $content = Content::get( $request );
-  if( $content == null ) {
-    print "unknown content";
+  $content_exists = true;
+  if(substr($request, 0, 10) == 'bestanden/' ) {
+    $content_exists = file_exists($request);
   } else {
+    $content_exists = ! is_null(Content::get( $request ));
+  }
+  if( $content_exists ) {
     print $request;
   }
 }
