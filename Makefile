@@ -1,8 +1,8 @@
 SKIN=vbsg
 FTP_USER=
 FTP_PASS=
-URL=ftp.vrijebasisschoolschriekgrootlo.be
-ROOT=/www
+URL=
+ROOT=
 FILES=.htaccess *.php lib
 
 all: dist
@@ -25,6 +25,3 @@ dist-clean:
 init:
 	@git submodule init && git submodule update
 	@cd lib/LightOpenIDClient; git submodule init && git submodule update
-	@echo "TODO"
-	@echo "- Edit config.php to setup your site..."
-	@echo "- Create the database: cd db; make"

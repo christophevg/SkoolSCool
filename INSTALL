@@ -1,0 +1,70 @@
+INSTALL
+
+* STEP 1 : get sources, select branch to follow and init the tree
+
+$ git clone git://github.com/christophevg/SkoolSCool.git
+
+("active" development is done on the "new" branch)
+$ git checkout --track origin/new
+
+$ make init
+
+* STEP 2 : setup mod_rewrite to hide index.php script name
+
+Add the following to a .htaccess file in the root of the project
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteBase /~xtof/Workspace/SkoolSCool/
+RewriteRule ^(.+)$ index.php?id=$1 [L,QSA]
+
+Replace "/~xtof/Workspace/SkoolSCool/" with the appropriate path to your root.
+
+* STEP 3 : create a database
+
+$ cd db
+$ make ADMIN=mysql USER=skoolscool PASS=skoolscool DATABASE=skoolscool
+Enter password: 
+/usr/local/mysql/bin/mysql -uskoolscool -pskoolscool skoolscool  < schema.sql
+/usr/local/mysql/bin/mysql  -uskoolscool -pskoolscool skoolscool < system.sql
+/usr/local/mysql/bin/mysql  -uskoolscool -pskoolscool skoolscool < passwords.sql
+SLEEP(1)
+0
+
+Replace mysql with your MySQL user with administrative rights and supply a user
+name, password and database name of your choice. The administrative user's 
+password is requested interactively.
+
+* STEP 4 : create a config.php file in the root of you site
+
+<?php
+
+// local configuration, allows to override the default configuration
+
+Config::$server = "localhost";
+
+// database connection
+Config::$dbname = 'skoolscool';
+Config::$user   = 'skoolscool';
+Config::$pass   = 'skoolscool';
+  
+// email + recaptcha
+Config::$feedbackMail = 'skoolscool';
+Config::$recaptchaPrivateKey = 'your private key goes here';
+  
+// google  
+Config::$googleAccount  = 'insert google account';
+Config::$googlePass     = 'insert google pass';
+
+// facebook
+Config::$facebookAppId  = 'insert facebook app id';
+Config::$facebookSecret = 'insert facebook secret';
+
+---
+
+At this point, you have a working setup. It's still very rough around the edges,
+but it works and shows some of the possibilities.
+
+The examples directory contains a few examples of pages you can create to setup
+different functionalities: like a photobook, calendar, ...

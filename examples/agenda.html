@@ -1,0 +1,43 @@
+<h1>Agenda</h1>
+  
+<ul id="agenda">
+  <div class="loading"></div>
+</ul>
+  
+<script>
+  var myGoogle = Cal.providers.google
+                    .connect( "insert google account here" );
+
+  new Cal.calendar()
+         .useDataProvider( myGoogle )
+         .processWith    ( display  )
+         .findEvents     (); // by default from now to now+1 month
+
+  var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+  function display( events ) {
+    var html = "";
+
+    var dates = [];
+    for( var date in events ) {
+      dates.push(date);
+    }
+    var sorted = dates.sort();
+
+    for( var i=0; i<sorted.length; i++ ) {
+      var d = new Date(sorted[i].replace(/-/g," "));
+      var day = d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+      for( var e=0; e<events[sorted[i]].length; e++ ) {
+        html += "<div class=\\"agenda\\">" 
+             +  "<span class=\\"date\\">" + day + " - </span>" 
+             +  "<span class=\\"item\\">" + events[sorted[i]][e].subject + "</span>"
+             +  "</div>";
+      }
+    }
+    html += "<p class=\\"more\\">"
+         +  "<a href=\\"kalender\\">toon de volledige kalender...</a>"
+         +  "</p>";
+    document.getElementById( "agenda" ).innerHTML = html;
+  }
+</script>

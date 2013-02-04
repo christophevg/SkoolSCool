@@ -1,18 +1,24 @@
 MYSQL=/usr/local/mysql/bin/mysql
+ADMIN=
+USER=
+PASS=
+DATABASE=
 
-all: create schema system passwords content
+all: create schema system passwords
 
 create:
-	${MYSQL} -uroot mysql < create.sql
+	@sed -e 's/%%USER%%/${USER}/g' \
+			 -e 's/%%PASS%%/${PASS}/g' \
+			 -e 's/%%DATABASE%%/${DATABASE}/g' \
+			 -e 's/%%ADMIN%%/${ADMIN}/g' \
+			 create.sql \
+	| ${MYSQL} -u${ADMIN} -p mysql
 
 schema:
-	${MYSQL} -uvbsg -pvbsg vbsg < schema.sql
+	${MYSQL} -u${USER} -p${PASS} ${DATABASE}  < schema.sql
 
 system:
-	${MYSQL} -uvbsg -pvbsg vbsg < system.sql
+	${MYSQL}  -u${USER} -p${PASS} ${DATABASE} < system.sql
 
 passwords:
-	${MYSQL} -uvbsg -pvbsg vbsg < passwords.sql
-
-content:
-	${MYSQL} -uvbsg -pvbsg vbsg < content.sql
+	${MYSQL}  -u${USER} -p${PASS} ${DATABASE} < passwords.sql

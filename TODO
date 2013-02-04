@@ -39,8 +39,6 @@ nice-to-haves
 
 - feedback/bug reporting
 
-- document content = Page + file upload + DocumentList
-
 - site is offline modus
 
 - add Hotmail/OAuth 2.0 support
@@ -50,8 +48,12 @@ nice-to-haves
 
 - incoming data cleaning using functional patterns
   $request->get('start', 'guid');
+  
+- remove NewsList -> JS ?
 
 ongoing
+
+- remove dutch strings from PHP code -> make configurable at least
 
 - clean up code
 	- split HTML and PHP code

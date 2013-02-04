@@ -1,0 +1,150 @@
+<div id="navigator">
+  <div class="header">
+    <span id="navigator-now"></span>
+    <div class="controls">  
+      <a href="javascript:" onclick="myNavigator.gotoPreviousMonth()">&lt;</a>
+      <a href="javascript:" onclick="myNavigator.gotoNextMonth()">&gt;</a>
+    </div>
+  </div>
+
+  <table id="c2" class="navigator">
+    <tr>
+      <td id="c21"></td>      <td id="c22"></td>      <td id="c23"></td>
+      <td id="c24"></td>      <td id="c25"></td>
+      <td id="c26" class="weekend"></td>      
+      <td id="c27" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c28"></td>      <td id="c29"></td>      <td id="c210"></td>
+      <td id="c211"></td>     <td id="c212"></td>
+      <td id="c213" class="weekend"></td>      
+      <td id="c214" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c215"></td>     <td id="c216"></td>     <td id="c217"></td>
+      <td id="c218"></td>     <td id="c219"></td>
+      <td id="c220" class="weekend"></td>      
+      <td id="c221" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c222"></td>     <td id="c223"></td>     <td id="c224"></td>
+      <td id="c225"></td>     <td id="c226"></td>
+      <td id="c227" class="weekend"></td>      
+      <td id="c228" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c229"></td>     <td id="c230"></td>     <td id="c231"></td>
+      <td id="c232"></td>     <td id="c233"></td>
+      <td id="c234" class="weekend"></td>      
+      <td id="c235" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c236"></td>     <td id="c237"></td>     <td id="c238"></td>
+      <td id="c239"></td>     <td id="c240"></td>
+      <td id="c241" class="weekend"></td>      
+      <td id="c242" class="weekend"></td>
+    </tr>
+  </table>
+</div>
+
+<div id="calendar">
+  <a href="javascript:" onclick="myCalendar.gotoPreviousMonth()">vorige</a> - 
+  <a href="javascript:" onclick="myCalendar.gotoToday()">vandaag</a> - 
+  <a href="javascript:" onclick="myCalendar.gotoNextMonth()">volgende</a>
+  <span id="now"></span>
+  <table id="c1" class="calendar">
+    <tr>
+      <td id="c11"></td>      <td id="c12"></td>      <td id="c13"></td>
+      <td id="c14"></td>      <td id="c15"></td>
+      <td id="c16" class="weekend"></td>      
+      <td id="c17" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c18"></td>      <td id="c19"></td>      <td id="c110"></td>
+      <td id="c111"></td>     <td id="c112"></td>
+      <td id="c113" class="weekend"></td>      
+      <td id="c114" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c115"></td>     <td id="c116"></td>     <td id="c117"></td>
+      <td id="c118"></td>     <td id="c119"></td>
+      <td id="c120" class="weekend"></td>      
+      <td id="c121" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c122"></td>     <td id="c123"></td>     <td id="c124"></td>
+      <td id="c125"></td>     <td id="c126"></td>
+      <td id="c127" class="weekend"></td>      
+      <td id="c128" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c129"></td>     <td id="c130"></td>     <td id="c131"></td>
+      <td id="c132"></td>     <td id="c133"></td>
+      <td id="c134" class="weekend"></td>      
+      <td id="c135" class="weekend"></td>
+    </tr>
+    <tr>
+      <td id="c136"></td>     <td id="c137"></td>     <td id="c138"></td>
+      <td id="c139"></td>     <td id="c140"></td>
+      <td id="c141" class="weekend"></td>      
+      <td id="c142" class="weekend"></td>
+    </tr>
+  </table>
+</div>
+  
+<script>
+  window.onload = function() {
+    // setup a connection to Google, using one of the default providers
+    var myGoogle = Cal.providers.google
+                      .connect( "insert google account here" );
+    
+    // create your calender object, pointing it to our HTML
+    window.myCalendar = Cal.activate                ( "c1"                  )
+                           .useDataProvider         ( myGoogle              )
+                           .notifyOfDaySelection    ( processDaySelection   )
+                           .notifyOfEventSelection  ( showEvent )
+                           .gotoToday();
+
+    var noDataProvider = {
+      getData : function getData(start, end, cb, ctx) { 
+        cb.apply( ctx, [ {} ] );
+      }
+    }
+    
+    function gotoDay(day) {
+      updateLabel(day, document.getElementById("navigator-now"));
+      this.gotoDate(day) // on the navigator
+      myCalendar.gotoDate(day) // and on the calendar itself
+    }
+
+    window.myNavigator = Cal.activate            ( "c2"           )
+                            .useDataProvider     ( noDataProvider )
+                            .notifyOfDaySelection( gotoDay        )
+                            .gotoToday();
+                         
+    // when a new date/day has been selected...
+    // this handler is executed within the scope of the calendar, so "this"
+    // _is_ the actual calendar, so we can call any method on this.
+    function processDaySelection(day) {
+      updateLabel(day, document.getElementById("now")); // update the label
+      this.gotoDate(day); // we only got the event, now we want to set it
+    }
+
+    // add a textual representation of the month of the given date
+    function updateLabel(date, label) {
+      var monthLabel = [ "januari", "februari", "maart", "april", "mei",
+                         "juni", "juli", "augustus", "september", "oktober",
+                         "november", "december" ];
+      label.innerHTML = 
+        monthLabel[date.getMonth()] + " " + date.getFullYear();
+    }
+
+    // when an event has been selected ...
+    function showEvent(event, elem) {
+      if( console && typeof console.log == "function" ) {
+        console.log( "TODO", event.subject, event.type, event.calendar, 
+                     event.start, event.end );
+      }
+    }
+  }
+</script>
