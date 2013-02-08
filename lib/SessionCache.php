@@ -44,7 +44,7 @@ class SessionCache implements ObjectStore {
     return $this;
   }
   
-  public function retrieve( $limit, $start = null ) {
+  public function retrieve( $limit = null, $start = null ) {
     $objects = $this->store->retrieve( $limit, $start );
     // TODO: add caching here also ?
     return $objects;
