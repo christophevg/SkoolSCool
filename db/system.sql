@@ -50,7 +50,9 @@ possible to link to this page from other pages or the site\'s nativation.
 
 It is also possible to include content from the site...
 
-[include:news?embed]' );
+[include:footer?embed]' ),
+
+( 'PageContent', 'news');
 
 -- SPECIALS
 INSERT INTO allObjects ( type, id, author )

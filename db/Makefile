@@ -1,8 +1,9 @@
-MYSQL=/usr/local/mysql/bin/mysql
+MYSQL_CLIENT=/usr/local/mysql/bin/mysql
 ADMIN=
 USER=
 PASS=
 DATABASE=
+MYSQL=${MYSQL_CLIENT} -u${USER} -p${PASS} ${DATABASE}
 
 all: create schema system passwords
 
@@ -12,13 +13,16 @@ create:
 			 -e 's/%%DATABASE%%/${DATABASE}/g' \
 			 -e 's/%%ADMIN%%/${ADMIN}/g' \
 			 create.sql \
-	| ${MYSQL} -u${ADMIN} -p mysql
+	| ${MYSQL_CLIENT} -u${ADMIN} -p mysql
 
 schema:
-	${MYSQL} -u${USER} -p${PASS} ${DATABASE}  < schema.sql
+	${MYSQL} < schema.sql
 
 system:
-	${MYSQL}  -u${USER} -p${PASS} ${DATABASE} < system.sql
+	${MYSQL} < system.sql
 
 passwords:
-	${MYSQL}  -u${USER} -p${PASS} ${DATABASE} < passwords.sql
+	${MYSQL} < passwords.sql
+
+shell:
+	${MYSQL}
