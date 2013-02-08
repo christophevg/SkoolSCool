@@ -8,7 +8,7 @@
 	path = lib/LightOpenIDClient
 	url = http://github.com/christophevg/LightOpenIDClient.git
 [submodule "skins/degroeituin/photo.js"]
-	path = skins/vbsg/photo.js
+	path = skins/degroeituin/photo.js
 	url = http://github.com/christophevg/photo.js
 [submodule "lib/diff"]
 	path = lib/diff
