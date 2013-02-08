@@ -77,7 +77,7 @@ class User extends Object {
   }
 
   function isContributor() {
-    return $this->hasRight('contributor');
+    return $this->hasRight('contributor') || $this->isAdmin();
   }
 
   function isAdmin() {
