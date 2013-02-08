@@ -634,7 +634,7 @@ EOT;
   }
 
   protected function insertContactPopup() {
-    $recaptcha = recaptcha_get_html("6Le6G9YSAAAAAPTOBHPwD9DwR7ZQBWFb4oDsGIEW");
+    $recaptcha = recaptcha_get_html("6Leow9wSAAAAAGN2JAOBVRMsbZyl_k4MPz5a5oNu");
     return <<<EOT
 <div class="overlay" id="contact-overlay">
 	<div id="contact-popup" class="popup withRoundedCorners">
