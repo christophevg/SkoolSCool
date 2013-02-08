@@ -1,13 +1,13 @@
-[submodule "skins/vbsg/breakdown"]
-	path = skins/vbsg/breakdown
+[submodule "skins/degroeituin/breakdown"]
+	path = skins/degroeituin/breakdown
 	url = http://github.com/christophevg/breakdown.git
-[submodule "skins/vbsg/cal.js"]
-	path = skins/vbsg/cal.js
+[submodule "skins/degroeituin/cal.js"]
+	path = skins/degroeituin/cal.js
 	url = http://github.com/christophevg/cal.js.git
 [submodule "lib/LightOpenIDClient"]
 	path = lib/LightOpenIDClient
 	url = http://github.com/christophevg/LightOpenIDClient.git
-[submodule "skins/vbsg/photo.js"]
+[submodule "skins/degroeituin/photo.js"]
 	path = skins/vbsg/photo.js
 	url = http://github.com/christophevg/photo.js
 [submodule "lib/diff"]

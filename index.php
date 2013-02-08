@@ -26,7 +26,7 @@ $request = Context::$request;
 $am = AuthorizationManager::getInstance();
 
 // get the (default) skin (=look & feel)
-$skin = Skin::get( 'vbsg' );
+$skin = Skin::get( Config::$skin );
 
 // retrieve the relevant content
 $content = Content::get( $request->id );

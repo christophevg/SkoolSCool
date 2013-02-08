@@ -1,7 +1,7 @@
 <?php
 
 /**
- * VBSG Skin
+ * DeGroeituin Skin
  * Implementation: Christophe VG <contact+skoolscool@christophe.vg>
  * Design: Ilse Heremans
  *
@@ -19,9 +19,9 @@ $GLOBALS['__START'] = microtime(true);
  * It has both a PHP and Javascript implementation, which allows for rendering
  * the result from both languages with exactly the same result.
  */
-include_once dirname(__FILE__) . '/vbsg/breakdown/php/breakdown.php';
+include_once dirname(__FILE__) . '/degroeituin/breakdown/php/breakdown.php';
 
-class VbsgSkin extends Skin {
+class DegroeituinSkin extends Skin {
   /**
    * The body method is one of the methods that need to be implemented to 
    * provide the parent Skin an implementation to operate minimally.
@@ -49,12 +49,12 @@ class VbsgSkin extends Skin {
 
   <title>Vrije Basisschool Schriek &amp; Grootlo</title>
 
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.css?{$this->includeVersion}">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/navigation.css?{$this->includeVersion}">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/fileuploader.css?{$this->includeVersion}">
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/diff.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/screen.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/navigation.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/fileuploader.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/diff.css?{$this->includeVersion}">
 
-  <link rel="stylesheet" type="text/css" media="print" href="./skins/vbsg/print.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" media="print" href="./skins/degroeituin/print.css?{$this->includeVersion}">
 
   <!-- recaptcha styling -->
   <script type="text/javascript">
@@ -65,12 +65,12 @@ class VbsgSkin extends Skin {
   </script>
 
   <!-- site automation -->
-  <script src="./skins/vbsg/notify.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/ajax.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/popup.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/editing.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/json2.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/add_content.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/notify.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/ajax.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/popup.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/editing.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/json2.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/add_content.js?{$this->includeVersion}"></script>
 
 	<!-- new site common scripts -->
   <script src="./skins/common/ajax.js?{$this->includeVersion}"></script>
@@ -79,24 +79,24 @@ class VbsgSkin extends Skin {
   <link rel="stylesheet" type="text/css" href="./skins/common/messages.css?{$this->includeVersion}">
 
   <!-- breakdown support -->
-  <script src="./skins/vbsg/breakdown/js/breakdown.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/breakdown/js/breakdown.js?{$this->includeVersion}"></script>
 
   <!-- calendar support -->
   <script src="http://www.google.com/jsapi"></script>
-  <script src="./skins/vbsg/cal.js/src/cal.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/cal.js/src/providers/google.js?{$this->includeVersion}"></script>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/cal.css?{$this->includeVersion}">
+  <script src="./skins/degroeituin/cal.js/src/cal.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/cal.js/src/providers/google.js?{$this->includeVersion}"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/cal.css?{$this->includeVersion}">
 
   <!-- photo support -->
-  <script src="./skins/vbsg/photo.js/src/photo.js?{$this->includeVersion}"></script>
-  <script src="./skins/vbsg/photo.js/src/providers/google.js?{$this->includeVersion}"></script>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/photo.css?{$this->includeVersion}">
+  <script src="./skins/degroeituin/photo.js/src/photo.js?{$this->includeVersion}"></script>
+  <script src="./skins/degroeituin/photo.js/src/providers/google.js?{$this->includeVersion}"></script>
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/photo.css?{$this->includeVersion}">
 
   <!--[if lt IE 7]>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie6.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/screen.ie6.css?{$this->includeVersion}">
   <![endif]-->
   <!--[if lt IE 8]>
-  <link rel="stylesheet" type="text/css" href="./skins/vbsg/screen.ie7.css?{$this->includeVersion}">
+  <link rel="stylesheet" type="text/css" href="./skins/degroeituin/screen.ie7.css?{$this->includeVersion}">
   <![endif]-->
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -120,9 +120,9 @@ class VbsgSkin extends Skin {
     
       <div class="toolbar-wrapper">
         <div id="user-toolbar" class="toolbar">
-          <img class="logo" src="./skins/vbsg/images/vbsg-logo.png" 
-               alt="Vrij Basisschool Schriek & Grootlo">
-          <p>Vrije Basisschool Schriek &amp; Grootlo</p>
+          <img class="logo" src="./skins/degroeituin/images/degroeituin-logo.png" 
+               alt="De Groeituin - Vrij Basisschool Schriek & Grootlo">
+          <p>De Groeituin</p>
           <div class="userbar">
 {$this->insertUserBar}
           </div>

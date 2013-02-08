@@ -8,6 +8,9 @@ class Config {
   // site configuration
   static $server = '';
 
+  // skin
+  static $skin = '';
+
   // database connection
   static $dbname = '';
   static $user   = '';
@@ -34,7 +37,7 @@ class Config {
 @include dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/config.php';
 
 // check if minimal configurations have been set
-foreach( array( 'server', 'dbname', 'user', 'pass', 'feedbackMail', 
+foreach( array( 'server', 'skin', 'dbname', 'user', 'pass', 'feedbackMail', 
                 'googleAccount', 'googlePass' ) as $var )
 {
   if( Config::$$var == '' ) { 

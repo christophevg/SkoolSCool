@@ -1,4 +1,4 @@
-SKIN=vbsg
+SKIN=degroeituin
 FTP_USER=
 FTP_PASS=
 URL=
@@ -13,8 +13,9 @@ upload: dist
 dist: dist-clean
 	@mkdir -p webroot/skins
 	@cp -r ${FILES} webroot/
-	@rm -f webroot/config.php
+	@rm -f webroot/config*.php
 	@rm -rf webroot/lib/Zend
+	@cp -r skins/common webroot/skins/
 	@cp -r skins/${SKIN} webroot/skins/
 	@cp -r skins/${SKIN}.php webroot/skins/
 	@find webroot -type d -name .git | xargs rm -rf
