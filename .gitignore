@@ -1,7 +1,9 @@
 *.log
 webroot
-config.php
+config*.php
 .htaccess
 doc
 db/backup*
 bestanden
+push.sh
+
