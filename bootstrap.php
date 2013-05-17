@@ -52,7 +52,7 @@ if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
 
 function getFederatedUser() {
   global $openid, $facebook;
-  if($user = $openid->getUser()) {
+  if(isset($openid) && $user = $openid->getUser()) {
     return $user->identity;
   }
   if( $user = $facebook->getUser()) {
@@ -64,6 +64,7 @@ function getFederatedUser() {
 function clearFederatedUser() {
   global $openid, $facebook;
   $openid->logoff();
+  $openid = null; // FIXME: somehow Yahoo's log-in session is restarted
   $facebook->destroySession();
 }
 
