@@ -70,14 +70,13 @@ function clearFederatedUser() {
 
 // if we have no current user but have a federated user try to log it on
 if( $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
-  $sm->login_federated( $federatedUser );
+  $sm->login_federated( md5($federatedUser) );
   // if we have no current user now, the federated user is unknown
   if( $sm->currentUser->isAnonymous() ) {
     Messages::getInstance()->addWarning( I18N::$UNKNOWN_FEDERATED_LOGIN );
-  } else {
-    // clear it: we used it to log in, no longer of any use now.
-    clearFederatedUser();
   }
+  // clear it: we used it to log in, no longer of any use now.
+  clearFederatedUser();
 }
 
 // if we still don't have a user, try to restart an existing session
@@ -102,18 +101,18 @@ if( ! $sm->currentUser->isAnonymous() ) {
 // => create an identity
 if( ! $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
   // if we already have an identity check it ...
-  if( $identity = Identity::get( $federatedUser ) ) {
+  if( $identity = Identity::get( md5($federatedUser) ) ) {
     if( $sm->currentUser == User::get( $identity->user ) ) {
       Messages::getInstance()->addInfo("Online profiel reeds gekend.");
     } else {
-      Messages::getInstance()->addCritical("Online profiel kan niet 2x gelinkt worden.");
+      Messages::getInstance()->addCritical("Online profiel kan niet 2x gelinkt worden." );
     }
     // clear it: we're already logged in, we can't do anything with this info
     clearFederatedUser();
   } else {
     if( isset($_GET['action']) && $_GET['action'] = 'link-profile'  ) {
       Objects::getStore( 'persistent' )
-        ->put( new Identity(array('id' => $federatedUser, 'user' => $sm->currentUser->id)));
+        ->put( new Identity(array('id' => md5($federatedUser), 'user' => $sm->currentUser->id)));
       Messages::getInstance()->addInfo("Online profiel succesvol gelinkt." );
       clearFederatedUser();
     } elseif( isset($_GET['action']) && $_GET['action'] = 'cancel-link-profile'  ) {
