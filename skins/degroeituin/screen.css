@@ -225,7 +225,7 @@ LI {
   float: left;
   margin: 5px;
   padding: 0px;
-  border: 2px solid white;
+  /* border: 2px solid white; */
 }
 
 .userbar {

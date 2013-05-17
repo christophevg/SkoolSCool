@@ -47,7 +47,7 @@ class DegroeituinSkin extends Skin {
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=8" >
 
-  <title>Vrije Basisschool Schriek &amp; Grootlo</title>
+  <title>De Groeituin - Vrije Basisschool Schriek &amp; Grootlo</title>
 
   <link rel="stylesheet" type="text/css" href="./skins/degroeituin/screen.css?{$this->includeVersion}">
   <link rel="stylesheet" type="text/css" href="./skins/degroeituin/navigation.css?{$this->includeVersion}">
@@ -121,8 +121,8 @@ class DegroeituinSkin extends Skin {
       <div class="toolbar-wrapper">
         <div id="user-toolbar" class="toolbar">
           <img class="logo" src="./skins/degroeituin/images/degroeituin-logo.png" 
-               alt="De Groeituin - Vrij Basisschool Schriek & Grootlo">
-          <p>De Groeituin</p>
+               alt="De Groeituin - Vrije Basisschool Schriek & Grootlo">
+          <p>De Groeituin - Vrije Basisschool Schriek &amp; Grootlo</p>
           <div class="userbar">
 {$this->insertUserBar}
           </div>
