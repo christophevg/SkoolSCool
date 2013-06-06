@@ -1,7 +1,5 @@
 TODO
 
-- add section/path prefix to file upload (with fixed selection droplist)
-
 - fix bug in editor to provide decent editor size
 
 - export database automation using cron
@@ -12,9 +10,17 @@ TODO
 	- managed image/calendar using Google
   - creation of users
 
+===> hide system user from user list (server side)
+===> select user after save or close form !!!
+===> delete user -> delete identities !!!
+===> add ANONYMOUS-ONLY support for alternative content for anonymous visitors
+===> formatting of nieuwslist overview
+
 ---
 
 nice-to-haves
+
+- add section/path prefix to file upload (with fixed selection droplist)
 
 - check: translation of special characters to HTML entities ?
 

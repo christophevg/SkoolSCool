@@ -16,6 +16,11 @@ TODO
 How to apply this on your site: copy and paste the content below this comment
 and add it to an HTML page.
 
+You will need to create another page containing the template for the email that
+is composed to send to new users. It is called "template activatie email" and
+can contain {{id}}, {{login}}, {{name}} which are replaced by their unique 
+identification (this has to be used in a link like: http://localhost/activeer?start={{id}})
+
 ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
            tag on it. If not, no harm done, because the page won't receive any
            useful data.

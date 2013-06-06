@@ -223,8 +223,9 @@ LI {
 
 .logo {
   float: left;
-  margin: 5px;
-  padding: 0px;
+  margin: 0px;
+  padding: 3px;
+  background-color: white;
   /* border: 2px solid white; */
 }
 
@@ -252,8 +253,8 @@ LI {
 }
 
 .page-home .banner {
-  height: 230px;
-  background-image: url( "images/banner-welkom.gif" );
+  height: 250px;
+  background-image: url( "images/banner-welkom.png" );
   background-repeat: no-repeat;
   background-position: center center;
 }

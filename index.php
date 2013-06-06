@@ -53,6 +53,11 @@ if( $content == null ) {
     } elseif( $request->requiresCreation ) {
       $content = Content::get( 'newContent', $request->string );
 
+    // it is possible that the user can't update THIS CONTENT -> no rights
+    // TODO this catches everything, need to FIXME
+    } elseif( ! $am->can( $user )->update( $request->id ) ) {
+      $content = Content::get( '404', $request->string );
+
     // if we're not even requested to create new content ... it's unknown
     } else {
       $content = Content::get( 'unknownContent', $request->string );
