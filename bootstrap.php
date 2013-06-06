@@ -34,11 +34,17 @@ $facebook = new Facebook(array(
 
 // process login post
 if( isset($_POST['login']) && isset($_POST['pass']) ) {
-  $sm->login( $_POST['login'], $_POST['pass'] );
+  if( $sm->login( $_POST['login'], $_POST['pass'] ) != null ) {
+    Logger::log("login using password");
+  } else {
+    Logger::log("login using password failed " .
+                "for '{$_POST[login]}' with pass '{$_POST[pass]}'");
+  }
 }
 
 // process logout get
 if( isset($_GET['action']) && $_GET['action'] == 'logout' ) {
+  Logger::log("requested log out");
   $sm->logout();
   $openid->logoff();
   // remove session cookie
@@ -70,10 +76,16 @@ function clearFederatedUser() {
 
 // if we have no current user but have a federated user try to log it on
 if( $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
-  $sm->login_federated( md5($federatedUser) );
+  $hashedFederatedUser = md5($federatedUser);
+  $sm->login_federated( $hashedFederatedUser );
   // if we have no current user now, the federated user is unknown
   if( $sm->currentUser->isAnonymous() ) {
+    Logger::log( "federated login failed using '$federatedUser' ($hashedFederatedUser)" );
     Messages::getInstance()->addWarning( I18N::$UNKNOWN_FEDERATED_LOGIN );
+  } else {
+    Logger::log( "federated login using '$federatedUser' ($hashedFederatedUser)");
+    // redirect to clean home page (removes federated GET parameters)
+    header('Location: home');
   }
   // clear it: we used it to log in, no longer of any use now.
   clearFederatedUser();
@@ -83,12 +95,20 @@ if( $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
 if( $sm->currentUser->isAnonymous()
     && isset( $_COOKIE['session'] ) && $_COOKIE['session'] != '' )
 {
-  $sm->login_federated( $_COOKIE['session'] );
+  if( $sm->login_federated( $_COOKIE['session'] ) ) {
+    Logger::log( "restart session" );
+  } else {
+    Logger::log( "restart session failed" );
+  }
 }
 
 // if we still don't have a user, try to use a one time password
 if( $sm->currentUser->isAnonymous() && isset($_GET['start']) ) {
-  $sm->login_otp( $_GET['start'] );
+  if( $sm->login_otp( $_GET['start'] ) ) {
+    Logger::log( "one-time-pass login");
+  } else {
+    Logger::log( "one-time-pass login failed using '{$_GET['start']}'");
+  }
 }
 
 // provide the browser/user with a cookie-based anti-XSFR session/uid
@@ -101,22 +121,28 @@ if( ! $sm->currentUser->isAnonymous() ) {
 // => create an identity
 if( ! $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
   // if we already have an identity check it ...
-  if( $identity = Identity::get( md5($federatedUser) ) ) {
+  $hashedFederatedUser = md5($federatedUser);
+  if( $identity = Identity::get( $hashedFederatedUser ) ) {
     if( $sm->currentUser == User::get( $identity->user ) ) {
       Messages::getInstance()->addInfo("Online profiel reeds gekend.");
+      Logger::log("federated login already known for '$federatedUser' ($hasedFederatedUser)");
     } else {
       Messages::getInstance()->addCritical("Online profiel kan niet 2x gelinkt worden." );
+      Logger::log("federated login alternate entry '$federatedUser' ($hasedFederatedUser)");
     }
     // clear it: we're already logged in, we can't do anything with this info
     clearFederatedUser();
   } else {
     if( isset($_GET['action']) && $_GET['action'] = 'link-profile'  ) {
       Objects::getStore( 'persistent' )
-        ->put( new Identity(array('id' => md5($federatedUser), 'user' => $sm->currentUser->id)));
+        ->put( new Identity(array('id' => md5($federatedUser),
+                                  'user' => $sm->currentUser->id)));
       Messages::getInstance()->addInfo("Online profiel succesvol gelinkt." );
+      Logger::log("federated login linked '$federatedUser' ($hasedFederatedUser)");
       clearFederatedUser();
     } elseif( isset($_GET['action']) && $_GET['action'] = 'cancel-link-profile'  ) {
       Messages::getInstance()->addInfo("Online profiel werd NIET gelinkt." );
+      Logger::log("federated login linking canceled '$federatedUser' ($hasedFederatedUser)");
       clearFederatedUser();
     } else {
       if( Request::getInstance()->id != 'link profiel' ) {

@@ -13,6 +13,8 @@ include_once dirname(__FILE__) . '/put.php';
 
 include_once dirname(__FILE__) . '/JSConsole.php';
 
+// 3rd party modules
+include_once dirname(__FILE__) . '/KLogger/src/KLogger.php';
 include_once dirname(__FILE__) . '/LightOpenIDClient/LightOpenIDClient.php';
 include_once dirname(__FILE__) . '/facebook/src/facebook.php';
 
@@ -26,6 +28,8 @@ include_once dirname(__FILE__) . '/I18N.nl.php';
 include_once dirname(__FILE__) . '/Messages.php';
 
 include_once dirname(__FILE__) . '/Config.php';
+
+include_once dirname(__FILE__) . '/Logger.php';
 
 include_once dirname(__FILE__) . '/Objects.php';
 

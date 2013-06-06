@@ -5,6 +5,10 @@
  */
  
 class Config {
+  // logging
+  static $logdir = '';
+  static $loglevel = '';
+
   // site configuration
   static $server = '';
 
@@ -37,8 +41,10 @@ class Config {
 @include dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/config.php';
 
 // check if minimal configurations have been set
-foreach( array( 'server', 'skin', 'dbname', 'user', 'pass', 'feedbackMail', 
-                'googleAccount', 'googlePass' ) as $var )
+foreach( array( 'logdir', 'loglevel', 'server', 'skin', 'dbname', 'user', 'pass',
+                'feedbackMail', 'recaptchaPrivateKey', 'defaultPageBody',
+                'defaultHtmlBody', 'googleAccount', 'googlePass',
+                'facebookAppId', 'facebookSecret' ) as $var )
 {
   if( Config::$$var == '' ) { 
     die( "Please configure the $var-variable" );

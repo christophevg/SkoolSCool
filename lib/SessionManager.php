@@ -76,6 +76,7 @@ class SessionManager {
     if( $session = Session::create( $user ) ) {
       setCookie( "session", $session->id, time() + 3600 * 24 * 30 ,'/' );
     }
+    return $this->currentUser;
   }
   
   function logout() {
