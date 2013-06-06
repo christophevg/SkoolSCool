@@ -10,6 +10,8 @@ TODO
 	- managed image/calendar using Google
   - creation of users
 
+- move some literals in dutch to I18N.nl (log in feedback in bootstrap)
+
 ===> hide system user from user list (server side)
 ===> select user after save or close form !!!
 ===> delete user -> delete identities !!!
