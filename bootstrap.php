@@ -67,6 +67,14 @@ function getFederatedUser() {
   return false;
 }
 
+function getFederatedEmail() {
+  global $openid;
+  if(isset($openid) && $user = $openid->getUser()) {
+    return $user->email;
+  }
+  return false;
+}
+
 function clearFederatedUser() {
   global $openid, $facebook;
   $openid->logoff();
@@ -77,13 +85,14 @@ function clearFederatedUser() {
 // if we have no current user but have a federated user try to log it on
 if( $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
   $hashedFederatedUser = md5($federatedUser);
+  $federatedEmail = getFederatedEmail();
   $sm->login_federated( $hashedFederatedUser );
   // if we have no current user now, the federated user is unknown
   if( $sm->currentUser->isAnonymous() ) {
-    Logger::log( "federated login failed using '$federatedUser' ($hashedFederatedUser)" );
+    Logger::log( "federated login failed using '$federatedUser' ($hashedFederatedUser) with email '$federatedEmail'" );
     Messages::getInstance()->addWarning( I18N::$UNKNOWN_FEDERATED_LOGIN );
   } else {
-    Logger::log( "federated login using '$federatedUser' ($hashedFederatedUser)");
+    Logger::log( "federated login using '$federatedUser' ($hashedFederatedUser) with email '$federatedEmail'");
     // redirect to clean home page (removes federated GET parameters)
     header('Location: home');
   }
@@ -122,27 +131,28 @@ if( ! $sm->currentUser->isAnonymous() ) {
 if( ! $sm->currentUser->isAnonymous() && $federatedUser = getFederatedUser() ) {
   // if we already have an identity check it ...
   $hashedFederatedUser = md5($federatedUser);
+  $federatedEmail = getFederatedEmail();
   if( $identity = Identity::get( $hashedFederatedUser ) ) {
     if( $sm->currentUser == User::get( $identity->user ) ) {
       Messages::getInstance()->addInfo("Online profiel reeds gekend.");
-      Logger::log("federated login already known for '$federatedUser' ($hasedFederatedUser)");
+      Logger::log("federated login already known for '$federatedUser' ($hasedFederatedUser) with email '$federatedEmail'");
     } else {
       Messages::getInstance()->addCritical("Online profiel kan niet 2x gelinkt worden." );
-      Logger::log("federated login alternate entry '$federatedUser' ($hasedFederatedUser)");
+      Logger::log("federated login alternate entry '$federatedUser' ($hasedFederatedUser) with email '$federatedEmail'");
     }
     // clear it: we're already logged in, we can't do anything with this info
     clearFederatedUser();
   } else {
     if( isset($_GET['action']) && $_GET['action'] = 'link-profile'  ) {
       Objects::getStore( 'persistent' )
-        ->put( new Identity(array('id' => md5($federatedUser),
+        ->put( new Identity(array('id' => $hashedFederatedUser,
                                   'user' => $sm->currentUser->id)));
       Messages::getInstance()->addInfo("Online profiel succesvol gelinkt." );
-      Logger::log("federated login linked '$federatedUser' ($hasedFederatedUser)");
+      Logger::log("federated login linked '$federatedUser' ($hashedFederatedUser) with email '$federatedEmail'");
       clearFederatedUser();
     } elseif( isset($_GET['action']) && $_GET['action'] = 'cancel-link-profile'  ) {
       Messages::getInstance()->addInfo("Online profiel werd NIET gelinkt." );
-      Logger::log("federated login linking canceled '$federatedUser' ($hasedFederatedUser)");
+      Logger::log("federated login linking canceled '$federatedUser' ($hashedFederatedUser) with email '$federatedEmail'");
       clearFederatedUser();
     } else {
       if( Request::getInstance()->id != 'link profiel' ) {
