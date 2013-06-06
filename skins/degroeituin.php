@@ -529,7 +529,8 @@ EOT;
         <input id="openid" type="hidden" name="openid_identifier" /> 
       </form>
 
-	    <p>Meld je aan met een van je bestaande profielen:</p>
+	    <p>Meld je aan met een van je bestaande profielen. Klik daartoe op de
+         desbetreffende knop.</p>
 	    <div class="providers">
         <a href="javascript:openid.signin('google');" class="openid google"></a>
         <a href="javascript:goto_facebook();" class="openid facebook"></a>
@@ -540,8 +541,10 @@ EOT;
 	  </div>
 	  
 	  <div class="credentials">
-	    <p>Beschik je over een specifieke gebruikersnaam en paswoord voor deze
-	      site, geef die dan hier in ...</p>
+	    <p>Indien je een specifieke gebruikersnaam en paswoord hebt ontvangen,
+      geef die hier in.<br>
+         <b>Opgelet</b>: Deze velden mag je NIET gebruiken met je eigen online
+         profiel gegevens.</p>
       <form action="./" method="post">
         <span class="label">Naam</span> <input name="login">
         <span class="label">Paswoord</span> <input type="password" name="pass"><br>
