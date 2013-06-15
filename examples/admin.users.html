@@ -49,6 +49,10 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
   DIV#admin-users DIV.details INPUT#action-delete {
     float:right;
   }
+  DIV#admin-users DIV.details DIV#details-status {
+    float:right;
+    font-weight: bold;
+  }
 </style>
 
 <div id="admin-users">
@@ -58,6 +62,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
 
 <div class="details" id="user-details">
   <span class="close"><a href="javascript:" onclick="Users.clear();">x</a></span>
+  <div id="details-status"></div>
   gebruikersnaam <input id="details-id" name="id"><br>
   naam <input id="details-name" name="name"><br>
   email <input id="details-email" name="email"><br>
@@ -83,7 +88,8 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
 <script>
 (function(globals) {
   var users,
-      showing, wasShowing;
+      showing, wasShowing,
+      fetchingIdentityOf;
 
   function refresh() {
     if( showing ) { wasShowing = users[showing].id; showing = false; }
@@ -121,12 +127,46 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
       $("details-rights-admin").checked       = user.rights.indexOf("admin") != -1;
       $("details-rights-contributor").checked = user.rights.indexOf("contributor") != -1;
       $("details-rights-ouderraad").checked   = user.rights.indexOf("ouderraad") != -1;
+      $("details-status").innerHTML 
+        = "<a href=\"javascript:\" onclick=\"Users.check('" + 
+          index + "')\">check status</a>";
 
       showDetails();
       showing = index;
     } else {
       hideDetails();
     }
+  }
+  
+  function check(index) {
+    user = users[index].id;
+    __OS__.find("Identitys", { "user": user }, null, null, showStatus);
+  }
+  
+  /* private */ function showStatus(response, success) {
+    if(! success) { alert( "failed: " + response.msg ); return; }
+    $("details-status").innerHTML = determineStatus(response);
+  }
+
+  /* private */ function isEmpty(object) { 
+    for(var i in object) { return false; }
+    return true;
+  }
+
+  /* private */ function determineStatus(identities) {
+    if( isEmpty(identities) ) { 
+      return "niet uitgenodigd, niet geactiveerd";
+    }
+
+    if( identities.length > 1 ) { 
+      return "FOUT: meerdere statussen";
+    }
+
+    if( identities[0].id.indexOf("-") == -1 ) { 
+      return "geactiveerd";
+    }
+    
+    return "uitgenodigd, niet geactiveerd";
   }
   
   function startCreate() {
@@ -144,6 +184,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     $("details-rights-admin").checked       = false;
     $("details-rights-contributor").checked = false;
     $("details-rights-ouderraad").checked   = false;
+    $("details-status").innerHTML           = "";
   }
 
   /* private */ function showDetails() {
@@ -282,7 +323,8 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     "save":     save,
     "remove":   remove,
     "clear":    clear,
-    "activate": activate
+    "activate": activate,
+    "check"   : check
   };
   
 })(window);
