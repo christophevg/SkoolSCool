@@ -234,7 +234,7 @@ class API {
               ->can( SessionManager::getInstance()->currentUser )
               ->update( $data ) )
         {
-          $output = json_encode($data->toHash());
+          $output = json_encode($data->toSensitiveHash());
         }
       }
     }
