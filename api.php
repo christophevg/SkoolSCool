@@ -121,6 +121,13 @@ class API {
   // actual functional handlers
   
   private function create( $contentType, $data ) {
+    if( ! AuthorizationManager::getInstance()
+            ->can( SessionManager::getInstance()->currentUser )
+            ->update( $contentType ) )
+    {
+      $this->fail( 403, 'insufficent privileges' );
+    }
+
     $object = Objects::getStore('persistent')->fetch($data['id']);
     if( $object != null ) {
       $this->fail( 409, 'Object with that ID exist. Use PUT to update it. ' );
