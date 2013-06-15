@@ -236,4 +236,18 @@ class AuthorizationManager {
     return $user->isAdmin();
   }
 
+  /**
+   * Validator for Users accessing Identity records
+   * @param $user accessing
+   * @param $IdentityObj accessed by the user
+   * @param $access string representation of the access type. 
+   *        possible values: read, update
+   * @return Boolean indicating if the user can access the record
+   *         according to the given access style.
+   */
+  private function UserIdentity( $user, $identityObj, $access = 'read' ) {
+    // only admin users can access user records
+    return $user->isAdmin();
+  }
+
 } 
