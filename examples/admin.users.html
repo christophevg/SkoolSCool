@@ -53,11 +53,15 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     float:right;
     font-weight: bold;
   }
+  DIV#admin-users DIV.stats {
+    padding: 5px;
+  }
 </style>
 
 <div id="admin-users">
 <h1>Gebruikersbeheer</h1>
 
+<div class="stats" id="all-users-stats"></div>
 <div class="users" id="all-users-list"></div>
 
 <div class="details" id="user-details">
@@ -104,6 +108,9 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
   
   /* private */ function refreshList() {
     html = "";
+    contributors = 0;
+    admins       = 0;
+    ouderraad    = 0;
     users.sort(function(left, right) { return left.name < right.name ? -1:1; });
     for(i=0;i<users.length;i++) {
       user = users[i];
@@ -112,8 +119,15 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
       if(user.id == wasShowing) {
         showing = i;
       }
+      if( user.rights.indexOf("admin") != -1 )       { admins++; }
+      if( user.rights.indexOf("contributor") != -1 ) { contributors++; }
+      if( user.rights.indexOf("ouderraad") != -1 )   { ouderraad++; }
     }
-    $("all-users-list").innerHTML = html;
+    $("all-users-list").innerHTML  = html;
+    $("all-users-stats").innerHTML = "gebruikers: " + users.length + " | " +
+                                     "admins: " + admins + " | " +
+                                     "contributors: " + contributors + " | " +
+                                     "ouderraad: " + ouderraad;
     if( showing ) { show(showing); }
   }
   
