@@ -79,8 +79,12 @@ var __OS__ = (function() {
       stringParts = [];
       for( var key in data ) {
         if(typeof data[key]["push"] != "undefined") {
-          for( var item in data[key] ) {
-            stringParts.push( key + "[]=" + encodeURIComponent(data[key][item]) );
+          if(data[key].length > 0) {
+            for( var item in data[key] ) {
+              stringParts.push( key + "[]=" + encodeURIComponent(data[key][item]) );
+            }
+          } else {
+            stringParts.push( key + "=" );
           }
         } else {
           stringParts.push( key + "=" + encodeURIComponent(data[key]) );

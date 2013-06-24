@@ -156,6 +156,10 @@ class API {
       $this->fail( 403, 'insufficent privileges' );
     }
     foreach( $data as $property => $value ) {
+      // non-array values reset array (empty string normally)
+      if(is_array($object->$property) && !is_array($value)) {
+        $value = array();
+      }
       // TODO: filter out "read-only" properties
       $object->$property = $value;
     }
