@@ -104,7 +104,8 @@ class AuthorizationManager {
     // responsibility
     if( ! is_a( $content, 'Content' ) ) { return true; }
 
-    // policy: tags can contain "<group>-only" with group being a usergroup
+    // 0. admin user can see everything, always
+    if( $user->isAdmin() ) { return true; }
 
     // 1. user-only content: no anonymous users
     if( $content->hasTag('user-only') && $user->isAnonymous() ) {
@@ -112,9 +113,17 @@ class AuthorizationManager {
     }
 
     // 2. generic <group>-only content
+    // policy: tags can contain "<group>-only" with group being a usergroup
     $groups = $content->getTagsMatching( '/^([a-z]+)-only$/', 1 );
     foreach( $groups as $group ) {
       if( $group != "user" && ! $user->hasRight( $group ) ) { return false; }
+    }
+
+    // 3. generic not-<group> content
+    // policy: tags can contain "not-<group>" with group being a usergroup
+    $groups = $content->getTagsMatching( '/^not-([a-z]+)$/', 1 );
+    foreach( $groups as $group ) {
+      if( $group != "user" && $user->hasRight( $group ) ) { return false; }
     }
     
     return true;
