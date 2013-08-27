@@ -73,6 +73,7 @@ ongoing
 ---
 
 bugs
+- save user rights on creation (currently only when updating)
 - preview with dynamic replaced content e.g. {{id}}
 - javascript in preview of e.g. HtmlContent
 - special characters in object id's (e.g. &)
