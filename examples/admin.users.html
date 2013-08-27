@@ -71,9 +71,10 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
   naam <input id="details-name" name="name"><br>
   email <input id="details-email" name="email"><br>
   rechten <br>
-  <input type="checkbox" id="details-rights-admin" name="admin">admin<br>
-  <input type="checkbox" id="details-rights-contributor" name="contributor">contributor<br>
-  <input type="checkbox" id="details-rights-ouderraad" name="ouderraad">ouderraad<br>
+  <input type="checkbox" id="details-rights-admin" name="admin"> admin<br>
+  <input type="checkbox" id="details-rights-contributor" name="contributor"> contributor<br>
+  <input type="checkbox" id="details-rights-ouderraad" name="ouderraad"> ouderraad<br>
+  <input type="checkbox" id="details-rights-personeel" name="personeel"> personeel<br>
 
   <input id="action-update" type="button" value="bewaar wijzigingen"
          onclick="Users.save();">
@@ -111,6 +112,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     contributors = 0;
     admins       = 0;
     ouderraad    = 0;
+    personeel    = 0;
     users.sort(function(left, right) { return left.name < right.name ? -1:1; });
     for(i=0;i<users.length;i++) {
       user = users[i];
@@ -122,12 +124,14 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
       if( user.rights.indexOf("admin") != -1 )       { admins++; }
       if( user.rights.indexOf("contributor") != -1 ) { contributors++; }
       if( user.rights.indexOf("ouderraad") != -1 )   { ouderraad++; }
+      if( user.rights.indexOf("personeel") != -1 )   { personeel++; }
     }
     $("all-users-list").innerHTML  = html;
     $("all-users-stats").innerHTML = "gebruikers: " + users.length + " | " +
                                      "admins: " + admins + " | " +
                                      "contributors: " + contributors + " | " +
-                                     "ouderraad: " + ouderraad;
+                                     "ouderraad: " + ouderraad + " | " +
+                                     "personeel: " + personeel;
     if( showing ) { show(showing); }
   }
   
@@ -141,6 +145,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
       $("details-rights-admin").checked       = user.rights.indexOf("admin") != -1;
       $("details-rights-contributor").checked = user.rights.indexOf("contributor") != -1;
       $("details-rights-ouderraad").checked   = user.rights.indexOf("ouderraad") != -1;
+      $("details-rights-personeel").checked   = user.rights.indexOf("personeel") != -1;
       $("details-status").innerHTML 
         = "<a href=\"javascript:\" onclick=\"Users.check('" + 
           index + "')\">check status</a>";
@@ -198,6 +203,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     $("details-rights-admin").checked       = false;
     $("details-rights-contributor").checked = false;
     $("details-rights-ouderraad").checked   = false;
+    $("details-rights-personeel").checked   = false;
     $("details-status").innerHTML           = "";
   }
 
@@ -236,6 +242,7 @@ ATTENTION: This is a sensitive page, so you'll want to apply an "admins-only"
     if( $("details-rights-admin").checked )       { rights.push("admin");      }
     if( $("details-rights-contributor").checked ) { rights.push("contributor");}
     if( $("details-rights-ouderraad").checked )   { rights.push("ouderraad");  }
+    if( $("details-rights-personeel").checked )   { rights.push("personeel");  }
     return rights;
   }
 
