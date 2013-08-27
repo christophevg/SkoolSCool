@@ -124,6 +124,7 @@ class AuthorizationManager {
     $groups = $content->getTagsMatching( '/^not-([a-z]+)$/', 1 );
     foreach( $groups as $group ) {
       if( $group != "user" && $user->hasRight( $group ) ) { return false; }
+      if( $group == "user" && ! $user->isAnonymous() )    { return false;}
     }
     
     return true;

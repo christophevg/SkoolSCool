@@ -15,7 +15,6 @@ TODO
 ===> hide system user from user list (server side)
 ===> select user after save or close form !!!
 ===> delete user -> delete identities !!!
-===> add ANONYMOUS-ONLY support for alternative content for anonymous visitors
 ===> formatting of nieuwslist overview
 
 ---
