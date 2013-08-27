@@ -2,6 +2,7 @@ TODO
 
 - fix bug in editor to provide decent editor size
 
+- export-import functionality through site
 - export database automation using cron
 
 - clean up temporaries using cron (otp:48hours)
@@ -12,6 +13,7 @@ TODO
 
 - move some literals in dutch to I18N.nl (log in feedback in bootstrap)
 
+===> remove hard-coded redirects to home -> ./
 ===> hide system user from user list (server side)
 ===> select user after save or close form !!!
 ===> delete user -> delete identities !!!
