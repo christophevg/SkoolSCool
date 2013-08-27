@@ -28,8 +28,14 @@ abstract class Content extends Object {
         // unathorized access ? reset the object
         $object = null;
       } else {
-        // authorized access, prepare it for publication
-        $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
+        if(method_exists($object, "replace")) {
+          // authorized access, prepare it for publication
+          $object->replace( '{{id}}', $alias != null ? $alias : $object->id );
+        } else {
+          // The content doesn't support Replace -> e.g. User record
+          // TODO: clean this up the right way ;-)
+          $object = null;
+        }
       }
     }
 
