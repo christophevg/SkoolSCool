@@ -13,10 +13,6 @@
  * aditionally validate the actual request.
  * 
  * @author Christophe VG <contact+skoolscool@christophe.vg>
- * 
- * TODO:
- * - GET & SEARCH methods support
- * - replace die() with sending correct HTTP responses (404, 500, 501,...)
  */
 
 // include all functionality
@@ -56,7 +52,7 @@ class API {
   }
 
   private function handlePut() {
-    global $_PUT; // too bad I can't define a supreglobal ;-)
+    global $_PUT; // too bad I can't define a real superglobal ;-)
     $this->validateModificationRequest();
     list( $contentType, $id, $ts ) = $this->parseRequest();
     // TODO clean PUT data
