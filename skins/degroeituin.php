@@ -114,6 +114,39 @@ class DegroeituinSkin extends Skin {
   </script>
 </head>
 <body>
+  <!-- Cookie Notification -->
+  <style>
+  DIV.cookieinfo {
+    font: 12pt Verdana;
+    margin: 3px;
+    padding: 10px;
+    background: #169BBC;
+    color: white;
+  }
+  </style>
+  <script>
+  function accept_cookies() {
+    document.getElementById("cookieinfo").style.display = "none";
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + 36500);
+    document.cookie="accept_cookies=1; path=/; expires="+exdate.toUTCString();;
+  }
+  </script>
+  <div id="cookieinfo" class="cookieinfo" style="display:none;">
+  De website van De Groeituin gebruikt <a
+  href="http://nl.wikipedia.org/wiki/Cookie_(internet)"
+  target="_blank">cookies</a> om je bezoeken nog aangenamer en makkelijker te
+  maken.<br>
+  Door gebruik te maken van deze website gaat u hiermee akkoord.<br>
+  <a href="javascript:accept_cookies();">OK, toon deze boodschap niet meer</a>.
+  </div>
+  <script>
+  if( document.cookie.indexOf("accept_cookies=1") == -1 ) {
+    document.getElementById("cookieinfo").style.display = "block";
+  }
+  </script>
+  <!-- Cookie Notification -->
+
   <div class="wrapper">
 
     <div class="page-{$this->content->url}">
