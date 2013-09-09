@@ -37,6 +37,10 @@ input.button {
   display: none;
 }
 
+input.text {
+  width: 100%;
+}
+
 DIV.handtekening {
   display: block;
 }
